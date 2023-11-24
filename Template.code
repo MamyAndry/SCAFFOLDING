@@ -1,0 +1,15 @@
+%package%
+
+%imports%
+
+%class%{
+    
+    %fields%
+
+    //SETTERS AND GETTERS
+        
+    %getters%
+
+    %setters%
+    
+}
