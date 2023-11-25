@@ -4,7 +4,7 @@
  */
 package generator;
 
-import dao.DbConnection;
+import generator.dao.DbConnection;
 import java.sql.Connection;
 import generator.service.DbService;
 import generator.service.DotnetGenerationService;
@@ -13,6 +13,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,12 +32,13 @@ public class CodeGenerator {
             separator = "/";
         Path directoryPath = Paths.get(path + separator + packageName)   ;
         Files.createDirectories(directoryPath);
-        System.out.println("Package created");
+        System.out.println(directoryPath.toString() + " created");
     }
     
-    public static String getTemplate(String path) throws Exception{
+    public static String getTemplate(InputStream path) throws Exception{
         StringBuilder builder = new StringBuilder();
-        BufferedReader reader = new BufferedReader(new FileReader(path));
+        InputStreamReader fis = new InputStreamReader(path);
+        BufferedReader reader = new BufferedReader(fis);
         String line;
         while((line = reader.readLine()) != null){
             builder.append(line).append("\n");
@@ -61,7 +64,8 @@ public class CodeGenerator {
         FileWriter writer = new FileWriter(path);
         HashMap<String, String> mapp = DbService.getColumnNameAndType(con, table);
         
-        String temp = getTemplate("Template.code");
+        String temp = getTemplate(CodeGenerator.class.getResourceAsStream("/Template.code"));
+        
         
         temp = temp.replace("%package%", JavaGenerationService.getPackage(packageName));
         temp = temp.replace("%imports%", JavaGenerationService.getImports(mapp));
@@ -81,7 +85,7 @@ public class CodeGenerator {
         FileWriter writer = new FileWriter(path);
         HashMap<String, String> mapp = DbService.getColumnNameAndType(con, table);
         
-        String temp = getTemplate("Template.code");
+        String temp = getTemplate(CodeGenerator.class.getResourceAsStream("/Template.code"));    
         
         temp = temp.replace("%package%", DotnetGenerationService.getPackage(packageName));
         temp = temp.replace("%imports%", DotnetGenerationService.getImports(mapp));

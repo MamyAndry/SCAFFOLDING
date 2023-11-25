@@ -5,13 +5,11 @@
 package generator.service;
 
 import generator.mapping.ClassMapping;
-import java.sql.Date;
-import java.sql.Timestamp;
+import generator.utils.ObjectUtility;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import utils.ObjectUtility;
 
 /**
  *

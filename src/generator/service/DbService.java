@@ -4,7 +4,7 @@
  */
 package generator.service;
 
-import generator.mapping.ClassMapping;
+import generator.utils.ObjectUtility;
 import java.util.HashMap;
 
 import java.sql.Connection;
@@ -15,7 +15,6 @@ import java.sql.DatabaseMetaData;
 
 import java.util.ArrayList;
 import java.util.List;
-import utils.ObjectUtility;
 /**
  *
  * @author Mamisoa
@@ -42,6 +41,14 @@ public class DbService {
           lst.add(rs.getString(3));
         }
         return lst;
+    }
+    public static String[] getAllTablesArrays(Connection con) throws Exception{
+        List<String> lst = getAllTables(con);
+        String[] array= new String[lst.size()];
+        for(int i = 0; i < lst.size(); i++){
+            array[i] = lst.get(i);
+        }
+        return array;
     }
     
     
