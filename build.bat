@@ -4,8 +4,10 @@ mkdir temp
 javac --source 8 --target 8 -cp library/DAO.jar -d temp @src.txt
 del file.txt
 del src.txt
-cd temp
-jar --create --file scaffold.jar --main-class generator.Main -C build .
-cd ..
-del temp
 
+@rem xcopy ./library/DAO.jar ./temp/ 
+
+@rem jar --create --file scaffold.jar -e generator.Main -C temp .
+jar cvMf scaffold.jar META-INF -C temp .
+
+del temp

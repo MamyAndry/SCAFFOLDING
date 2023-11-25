@@ -23,12 +23,12 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // TODO code application logic here
         Connection con = null;
         try{
+            System.out.println("Hi from " + System.getProperty("user.dir"));
             con = new DbConnection().connect();
-            System.out.println(con);
             String path = "";
             String packageName = "";
             String lang = "";
@@ -46,7 +46,7 @@ public class Main {
                     case "packageName":
                         packageName = elt[1];
                         break;
-                    case "Language":
+                    case "language":
                         lang = elt[1];
                         break;
                     default:
@@ -54,18 +54,20 @@ public class Main {
                 }
             }
             List<String> list = DbService.getAllTables(con);
-            for(String item : list)
-                CodeGenerator.generateJavaSource(con, path,item, packageName);
+            if(lang.equals("JAVA")){
+                for(String item : list)
+                    CodeGenerator.generateJavaSource(con, path,item, packageName);
+            }else if(lang.equals("DOTNET")){
+                for(String item : list)
+                    CodeGenerator.generateDotnetSource(con, path,item, packageName);
+            }
             
         }catch(Exception e){
             e.printStackTrace();
-        }finally{
-            try {
-                con.close();
-            } catch (SQLException ex) {
-               ex.printStackTrace();
-            }
         }
+//        finally{
+//            con.close();
+//        }
         
     }
     

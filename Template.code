@@ -4,12 +4,11 @@
 
 %class%{
     
-    %fields%
-
+%fields%
     //SETTERS AND GETTERS
         
-    %getters%
+%encapsulation%
+    //CONSTRUCTORS
 
-    %setters%
-    
+ %constructors%
 }

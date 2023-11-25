@@ -4,6 +4,8 @@
  */
 package generator.service;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.sql.Timestamp;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -16,7 +18,11 @@ import utils.ObjectUtility;
  *
  * @author Mamisoa
  */
-public class GenerationService {
+public class JavaGenerationService {
+    
+    public static String getPackage(String packageName){
+        return "package "+packageName+";";
+    }
     
     public static List<String> getAllImports(HashMap<String, Class> columns){
         List<String> lst = new ArrayList<>();
@@ -54,11 +60,11 @@ public class GenerationService {
     
     public static String getClass(String table){
         String res = "@Table(name = " + "\"" + table + "\")\n";
-        res += "public class " + getClassName(table) + "{\n";
+        res += "public class " + getClassName(table) + "";
         return res;
     }
 
-    public static List<String> getAllGetters(HashMap<String, Class> columns){
+    public static List<String> getAllGettersAndSetters(HashMap<String, Class> columns){
         List<String> lst = new ArrayList<>();
         
         for (Map.Entry<String, Class> set : columns.entrySet()) {
@@ -67,38 +73,17 @@ public class GenerationService {
             String temp = "\tpublic " + type + " get" + ObjectUtility.capitalize(field) + "(){\n";
             temp += "\t\treturn this." + field + ";\n";
             temp += "\t}\n";
-            lst.add(temp);
-        }
-            
-        return lst;
-    }
-
-    public static List<String> getAllSetters(HashMap<String, Class> columns){
-        List<String> lst = new ArrayList<>();
-        
-        for (Map.Entry<String, Class> set : columns.entrySet()) {
-            String field = DbService.formatString(set.getKey());
-            String type = splitByPoint(set.getValue().getName());
-            String temp = "\tpublic void set" + ObjectUtility.capitalize(field) + "(" + type + " " + field+"){\n";
+            temp += "\tpublic void set" + ObjectUtility.capitalize(field) + "(" + type + " " + field+"){\n";
             temp += "\t\tthis." + field+" = " + field + ";\n";
             temp += "\t}\n";
             lst.add(temp);
         }
             
         return lst;
-    }
+    } 
     
-    public static String getSetters(HashMap<String, Class> columns){
-        List<String> lst = getAllSetters(columns);
-        String res = "";
-        for(String item : lst){
-            res += item;
-        }
-        return res;
-    }    
-    
-    public static String getGetters(HashMap<String, Class> columns){
-        List<String> lst = getAllGetters(columns);
+    public static String getGettersAndSetters(HashMap<String, Class> columns){
+        List<String> lst = getAllGettersAndSetters(columns);
         String res = "";
         for(String item : lst){
             res += item;
@@ -156,6 +141,16 @@ public class GenerationService {
             res += item;
         }
         return res;
+    }
+    
+    public static String getTemplate(String path) throws Exception{
+        StringBuilder builder = new StringBuilder();
+        BufferedReader reader = new BufferedReader(new FileReader(path));
+        String line;
+        while((line = reader.readLine()) != null){
+            builder.append(line).append("\n");
+        }
+        return builder.toString();
     }
 }
 

@@ -7,6 +7,7 @@ package generator.mapping;
 import java.util.HashMap;
 import java.sql.Timestamp;
 import java.sql.Date;
+import java.time.LocalTime;
 /**
  *
  * @author Mamisoa
@@ -42,13 +43,34 @@ public class ClassMapping {
         mapping.put(2, Double.class);
         mapping.put(6, Float.class);
         mapping.put(12, String.class);
-//        mapping.put(2014, Timestamp.class);
+        mapping.put(2014, Timestamp.class);
         mapping.put(93, Timestamp.class);
         mapping.put(0, null);
         mapping.put(91, Date.class);
+        mapping.put(-16, Long.class);
+        mapping.put(92, LocalTime.class);
+        mapping.put(16, Boolean.class);
+        mapping.put(1, char.class);
+        mapping.put(-7, Byte.class);
         
         return mapping;
+    }
     
+    public static HashMap<Class, String> getClassMapDotnet(){
+        HashMap<Class, String> mapping = new HashMap<>();
+        
+        mapping.put(Integer.class, "int");
+        mapping.put(Double.class, "Double");
+        mapping.put(Float.class, "Float");
+        mapping.put(String.class, "string");
+        mapping.put(Timestamp.class, "DateTime");
+        mapping.put(Boolean.class, "bool");
+        mapping.put(Date.class, "DateOnly");
+        mapping.put(char.class, "Char");
+        mapping.put(LocalTime.class, "TimeOnly");
+        mapping.put(Byte.class, "Byte");
+        
+        return mapping;
     }
 }
 

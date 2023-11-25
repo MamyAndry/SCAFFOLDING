@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Created-By: 17.0.8 (Oracle Corporation)
+Main-Class: generator.Main
+Class-Path: file:///E:/LIBRARY/DAO.jar
