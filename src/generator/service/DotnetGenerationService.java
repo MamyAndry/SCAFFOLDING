@@ -23,17 +23,17 @@ public class DotnetGenerationService {
         return "namespace "+ packageName +";";
     }
     
-    public static List<String> getAllImports(HashMap<String, Class> columns){
+    public static List<String> getAllImports(HashMap<String, String> columns){
         List<String> lst = new ArrayList<>();
         
         lst.add("using System;");
-        for (Map.Entry<String, Class> set : columns.entrySet()) {  
+        for (Map.Entry<String, String> set : columns.entrySet()) {  
 
         } 
         return lst;
     }
     
-    public static String getImports(HashMap<String, Class> columns){
+    public static String getImports(HashMap<String, String> columns){
         List<String> lst = getAllImports(columns);
         String res = "";
         for(String item : lst){
@@ -52,10 +52,10 @@ public class DotnetGenerationService {
         return res;
     }
 
-    public static List<String> getAllGettersAndSetters(HashMap<String, Class> columns){
+    public static List<String> getAllGettersAndSetters(HashMap<String, String> columns){
         List<String> lst = new ArrayList<>();
         
-        for (Map.Entry<String, Class> set : columns.entrySet()) {
+        for (Map.Entry<String, String> set : columns.entrySet()) {
             String field = DbService.formatString(set.getKey()); 
             String type = ClassMapping.getClassMapDotnet().get(set.getValue());
             String temp = "\t[Column(name = \""+set.getKey()+"\")]\n";
@@ -74,7 +74,7 @@ public class DotnetGenerationService {
     }
  
     
-    public static String getGettersAndSetters(HashMap<String, Class> columns){
+    public static String getGettersAndSetters(HashMap<String, String> columns){
         List<String> lst = getAllGettersAndSetters(columns);
         String res = "";
         for(String item : lst){
@@ -83,10 +83,10 @@ public class DotnetGenerationService {
         return res;
     }
    
-    public static List<String> getAllFields(HashMap<String, Class> columns){
+    public static List<String> getAllFields(HashMap<String, String> columns){
         List<String> lst = new ArrayList<>();
         
-        for (Map.Entry<String, Class> set : columns.entrySet()) {
+        for (Map.Entry<String, String> set : columns.entrySet()) {
             String field = DbService.formatString(set.getKey());
             String type = ClassMapping.getClassMapDotnet().get(set.getValue());
             String temp = "\t[NotMapped]\n";
@@ -96,7 +96,7 @@ public class DotnetGenerationService {
         
         return lst;
     }
-    public static String getFields(HashMap<String, Class> columns){
+    public static String getFields(HashMap<String, String> columns){
         List<String> lst = getAllFields(columns);
         String res = "";
         for(String item : lst){
@@ -105,14 +105,14 @@ public class DotnetGenerationService {
         return res;
     }
     
-    public static List<String> getAllConstructors(String table, HashMap<String, Class> columns){
+    public static List<String> getAllConstructors(String table, HashMap<String, String> columns){
         List<String> lst = new ArrayList<>();
 
         lst.add("\tpublic " + getClassName(table) + "(){}\n");
         String temp = "\tpublic " + getClassName(table) + "(";
         String args = "";
         String  setters = "";
-        for (Map.Entry<String, Class> set : columns.entrySet()) {
+        for (Map.Entry<String, String> set : columns.entrySet()) {
             String field = DbService.formatString(set.getKey());
             String type = ClassMapping.getClassMapDotnet().get(set.getValue());
             args += type + " " + field + ", ";
@@ -126,7 +126,7 @@ public class DotnetGenerationService {
         return lst;
     }
     
-    public static String getConstructors(String table, HashMap<String, Class> columns){
+    public static String getConstructors(String table, HashMap<String, String> columns){
         List<String> lst = getAllConstructors(table, columns);
         String res = "";
         for(String item : lst){

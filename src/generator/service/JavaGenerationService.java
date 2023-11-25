@@ -4,8 +4,6 @@
  */
 package generator.service;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.sql.Timestamp;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -15,7 +13,7 @@ import java.util.Map;
 import utils.ObjectUtility;
 
 /**
- *
+ *54545445545555455+466
  * @author Mamisoa
  */
 public class JavaGenerationService {
@@ -24,7 +22,7 @@ public class JavaGenerationService {
         return "package "+packageName+";";
     }
     
-    public static List<String> getAllImports(HashMap<String, Class> columns){
+    public static List<String> getAllImports(HashMap<String, String> columns){
         List<String> lst = new ArrayList<>();
         
         lst.add("import dao.annotation.PrimaryKey;\n");
@@ -32,16 +30,22 @@ public class JavaGenerationService {
         lst.add("import dao.annotation.Table;\n");
         lst.add("import java.sql.Connection;\n");
         
-        for (Map.Entry<String, Class> set : columns.entrySet()) {  
-            if(set.getValue().equals(Date.class))
+        for (Map.Entry<String, String> set : columns.entrySet()) {  
+            if(set.getValue().equals("java.sql.Date"))
                 lst.add("import java.sql.Date;\n");
-            else if(set.getValue().equals(Timestamp.class))
+            else if(set.getValue().equals("java.sql.Timestamp"))
                 lst.add("import java.sql.Timestamp;\n");
+            else if(set.getValue().equals("java.sql.Time"))
+                lst.add("import java.sql.Time;\n");
+            else if(set.getValue().equals("java.math.BigDecimal"))
+                lst.add("import java.math.BigDecimal;\n");
+//            else if(set.getValue().equals("org.postgresql.geometric.PGpoint"))
+//                lst.add("import org.postgresql.geometric.PGpoint;\n");
         } 
         return lst;
     }
     
-    public static String getImports(HashMap<String, Class> columns){
+    public static String getImports(HashMap<String, String> columns){
         List<String> lst = getAllImports(columns);
         String res = "";
         for(String item : lst){
@@ -51,6 +55,10 @@ public class JavaGenerationService {
     }
     
     public static String splitByPoint(String str){
+        if(str.equals("[B"))
+            return "Byte[]";
+        else if(str.equals("org.postgresql.geometric.PGpoint"))
+            return "String";
         return  str.split("\\.")[str.split("\\.").length - 1];
     }
 
@@ -64,12 +72,12 @@ public class JavaGenerationService {
         return res;
     }
 
-    public static List<String> getAllGettersAndSetters(HashMap<String, Class> columns){
+    public static List<String> getAllGettersAndSetters(HashMap<String, String> columns){
         List<String> lst = new ArrayList<>();
         
-        for (Map.Entry<String, Class> set : columns.entrySet()) {
+        for (Map.Entry<String, String> set : columns.entrySet()) {
             String field = DbService.formatString(set.getKey());
-            String type = splitByPoint(set.getValue().getName());
+            String type = splitByPoint(set.getValue());
             String temp = "\tpublic " + type + " get" + ObjectUtility.capitalize(field) + "(){\n";
             temp += "\t\treturn this." + field + ";\n";
             temp += "\t}\n";
@@ -82,7 +90,7 @@ public class JavaGenerationService {
         return lst;
     } 
     
-    public static String getGettersAndSetters(HashMap<String, Class> columns){
+    public static String getGettersAndSetters(HashMap<String, String> columns){
         List<String> lst = getAllGettersAndSetters(columns);
         String res = "";
         for(String item : lst){
@@ -91,12 +99,12 @@ public class JavaGenerationService {
         return res;
     }
    
-    public static List<String> getAllFields(HashMap<String, Class> columns){
+    public static List<String> getAllFields(HashMap<String, String> columns){
         List<String> lst = new ArrayList<>();
         
-        for (Map.Entry<String, Class> set : columns.entrySet()) {
+        for (Map.Entry<String, String> set : columns.entrySet()) {
             String field = DbService.formatString(set.getKey());
-            String type = splitByPoint(set.getValue().getName());
+            String type = splitByPoint(set.getValue());
             String temp = "\t@Column(name = \""+set.getKey()+"\")\n";
             temp += "\t" + type + " " + field + ";\n";
             lst.add(temp);
@@ -104,7 +112,7 @@ public class JavaGenerationService {
         
         return lst;
     }
-    public static String getFields(HashMap<String, Class> columns){
+    public static String getFields(HashMap<String, String> columns){
         List<String> lst = getAllFields(columns);
         String res = "";
         for(String item : lst){
@@ -113,16 +121,16 @@ public class JavaGenerationService {
         return res;
     }
     
-    public static List<String> getAllConstructors(String table, HashMap<String, Class> columns){
+    public static List<String> getAllConstructors(String table, HashMap<String, String> columns){
         List<String> lst = new ArrayList<>();
 
         lst.add("\tpublic " + getClassName(table) + "(){}\n");
         String temp = "\tpublic " + getClassName(table) + "(";
         String args = "";
         String  setters = "";
-        for (Map.Entry<String, Class> set : columns.entrySet()) {
+        for (Map.Entry<String, String> set : columns.entrySet()) {
             String field = DbService.formatString(set.getKey());
-            String type = splitByPoint(set.getValue().getName());
+            String type = splitByPoint(set.getValue());
             args += type + " " + field + ", ";
             setters += "\t\tset" + ObjectUtility.capitalize(field) +"("+field+");\n";
         }
@@ -134,23 +142,13 @@ public class JavaGenerationService {
         return lst;
     }
     
-    public static String getConstructors(String table, HashMap<String, Class> columns){
+    public static String getConstructors(String table, HashMap<String, String> columns){
         List<String> lst = getAllConstructors(table, columns);
         String res = "";
         for(String item : lst){
             res += item;
         }
         return res;
-    }
-    
-    public static String getTemplate(String path) throws Exception{
-        StringBuilder builder = new StringBuilder();
-        BufferedReader reader = new BufferedReader(new FileReader(path));
-        String line;
-        while((line = reader.readLine()) != null){
-            builder.append(line).append("\n");
-        }
-        return builder.toString();
     }
 }
 

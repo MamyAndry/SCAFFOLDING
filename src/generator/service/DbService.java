@@ -45,9 +45,8 @@ public class DbService {
     }
     
     
-    public static HashMap<String, Class> getColumnNameAndType(Connection con, String tableName) throws Exception{
-        HashMap<String, Class> map = new HashMap<>();
-        HashMap<Integer, Class> mapping = ClassMapping.getClassMapTable();
+    public static HashMap<String, String> getColumnNameAndType(Connection con, String tableName) throws Exception{
+        HashMap<String, String> map = new HashMap<>();
         
         String query = "SELECT * FROM "+tableName;
         
@@ -56,11 +55,28 @@ public class DbService {
         ResultSetMetaData rsmd = rs.getMetaData();
         int count = rsmd.getColumnCount();
         for(int i = 1; i <= count; i++){
-            Integer key = rsmd.getColumnType(i);
-            String column = rsmd.getColumnName(i);
-            map.put(column, mapping.get(key));
+            String key = rsmd.getColumnName(i);
+            String value = rsmd.getColumnClassName(i);
+            map.put(key, value);
         }
         return map;
-    }   
+    }
+    
+    public static HashMap<String, String> getDetailsColumn(Connection con, String tableName) throws Exception{
+        HashMap<String, String> map = new HashMap<>();
+        
+        String query = "SELECT * FROM "+tableName;
+        
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int count = rsmd.getColumnCount();
+        for(int i = 1; i <= count; i++){
+            String key = rsmd.getColumnClassName(i);
+            String column = rsmd.getColumnName(i);
+            map.put(column, key);
+        }
+        return map;
+    }
 
 }
