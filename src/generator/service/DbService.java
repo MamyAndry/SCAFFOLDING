@@ -85,5 +85,25 @@ public class DbService {
         }
         return map;
     }
+    
+    public static void getTableConstraints(Connection con, String tableName) throws Exception{
+//        HashMap<String, String> map = new HashMap<>();
+        
+        String query = "SELECT * FROM "+tableName;
+        
+        DatabaseMetaData meta = con.getMetaData();
+//        ResultSet tablesRs = meta.getTables(null, null, tableName, new String[]{"TABLE"});
+        ResultSet primaryKeys = meta.getPrimaryKeys(null, null, "table_name");
+        
+        ResultSetMetaData rsmd = primaryKeys.getMetaData();
+            System.out.println(rsmd.getColumnName(1));
+//        while(primaryKeys.next()){
+//        }
+        ResultSet forignKeys = meta.getExportedKeys(null, null, "table_name");
+            System.out.println(forignKeys);
+//        while(forignKeys.next()){
+//        }
+//        return map;
+    }
 
 }

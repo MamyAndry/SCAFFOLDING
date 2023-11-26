@@ -46,6 +46,16 @@ public class CodeGenerator {
         return builder.toString();
     }
     
+    public static String getTemplate(String path) throws Exception{
+        StringBuilder builder = new StringBuilder();
+        BufferedReader reader = new BufferedReader(new FileReader(path));
+        String line;
+        while((line = reader.readLine()) != null){
+            builder.append(line).append("\n");
+        }
+        return builder.toString();
+    }
+    
     public static void createFile(String packageName, String path, String fileName, String extension) throws Exception{
         String separator = "\\";
         if(System.getProperty("os.name").equals("Linux"))
@@ -56,47 +66,34 @@ public class CodeGenerator {
         System.out.println(file.getAbsolutePath() + " succesfully created");
     }
     
-    public static void writeJavaFile(Connection con, String table, String path, String packageName, String fileName, String extension) throws Exception{
-        String separator = "\\";
-        if(System.getProperty("os.name").equals("Linux"))
-            separator = "/";
+    public static void writeFile(Connection con, String table, String path, String packageName, String fileName, String extension) throws Exception{
+        String separator = File.separator;
         path = path + separator + packageName + separator + fileName + "." + extension;
         FileWriter writer = new FileWriter(path);
         HashMap<String, String> mapp = DbService.getColumnNameAndType(con, table);
         
         String temp = getTemplate(CodeGenerator.class.getResourceAsStream("/Template.code"));
-        
-        
-        temp = temp.replace("%package%", JavaGenerationService.getPackage(packageName));
-        temp = temp.replace("%imports%", JavaGenerationService.getImports(mapp));
-        temp = temp.replace("%class%", JavaGenerationService.getClass(table));
-        temp = temp.replace("%fields%", JavaGenerationService.getFields(mapp));
-        temp = temp.replace("%encapsulation%", JavaGenerationService.getGettersAndSetters(mapp));
-        temp = temp.replace("%constructors%", JavaGenerationService.getConstructors(table, mapp));
-        
-        writer.write(temp);
-        writer.close();
-    }
-    public static void writeDotnetFile(Connection con, String table, String path, String packageName, String fileName, String extension) throws Exception{
-        String separator = "\\";
-        if(System.getProperty("os.name").equals("Linux"))
-            separator = "/";
-        path = path + separator + packageName + separator + fileName + "." + extension;
-        FileWriter writer = new FileWriter(path);
-        HashMap<String, String> mapp = DbService.getColumnNameAndType(con, table);
-        
-        String temp = getTemplate(CodeGenerator.class.getResourceAsStream("/Template.code"));    
-        
-        temp = temp.replace("%package%", DotnetGenerationService.getPackage(packageName));
-        temp = temp.replace("%imports%", DotnetGenerationService.getImports(mapp));
-        temp = temp.replace("%class%", DotnetGenerationService.getClass(table));
-        temp = temp.replace("%fields%", DotnetGenerationService.getFields(mapp));
-        temp = temp.replace("%encapsulation%", DotnetGenerationService.getGettersAndSetters(mapp));
-        temp = temp.replace("%constructors%", DotnetGenerationService.getConstructors(table, mapp));
+//        String temp = getTemplate("Template.code");
+        if(extension.equals("java")){
+            temp = temp.replace("%package%", JavaGenerationService.getPackage(packageName));
+            temp = temp.replace("%imports%", JavaGenerationService.getImports(mapp));
+            temp = temp.replace("%class%", JavaGenerationService.getClass(table));
+            temp = temp.replace("%fields%", JavaGenerationService.getFields(mapp));
+            temp = temp.replace("%encapsulation%", JavaGenerationService.getGettersAndSetters(mapp));
+            temp = temp.replace("%constructors%", JavaGenerationService.getConstructors(table, mapp));
+        }else if(extension.equals("cs")){
+            temp = temp.replace("%package%", DotnetGenerationService.getPackage(packageName));
+            temp = temp.replace("%imports%", DotnetGenerationService.getImports(mapp));
+            temp = temp.replace("%class%", DotnetGenerationService.getClass(table));
+            temp = temp.replace("%fields%", DotnetGenerationService.getFields(mapp));
+            temp = temp.replace("%encapsulation%", DotnetGenerationService.getGettersAndSetters(mapp));
+            temp = temp.replace("%constructors%", DotnetGenerationService.getConstructors(table, mapp));
+        }
         
         writer.write(temp);
         writer.close();
     }
+    
     public static void generateSource(Connection con, String path, String table, String packageName, String extension) throws Exception{   
         boolean state = false;
         if(con == null){
@@ -105,10 +102,7 @@ public class CodeGenerator {
         }
         String fileName = JavaGenerationService.getClassName(table);
         createFile(packageName, path, fileName, extension);
-        if(extension.equals("java"))
-           writeJavaFile(con, table, path, packageName, fileName, extension);
-        else if(extension.equals("cs"))
-            writeDotnetFile(con, table, path, packageName, fileName, extension);
+        writeFile(con, table, path, packageName, fileName, extension);
         if( state == true) con.close();
     }
 }
