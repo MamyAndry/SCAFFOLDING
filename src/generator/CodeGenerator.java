@@ -72,25 +72,15 @@ public class CodeGenerator {
         FileWriter writer = new FileWriter(path);
         HashMap<String, String> mapp = DbService.getColumnNameAndType(con, table);
         
-        String temp = getTemplate(CodeGenerator.class.getResourceAsStream("/Template.code"));
-//        String temp = getTemplate("Template.code");
+        String template = getTemplate(CodeGenerator.class.getResourceAsStream("/Template.code"));
+//        String template = getTemplate("Template.code");
         if(extension.equals("java")){
-            temp = temp.replace("%package%", JavaGenerationService.getPackage(packageName));
-            temp = temp.replace("%imports%", JavaGenerationService.getImports(mapp));
-            temp = temp.replace("%class%", JavaGenerationService.getClass(table));
-            temp = temp.replace("%fields%", JavaGenerationService.getFields(mapp));
-            temp = temp.replace("%encapsulation%", JavaGenerationService.getGettersAndSetters(mapp));
-            temp = temp.replace("%constructors%", JavaGenerationService.getConstructors(table, mapp));
+            template = JavaGenerationService.generate(template, packageName, mapp, table);
         }else if(extension.equals("cs")){
-            temp = temp.replace("%package%", DotnetGenerationService.getPackage(packageName));
-            temp = temp.replace("%imports%", DotnetGenerationService.getImports(mapp));
-            temp = temp.replace("%class%", DotnetGenerationService.getClass(table));
-            temp = temp.replace("%fields%", DotnetGenerationService.getFields(mapp));
-            temp = temp.replace("%encapsulation%", DotnetGenerationService.getGettersAndSetters(mapp));
-            temp = temp.replace("%constructors%", DotnetGenerationService.getConstructors(table, mapp));
+            template = DotnetGenerationService.generate(template, packageName, mapp, table);
         }
         
-        writer.write(temp);
+        writer.write(template);
         writer.close();
     }
     

@@ -148,5 +148,16 @@ public class JavaGenerationService {
         }
         return res;
     }
+    
+    public static String generate(String template, String packageName, HashMap<String, String> mapp, String table){
+        String temp = template;
+        temp = temp.replace("%package%", JavaGenerationService.getPackage(packageName));
+        temp = temp.replace("%imports%", JavaGenerationService.getImports(mapp));
+        temp = temp.replace("%class%", JavaGenerationService.getClass(table));
+        temp = temp.replace("%fields%", JavaGenerationService.getFields(mapp));
+        temp = temp.replace("%encapsulation%", JavaGenerationService.getGettersAndSetters(mapp));
+        temp = temp.replace("%constructors%", JavaGenerationService.getConstructors(table, mapp));
+        return temp;
+    }
 }
 

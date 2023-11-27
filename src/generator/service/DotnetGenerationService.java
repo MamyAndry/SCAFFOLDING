@@ -132,4 +132,15 @@ public class DotnetGenerationService {
         }
         return res;
     }
+    
+    public static String generate(String template, String packageName, HashMap<String, String> mapp, String table){
+        String temp = template;
+        temp = temp.replace("%package%", DotnetGenerationService.getPackage(packageName));
+        temp = temp.replace("%imports%", DotnetGenerationService.getImports(mapp));
+        temp = temp.replace("%class%", DotnetGenerationService.getClass(table));
+        temp = temp.replace("%fields%", DotnetGenerationService.getFields(mapp));
+        temp = temp.replace("%encapsulation%", DotnetGenerationService.getGettersAndSetters(mapp));
+        temp = temp.replace("%constructors%", DotnetGenerationService.getConstructors(table, mapp));
+        return temp;
+    }
 }

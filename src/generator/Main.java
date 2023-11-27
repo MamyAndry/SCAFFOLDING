@@ -29,7 +29,7 @@ public class Main {
 //                String cli = scan.nextLine();
 //                new CLIReader().read(con, cli);
 //            }
-            DbService.getTableConstraints(con, "test2");
+            DbService.getTableConstraints(con, "photo");
         }catch(Exception e){
             e.printStackTrace();
         }
