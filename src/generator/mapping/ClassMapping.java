@@ -43,7 +43,8 @@ public class ClassMapping {
         mapping.put("java.sql.Date", "DateOnly");
         mapping.put("java.lang.Char", "Char");
         mapping.put("java.sql.Time", "TimeOnly");
-        mapping.put(" java.math.BigDecimal", "BigDecimal");
+        mapping.put("java.math.BigDecimal", "decimal");
+        mapping.put(" java.math.BigInt", "BigInteger");
         mapping.put("[B", "Byte[]");
         mapping.put("org.postgresql.geometric.PGpoint", "string");
 

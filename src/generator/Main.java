@@ -23,13 +23,13 @@ public class Main {
         Connection con = null;
         try{
             con = new DbConnection().connect();
-//            while(1 != 2){
-//                Scanner scan = new Scanner(System.in);
-//                System.out.print("Scaffold >> ");
-//                String cli = scan.nextLine();
-//                new CLIReader().read(con, cli);
-//            }
-            DbService.getTableConstraints(con, "photo");
+            while(1 != 2){
+                Scanner scan = new Scanner(System.in);
+                System.out.print("Scaffold >> ");
+                String cli = scan.nextLine();
+                new CLIReader().read(con, cli);
+            }
+//            DbService.getTableConstraints(con, "article");
         }catch(Exception e){
             e.printStackTrace();
         }

@@ -27,10 +27,9 @@ import java.util.HashMap;
 public class CodeGenerator {
     
     public static void createPackage(String packageName, String path) throws Exception{
-        String separator = "//";
-        if(System.getProperty("os.name").equals("Linux"))
-            separator = "/";
-        Path directoryPath = Paths.get(path + separator + packageName)   ;
+        packageName = packageName.replace(".", File.separator);
+        System.out.println(packageName);
+        Path directoryPath = Paths.get(path + File.separator + packageName)   ;
         Files.createDirectories(directoryPath);
         System.out.println(directoryPath.toString() + " created");
     }
@@ -57,10 +56,8 @@ public class CodeGenerator {
     }
     
     public static void createFile(String packageName, String path, String fileName, String extension) throws Exception{
-        String separator = "\\";
-        if(System.getProperty("os.name").equals("Linux"))
-            separator = "/";
-
+        packageName = packageName.replace(".", File.separator);
+        String separator = File.separator;
         path = path + separator + packageName + separator + fileName + "." + extension;
         File file = new File(path);
         System.out.println(file.getAbsolutePath() + " succesfully created");
@@ -68,7 +65,8 @@ public class CodeGenerator {
     
     public static void writeFile(Connection con, String table, String path, String packageName, String fileName, String extension) throws Exception{
         String separator = File.separator;
-        path = path + separator + packageName + separator + fileName + "." + extension;
+        String pack = packageName.replace(".", File.separator);
+        path = path + separator + pack + separator + fileName + "." + extension;
         FileWriter writer = new FileWriter(path);
         HashMap<String, String> mapp = DbService.getColumnNameAndType(con, table);
         

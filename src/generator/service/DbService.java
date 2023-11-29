@@ -64,6 +64,7 @@ public class DbService {
         for(int i = 1; i <= count; i++){
             String key = rsmd.getColumnName(i);
             String value = rsmd.getColumnClassName(i);
+//            System.out.println(value);
             map.put(key, value);
         }
         return map;
@@ -110,13 +111,13 @@ public class DbService {
         
         int count2  = rsmd2.getColumnCount();
         System.out.println("--------- FOREIGN KEY ----------------");     
-        System.out.println(foreignKeys.next());
-//        while(foreignKeys.next()){
-//            for(int i = 1; i <= count2; i++){
-//                System.out.println(" column NAME = " + rsmd2.getColumnName(i) + " column VALUES = " + foreignKeys.getString(i) + " column TYPE = "+rsmd2.getColumnClassName(i));
-//            }
-//            System.out.println("-------------------------------------");
-//        }
+//        System.out.println(foreignKeys.next());
+        while(foreignKeys.next()){
+            for(int i = 1; i <= count2; i++){
+                System.out.println(" column NAME = " + rsmd2.getColumnName(i) + " column VALUES = " + foreignKeys.getString(i) + " column TYPE = "+rsmd2.getColumnClassName(i));
+            }
+            System.out.println("-------------------------------------");
+        }
 //        return map;
     }
 
