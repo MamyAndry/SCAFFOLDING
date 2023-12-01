@@ -54,8 +54,10 @@ public class CLIReader {
     
     //METHODS
     public void getData(String[] str) throws Exception{
-        if(!str[0].equals("scaffold"))
+        if(!str[0].equals("generate"))
             throw new Exception("Wrong syntax");
+        else if(str[0].equals("exit"))
+            throw new Exception("Farewell");
         for(int i = 0; i < str.length; i++){
             if(str[i].equals("-p")){
                 this.setPackageName(str[i+1]);
@@ -103,5 +105,7 @@ public class CLIReader {
         }
     }
     
-        //scaffold -p test -t information -path E:\ITU\TEST -l java
+        //generate -p test -t information -path E:\ITU\TEST -l java
+        //generate -p solaire.entity -t all -path E:\ITU\L3\Mr_Tahina\SOLAIRE\src\java -l java
 }
+

@@ -23,9 +23,9 @@ public class JavaGenerationService {
     public static List<String> getAllImports(HashMap<String, String> columns){
         List<String> lst = new ArrayList<>();
         
-        lst.add("import dao.annotation.PrimaryKey;\n");
-        lst.add("import dao.annotation.Column;\n");
-        lst.add("import dao.annotation.Table;\n");
+        lst.add("import annotation.PrimaryKey;\n");
+        lst.add("import annotation.Column;\n");
+        lst.add("import annotation.Table;\n");
         lst.add("import java.sql.Connection;\n");
         
         for (Map.Entry<String, String> set : columns.entrySet()) {  
@@ -130,7 +130,7 @@ public class JavaGenerationService {
             String field = DbService.formatString(set.getKey());
             String type = splitByPoint(set.getValue());
             args += type + " " + field + ", ";
-            setters += "\t\tset" + ObjectUtility.capitalize(field) +"("+field+");\n";
+            setters += "\t\tthis.set" + ObjectUtility.capitalize(field) +"("+field+");\n";
         }
         args = args.substring(0, args.length() - 2);
         temp += args + "){\n";

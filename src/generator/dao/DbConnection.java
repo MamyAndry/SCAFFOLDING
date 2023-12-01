@@ -5,6 +5,7 @@
 package generator.dao;
 
 import generator.parser.FileParser;
+import java.io.File;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -57,11 +58,8 @@ public class DbConnection {
     
     //FUNCTION 
     public void readFile()throws Exception{
-        String separator = "\\";
-        if(System.getProperty("os.name").equals("Linux"))
-            separator = "/";
-        String confFile = System.getProperty("user.dir") + separator + "database.conf";
-        System.out.println("Hello from DAO : " + confFile);
+        String confFile = System.getProperty("user.dir") + File.separator + "database.conf";
+//        System.out.println("Hello from DAO : " + confFile);
         List<String[]> lst = FileParser.readFile(confFile);
         for(String[] elt : lst ){
             switch (elt[0]) {

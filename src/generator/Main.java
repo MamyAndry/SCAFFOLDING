@@ -31,7 +31,7 @@ public class Main {
             }
 //            DbService.getTableConstraints(con, "article");
         }catch(Exception e){
-            e.printStackTrace();
+            e.getMessage();
         }
         finally{
             con.close();
