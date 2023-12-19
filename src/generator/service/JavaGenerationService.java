@@ -12,24 +12,24 @@ import java.util.Map;
 
 /**
  *
- * 
+ *
  * @author Mamisoa
  */
 public class JavaGenerationService {
-    
+
     public static String getPackage(String packageName){
         return "package "+packageName+";";
     }
-    
+
     public static List<String> getAllImports(HashMap<String, String> columns){
         List<String> lst = new ArrayList<>();
-        
+
         lst.add("import annotation.PrimaryKey;\n");
         lst.add("import annotation.Column;\n");
         lst.add("import annotation.Table;\n");
         lst.add("import java.sql.Connection;\n");
-        
-        for (Map.Entry<String, String> set : columns.entrySet()) {  
+
+        for (Map.Entry<String, String> set : columns.entrySet()) {
             if(set.getValue().equals("java.sql.Date"))
                 lst.add("import java.sql.Date;\n");
             else if(set.getValue().equals("java.sql.Timestamp"))
@@ -40,10 +40,10 @@ public class JavaGenerationService {
                 lst.add("import java.math.BigDecimal;\n");
 //            else if(set.getValue().equals("org.postgresql.geometric.PGpoint"))
 //                lst.add("import org.postgresql.geometric.PGpoint;\n");
-        } 
+        }
         return lst;
     }
-    
+
     public static String getImports(HashMap<String, String> columns){
         List<String> lst = getAllImports(columns);
         String res = "";
@@ -52,7 +52,7 @@ public class JavaGenerationService {
         }
         return res;
     }
-    
+
     public static String splitByPoint(String str){
         if(str.equals("[B"))
             return "Byte[]";
@@ -64,7 +64,7 @@ public class JavaGenerationService {
     public static String getClassName(String table){
         return ObjectUtility.capitalize(DbService.formatString(table));
     }
-    
+
     public static String getClass(String table){
         String res = "@Table(name = " + "\"" + table + "\")\n";
         res += "public class " + getClassName(table) + "";
@@ -73,7 +73,7 @@ public class JavaGenerationService {
 
     public static List<String> getAllGettersAndSetters(HashMap<String, String> columns){
         List<String> lst = new ArrayList<>();
-        
+
         for (Map.Entry<String, String> set : columns.entrySet()) {
             String field = DbService.formatString(set.getKey());
             String type = splitByPoint(set.getValue());
@@ -85,10 +85,10 @@ public class JavaGenerationService {
             temp += "\t}\n";
             lst.add(temp);
         }
-            
+
         return lst;
-    } 
-    
+    }
+
     public static String getGettersAndSetters(HashMap<String, String> columns){
         List<String> lst = getAllGettersAndSetters(columns);
         String res = "";
@@ -97,10 +97,10 @@ public class JavaGenerationService {
         }
         return res;
     }
-   
+
     public static List<String> getAllFields(HashMap<String, String> columns){
         List<String> lst = new ArrayList<>();
-        
+
         for (Map.Entry<String, String> set : columns.entrySet()) {
             String field = DbService.formatString(set.getKey());
             String type = splitByPoint(set.getValue());
@@ -108,7 +108,7 @@ public class JavaGenerationService {
             temp += "\t" + type + " " + field + ";\n";
             lst.add(temp);
         }
-        
+
         return lst;
     }
     public static String getFields(HashMap<String, String> columns){
@@ -119,7 +119,7 @@ public class JavaGenerationService {
         }
         return res;
     }
-    
+
     public static List<String> getAllConstructors(String table, HashMap<String, String> columns){
         List<String> lst = new ArrayList<>();
 
@@ -137,10 +137,10 @@ public class JavaGenerationService {
         temp += args + "){\n";
         temp += setters + "\t}\n";
         lst.add(temp);
-        
+
         return lst;
     }
-    
+
     public static String getConstructors(String table, HashMap<String, String> columns){
         List<String> lst = getAllConstructors(table, columns);
         String res = "";
@@ -149,7 +149,7 @@ public class JavaGenerationService {
         }
         return res;
     }
-    
+
     public static String generate(String template, String packageName, HashMap<String, String> mapp, String table){
         String temp = template;
         temp = temp.replace("%package%", JavaGenerationService.getPackage(packageName));
@@ -160,5 +160,35 @@ public class JavaGenerationService {
         temp = temp.replace("%constructors%", JavaGenerationService.getConstructors(table, mapp));
         return temp;
     }
+
+    /*
+     * Eo amin ilay classe no misy an ilay annotation @Restcontroller na @Controller sy @Requestmapping(path = "/url")
+     * Dia avy eo manisy import anilay Restcontroller sy requestmapping
+     */
+
+    public static String getClassSpring(String table){
+        String res = "@RestController\n";
+        res += "@RequestMapping(path = \"/"+table+"s\")\n";
+        res += "public class " + getClassName(table) + "Controller";
+        return res;
+    }
+    public static String getImportsSpring(){
+        String res = "import org.springframework.web.bind.annotation.RestController;\n";
+        res += "import org.springframework.web.bind.annotation.RequestMapping;\n";
+        return res;
+    }
+
+    public static String generateSpringControllers(String template,String packageName, String table) {
+        String temp = template;
+        temp = temp.replace("%package%", JavaGenerationService.getPackage(packageName));
+        temp = temp.replace("%imports%", JavaGenerationService.getImportsSpring());
+        temp = temp.replace("%class%", JavaGenerationService.getClassSpring(table));
+        temp = temp.replace("%fields%", "");
+        temp = temp.replace("%encapsulation%", "");
+        temp = temp.replace("%constructors%", "");
+        return temp;
+    }
+
+
 }
 

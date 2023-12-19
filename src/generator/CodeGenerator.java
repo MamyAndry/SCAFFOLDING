@@ -25,7 +25,7 @@ import java.util.HashMap;
  * @author Mamisoa
  */
 public class CodeGenerator {
-    
+
     public static void createPackage(String packageName, String path) throws Exception{
         packageName = packageName.replace(".", File.separator);
         System.out.println(packageName);
@@ -33,7 +33,7 @@ public class CodeGenerator {
         Files.createDirectories(directoryPath);
         System.out.println(directoryPath.toString() + " created");
     }
-    
+
     public static String getTemplate(InputStream path) throws Exception{
         StringBuilder builder = new StringBuilder();
         InputStreamReader fis = new InputStreamReader(path);
@@ -44,7 +44,7 @@ public class CodeGenerator {
         }
         return builder.toString();
     }
-    
+
     public static String getTemplate(String path) throws Exception{
         StringBuilder builder = new StringBuilder();
         BufferedReader reader = new BufferedReader(new FileReader(path));
@@ -54,7 +54,7 @@ public class CodeGenerator {
         }
         return builder.toString();
     }
-    
+
     public static void createFile(String packageName, String path, String fileName, String extension) throws Exception{
         packageName = packageName.replace(".", File.separator);
         String separator = File.separator;
@@ -62,14 +62,14 @@ public class CodeGenerator {
         File file = new File(path);
         System.out.println(file.getAbsolutePath() + " succesfully created");
     }
-    
+
     public static void writeFile(Connection con, String table, String path, String packageName, String fileName, String extension) throws Exception{
         String separator = File.separator;
         String pack = packageName.replace(".", File.separator);
         path = path + separator + pack + separator + fileName + "." + extension;
         FileWriter writer = new FileWriter(path);
         HashMap<String, String> mapp = DbService.getColumnNameAndType(con, table);
-        
+
         String template = getTemplate(CodeGenerator.class.getResourceAsStream("/Template.code"));
 //        String template = getTemplate("Template.code");
         if(extension.equals("java")){
@@ -77,12 +77,12 @@ public class CodeGenerator {
         }else if(extension.equals("cs")){
             template = DotnetGenerationService.generate(template, packageName, mapp, table);
         }
-        
+
         writer.write(template);
         writer.close();
     }
-    
-    public static void generateSource(Connection con, String path, String table, String packageName, String extension) throws Exception{   
+
+    public static void generateSource(Connection con, String path, String table, String packageName, String extension) throws Exception{
         boolean state = false;
         if(con == null){
             con = new DbConnection().connect();
