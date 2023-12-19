@@ -86,8 +86,7 @@ public class DbService {
         }
         return map;
     }
-    
-    public static void getTableConstraints(Connection con, String tableName) throws Exception{
+    public static  void getPrimaryKey(Connection con, String tableName) throws Exception{
 //        HashMap<String, String> map = new HashMap<>();
         
         String query = "SELECT * FROM "+tableName;
@@ -101,15 +100,22 @@ public class DbService {
         
         System.out.println("--------- PRIMARY KEY ----------------");
         while(primaryKeys.next()){
-            for(int i = 1; i <= count; i++){
-                System.out.println(" column NAME = " + rsmd.getColumnName(i) + " column VALUES = "+primaryKeys.getObject(i) + " column TYPE = " + rsmd.getColumnClassName(i));
-            }
+//            for(int i = 1; i <= count; i++){
+                System.out.println(" column NAME = " + rsmd.getColumnName(4) + " column VALUES = "+primaryKeys.getObject("column_name") + " column TYPE = " + rsmd.getColumnClassName(4));
+//            }
         }
-        
+    }
+    
+    public static void getForeignKeys(Connection con, String tableName) throws Exception{
+        String query = "SELECT * FROM "+tableName;
+        DatabaseMetaData meta = con.getMetaData();
+        ResultSet tablesRs = meta.getTables(null, null, tableName, new String[]{"TABLE"});
+        ResultSet primaryKeys = meta.getPrimaryKeys(null, null, tableName);
         ResultSet foreignKeys = meta.getExportedKeys(null, null, tableName);
         ResultSetMetaData rsmd2 = foreignKeys.getMetaData();
         
         int count2  = rsmd2.getColumnCount();
+        System.out.println("");
         System.out.println("--------- FOREIGN KEY ----------------");     
 //        System.out.println(foreignKeys.next());
         while(foreignKeys.next()){
@@ -118,7 +124,12 @@ public class DbService {
             }
             System.out.println("-------------------------------------");
         }
-//        return map;
+//        return map;   
+    }
+    
+    
+    public static void getTableConstraints(Connection con, String tableName) throws Exception{
+        getPrimaryKey(con, tableName);
     }
 
 }

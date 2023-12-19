@@ -2,7 +2,7 @@
 
 %imports%
 
-%class%{
+%class% {
     
 %fields%
     //SETTERS AND GETTERS

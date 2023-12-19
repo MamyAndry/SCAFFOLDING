@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/ITU/L3/Mr_Naina/SCAFFOLDING/Template.code</file>
             <file>file:/E:/ITU/L3/Mr_Naina/SCAFFOLDING/src/generator/Main.java</file>
-            <file>file:/E:/ITU/L3/Mr_Naina/SCAFFOLDING/src/generator/CLIReader.java</file>
-            <file>file:/E:/ITU/L3/Mr_Naina/SCAFFOLDING/src/generator/service/DbService.java</file>
-            <file>file:/E:/ITU/L3/Mr_Naina/SCAFFOLDING/conf/Template.code</file>
-            <file>file:/E:/ITU/L3/Mr_Naina/SCAFFOLDING/src/generator/service/JavaGenerationService.java</file>
+            <file>file:/E:/ITU/L3/Mr_Naina/SCAFFOLDING/src/generator/dao/DbConnection.java</file>
+            <file>file:/E:/ITU/L3/Mr_Naina/SCAFFOLDING/src/properties/DatabaseType.java</file>
         </group>
     </open-files>
 </project-private>

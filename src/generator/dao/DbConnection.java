@@ -5,85 +5,119 @@
 package generator.dao;
 
 import generator.parser.FileParser;
-import java.io.File;
 import java.util.List;
+
+import java.io.File;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.HashMap;
+import properties.DatabaseType;
 /**
  *
  * @author Mamisoa
  */
 public class DbConnection {
-    String datasource;
-    String driver;
-    String username;
-    String password;
+    static String database;
+    static String datasource;
+    static String username;
+    static String password;
+    static DatabaseType databaseType;
 
     //SETTERS and GETTERS
 
-    public String getDatasource() {
+    public static String getDatabase() {
+        return database;
+    }
+
+    public static void setDatabase(String database) {
+        DbConnection.database = database;
+    }
+
+    public static String getDatasource() {
         return datasource;
     }
 
-    public void setDatasource(String datasource) {
-        this.datasource = datasource;
+    public static void setDatasource(String datasource) {
+        DbConnection.datasource = datasource;
     }
 
-    public String getDriver() {
-        return driver;
-    }
 
-    public void setDriver(String driver) {
-        this.driver = driver;
-    }
-
-    public String getUsername() {
+    public static String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public static void setUsername(String username) {
+        DbConnection.username = username;
     }
 
-    public String getPassword() {
+    public static String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public static void setPassword(String password) {
+        DbConnection.password = password;
+    }
+    
+    public static DatabaseType getDatabaseType() {
+        return databaseType;
+    }
+
+    public static void setDatabaseType(DatabaseType databaseType) {
+        DbConnection.databaseType = databaseType;
     }
 
     //CONSTRUCTOR
     public DbConnection(){}
     
     //FUNCTION 
-    public void readFile()throws Exception{
-        String confFile = System.getProperty("user.dir") + File.separator + "database.conf";
-//        System.out.println("Hello from DAO : " + confFile);
+//    public HashMap<String, Method> getMapping(){
+//        HashMap<String, Method> mapping = new HashMap<>();
+//        return mapping;
+//    } 
+    
+    public static void readFile()throws Exception{
+        String separator = File.separator;
+        String confFile = System.getProperty("user.dir") + separator +"database.conf";
         List<String[]> lst = FileParser.readFile(confFile);
         for(String[] elt : lst ){
-            switch (elt[0]) {
-                case "datasource":
-                    setDatasource(elt[1]);
-                    break;
-                case "driver":
-                    setDriver(elt[1]);
-                    break;
-                case "username":
-                    setUsername(elt[1]);
-                    break;
-                case "password":
-                    setPassword(elt[1]);
-                    break;
-                default:
-                    break;
-            }
+            if(elt[0].equals("database")) setDatabase(elt[1]);
+            else if (elt[0].equals("datasource")) setDatasource(elt[1]);
+            else if (elt[0].equals("username")) setUsername(elt[1]);
+            else if (elt[0].equals("password")) setPassword(elt[1]);
         }
+        
+        if(getDatabase().equals("POSTGRESQL")) setDatabaseType(DatabaseType.POSTGRESQL);
+        else if(getDatabase().equals("ORACLE")) setDatabaseType(DatabaseType.ORACLE);
+        else if(getDatabase().equals("MYSLQ")) setDatabaseType(DatabaseType.MYSQL);
+        else if(getDatabase().equals( "SQLSERVER")) setDatabaseType(DatabaseType.SQLSERVER);
     }
     
-    public Connection connect()throws Exception{
+    public static Connection connect()throws Exception{
         readFile(); 
-        Class.forName(getDriver());
+        Class.forName(getDatabaseType().getDriver());
+        Connection con = DriverManager.getConnection(getDatasource(),getUsername(),getPassword());
+        return con;
+    }
+    
+    public static void readFile(String path)throws Exception{
+        List<String[]> lst = FileParser.readFile(path);
+        for(String[] elt : lst ){
+            if(elt[0].equals("database")) setDatabase(elt[1]);
+            else if (elt[0].equals("datasource")) setDatasource(elt[1]);
+            else if (elt[0].equals("username")) setUsername(elt[1]);
+            else if (elt[0].equals("password")) setPassword(elt[1]);
+        }
+        
+        if(getDatabase().equals("POSTGRESQL")) setDatabaseType(DatabaseType.POSTGRESQL);
+        else if(getDatabase().equals("ORACLE")) setDatabaseType(DatabaseType.ORACLE);
+        else if(getDatabase().equals("MYSLQ")) setDatabaseType(DatabaseType.MYSQL);
+        else if(getDatabase().equals( "SQLSERVER")) setDatabaseType(DatabaseType.SQLSERVER);
+    }
+    
+    public static Connection connect(String path)throws Exception{
+        readFile(path); 
+        Class.forName(getDatabaseType().getDriver());
         Connection con = DriverManager.getConnection(getDatasource(),getUsername(),getPassword());
         return con;
     }
