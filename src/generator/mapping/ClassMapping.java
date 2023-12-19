@@ -5,9 +5,6 @@
 package generator.mapping;
 
 import java.util.HashMap;
-import java.sql.Timestamp;
-import java.sql.Date;
-import java.time.LocalTime;
 /**
  *
  * @author Mamisoa

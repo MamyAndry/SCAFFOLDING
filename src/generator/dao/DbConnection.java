@@ -8,10 +8,8 @@ import generator.parser.FileParser;
 import java.util.List;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.HashMap;
 import properties.DatabaseType;
 /**
  *
