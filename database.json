@@ -1,6 +1,6 @@
 {
-    "databaseType":"POSTGRESQL",
     "datasource":"jdbc:postgresql://localhost:5432/solaire",
     "username":"mamisoa",
-    "password":"prom15"
+    "password":"prom15",
+    "databaseType":"POSTGRESQL"
 }

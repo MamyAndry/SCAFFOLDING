@@ -6,6 +6,7 @@ package generator.parser;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
@@ -15,12 +16,10 @@ import java.io.FileReader;
  */
 public class JsonParser {
     
-    public static <T> T parseJson(String path, Object object) throws Exception{
-        JsonReader reader = new JsonReader(new FileReader(new File(path)));
-//        System.out.println(reader);
-        System.out.println("DXJHB?<");
-        Object temp = new Gson().fromJson(reader, object.getClass());
-        System.out.println(temp);
+    public static <T> T parseJson(String path, Class<?> object) throws Exception{
+        File file = new File(path);
+        JsonReader reader = new JsonReader(new BufferedReader(new FileReader(path)));
+        Object temp = new Gson().fromJson(reader, object);
         return (T)temp;
     }
 }

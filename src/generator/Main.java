@@ -4,6 +4,7 @@
  */
 package generator;
 
+import com.google.gson.Gson;
 import generator.dao.DbConnection;
 import generator.parser.JsonParser;
 import java.io.File;
@@ -36,11 +37,15 @@ public class Main {
 //            String primaryKey = DbService.getPrimaryKey(con, "secteur");
 //            System.out.println(primaryKey );
             String separator = File.separator;
-            DbConnection onj = JsonParser.parseJson(System.getProperty("user.dir") + separator +"database.json", DbConnection.class);
-            System.out.println("FCPOcil'po");
-            System.out.println(onj);
+//            String test = "{\"databaseType\":\"POSTGRESQL\",\"datasource\":\"jdbc:postgresql://localhost:5432/solaire\",\"username\":\"mamisoa\",\"password\":\"prom15\"}";
+//            DbConnection onj = new Gson().fromJson(test, DbConnection.class);
+            DbConnection trmp = new DbConnection();
+            DbConnection onj = JsonParser.parseJson("E:\\ITU\\L3\\Mr_Naina\\SCAFFOLDING\\database.json", DbConnection.class);
+            
+            System.out.println(new Gson().toJson(onj));
+            System.out.println(onj.getDatabaseType().getDriver());
         }catch(Exception e){
-            e.getMessage();
+            e.printStackTrace();
         }finally{
 //            con.close();
         }

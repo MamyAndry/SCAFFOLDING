@@ -110,7 +110,7 @@ public class DbService {
 //    }
     
     public static  String getPrimaryKey(Connection con, String tableName) throws Exception{
-        String query = DbConnection.getDatabaseType().getPrimaryKeyQuery();
+        String query = new DbConnection().getDatabaseType().getPrimaryKeyQuery();
         query = query.replace("?", tableName);
         
         PreparedStatement stmt = con.prepareCall(query);

@@ -17,53 +17,53 @@ import properties.DatabaseType;
  * @author Mamisoa
  */
 public class DbConnection {
-    static String database;
-    static String datasource;
-    static String username;
-    static String password;
-    static DatabaseType databaseType;
+    String database;
+    String datasource;
+    String username;
+    String password;
+    DatabaseType databaseType;
 
     //SETTERS and GETTERS
 
-    public static String getDatabase() {
+    public String getDatabase() {
         return database;
     }
 
-    public static void setDatabase(String database) {
-        DbConnection.database = database;
+    public void setDatabase(String database) {
+        this.database = database;
     }
 
-    public static String getDatasource() {
+    public String getDatasource() {
         return datasource;
     }
 
-    public static void setDatasource(String datasource) {
-        DbConnection.datasource = datasource;
+    public void setDatasource(String datasource) {
+        this.datasource = datasource;
     }
 
 
-    public static String getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public static void setUsername(String username) {
-        DbConnection.username = username;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public static String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public static void setPassword(String password) {
-        DbConnection.password = password;
+    public void setPassword(String password) {
+        this.password = password;
     }
     
-    public static DatabaseType getDatabaseType() {
+    public DatabaseType getDatabaseType() {
         return databaseType;
     }
 
-    public static void setDatabaseType(DatabaseType databaseType) {
-        DbConnection.databaseType = databaseType;
+    public void setDatabaseType(DatabaseType databaseType) {
+        this.databaseType = databaseType;
     }
 
     //CONSTRUCTOR
@@ -75,7 +75,7 @@ public class DbConnection {
 //        return mapping;
 //    } 
     
-    public static void readFile()throws Exception{
+    public void readFile()throws Exception{
         String separator = File.separator;
         String confFile = System.getProperty("user.dir") + separator +"database.conf";
         List<String[]> lst = FileParser.readFile(confFile);
@@ -92,7 +92,7 @@ public class DbConnection {
         else if(getDatabase().equals( "SQLSERVER")) setDatabaseType(DatabaseType.SQLSERVER);
     }
     
-    public static void readJson()throws Exception{
+    public void readJson()throws Exception{
         String separator = File.separator;
         String confFile = System.getProperty("user.dir") + separator +"database.json";
         System.out.println(confFile);
@@ -103,7 +103,7 @@ public class DbConnection {
         setPassword(temp.getPassword());
     }
     
-    public static Connection connect()throws Exception{
+    public Connection connect()throws Exception{
 //        readFile(); 
         System.out.println("HIHIHIHIHI");
         readJson();
@@ -112,7 +112,7 @@ public class DbConnection {
         return con;
     }
     
-    public static void readFile(String path)throws Exception{
+    public void readFile(String path)throws Exception{
         List<String[]> lst = FileParser.readFile(path);
         for(String[] elt : lst ){
             if(elt[0].equals("database")) setDatabase(elt[1]);
@@ -127,7 +127,7 @@ public class DbConnection {
         else if(getDatabase().equals( "SQLSERVER")) setDatabaseType(DatabaseType.SQLSERVER);
     }
     
-    public static Connection connect(String path)throws Exception{
+    public Connection connect(String path)throws Exception{
         readFile(path);
 //        readJson(path); 
         Class.forName(getDatabaseType().getDriver());
