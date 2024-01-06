@@ -5,6 +5,7 @@
 package generator.dao;
 
 import generator.parser.FileParser;
+import generator.parser.JsonParser;
 import java.util.List;
 
 import java.io.File;
@@ -91,8 +92,21 @@ public class DbConnection {
         else if(getDatabase().equals( "SQLSERVER")) setDatabaseType(DatabaseType.SQLSERVER);
     }
     
+    public static void readJson()throws Exception{
+        String separator = File.separator;
+        String confFile = System.getProperty("user.dir") + separator +"database.json";
+        System.out.println(confFile);
+        DbConnection temp = JsonParser.parseJson(confFile, DbConnection.class);
+        setDatabaseType(temp.getDatabaseType());
+        setDatasource(temp.getDatasource());
+        setUsername(temp.getUsername());
+        setPassword(temp.getPassword());
+    }
+    
     public static Connection connect()throws Exception{
-        readFile(); 
+//        readFile(); 
+        System.out.println("HIHIHIHIHI");
+        readJson();
         Class.forName(getDatabaseType().getDriver());
         Connection con = DriverManager.getConnection(getDatasource(),getUsername(),getPassword());
         return con;
@@ -114,7 +128,8 @@ public class DbConnection {
     }
     
     public static Connection connect(String path)throws Exception{
-        readFile(path); 
+        readFile(path);
+//        readJson(path); 
         Class.forName(getDatabaseType().getDriver());
         Connection con = DriverManager.getConnection(getDatasource(),getUsername(),getPassword());
         return con;

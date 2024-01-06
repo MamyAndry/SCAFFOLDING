@@ -4,6 +4,7 @@
  */
 package generator.service;
 
+import generator.dao.DbConnection;
 import generator.utils.ObjectUtility;
 import java.util.HashMap;
 
@@ -12,6 +13,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,25 +88,37 @@ public class DbService {
         }
         return map;
     }
-    public static  void getPrimaryKey(Connection con, String tableName) throws Exception{
-//        HashMap<String, String> map = new HashMap<>();
+    //AZA FAFANA 
+//    public static  void getPrimaryKey(Connection con, String tableName) throws Exception{
+////        HashMap<String, String> map = new HashMap<>();
+//        
+//        String query = "SELECT * FROM "+tableName;
+//        
+//        DatabaseMetaData meta = con.getMetaData();
+//        ResultSet tablesRs = meta.getTables(null, null, tableName, new String[]{"TABLE"});
+//        ResultSet primaryKeys = meta.getPrimaryKeys(null, null, tableName);
+//        
+//        ResultSetMetaData rsmd = primaryKeys.getMetaData();
+//        int count  = rsmd.getColumnCount();
+//        
+//        System.out.println("--------- PRIMARY KEY ----------------");
+//        while(primaryKeys.next()){
+////            for(int i = 1; i <= count; i++){
+//                System.out.println(" column NAME = " + rsmd.getColumnName(4) + " column VALUES = "+primaryKeys.getObject("column_name") + " column TYPE = " + rsmd.getColumnClassName(4));
+////            }
+//        }
+//    }
+    
+    public static  String getPrimaryKey(Connection con, String tableName) throws Exception{
+        String query = DbConnection.getDatabaseType().getPrimaryKeyQuery();
+        query = query.replace("?", tableName);
         
-        String query = "SELECT * FROM "+tableName;
-        
-        DatabaseMetaData meta = con.getMetaData();
-        ResultSet tablesRs = meta.getTables(null, null, tableName, new String[]{"TABLE"});
-        ResultSet primaryKeys = meta.getPrimaryKeys(null, null, tableName);
-        
-        ResultSetMetaData rsmd = primaryKeys.getMetaData();
-        int count  = rsmd.getColumnCount();
-        
-        System.out.println("--------- PRIMARY KEY ----------------");
-        while(primaryKeys.next()){
-//            for(int i = 1; i <= count; i++){
-                System.out.println(" column NAME = " + rsmd.getColumnName(4) + " column VALUES = "+primaryKeys.getObject("column_name") + " column TYPE = " + rsmd.getColumnClassName(4));
-//            }
-        }
+        PreparedStatement stmt = con.prepareCall(query);
+        ResultSet rs = stmt.executeQuery();
+        rs.next();
+        return rs.getString(1);
     }
+
     
     public static void getForeignKeys(Connection con, String tableName) throws Exception{
         String query = "SELECT * FROM "+tableName;

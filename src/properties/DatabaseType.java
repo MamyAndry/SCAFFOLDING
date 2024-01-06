@@ -21,7 +21,7 @@ public enum DatabaseType {
             new String[]{},
             "SELECT kcu.column_name FROM  information_schema.table_constraints AS tc  JOIN information_schema.key_column_usage AS kcu   ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema JOIN information_schema.constraint_column_usage AS ccu   ON ccu.constraint_name = tc.constraint_name   AND ccu.table_schema = tc.table_schema WHERE tc.constraint_type like '%KEY%' AND tc.table_name=?",
             new String[]{},
-            "SELECT kcu.column_name AS foreign_column_name FROM  information_schema.table_constraints AS tc  JOIN information_schema.key_column_usage AS kcu   ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema JOIN information_schema.constraint_column_usage AS ccu   ON ccu.constraint_name = tc.constraint_name   AND ccu.table_schema = tc.table_schema WHERE tc.constraint_type='PRIMARY KEY' AND tc.table_name=?"),
+            "SELECT kcu.column_name AS column_name FROM  information_schema.table_constraints AS tc  JOIN information_schema.key_column_usage AS kcu   ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema JOIN information_schema.constraint_column_usage AS ccu   ON ccu.constraint_name = tc.constraint_name   AND ccu.table_schema = tc.table_schema WHERE tc.constraint_type='PRIMARY KEY' AND tc.table_name='?'"),
     MYSQL("mysql",
             "com.mysql.cj.jdbc.Driver",
             "",
@@ -33,7 +33,7 @@ public enum DatabaseType {
             new String[]{"fk", "PRIMARY KEY"},
             "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE  table_name=? AND CONSTRAINT_NAME LIKE concat('%',?,'%') ",
             new String[]{"fk"},
-            "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE CONSTRAINT_NAME='PRIMARY' AND table_name=?"),
+            "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE CONSTRAINT_NAME='PRIMARY' AND table_name='?'"),
     POSTGRESQL("postgre,sql",
             "org.postgresql.Driver",
             "SELCT nextval('?')",
@@ -45,10 +45,10 @@ public enum DatabaseType {
             new String[]{"KEY"},
             "SELECT kcu.column_name FROM information_schema.table_constraints AS tc JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name AND ccu.table_schema = tc.table_schema WHERE  tc.table_name=? AND tc.constraint_type like concat('%',?,'%') ",
             new String[]{"KEY"},
-            "SELECT kcu.column_name AS foreign_column_name FROM information_schema.table_constraints AS tc JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name AND ccu.table_schema = tc.table_schema WHERE tc.constraint_type='PRIMARY KEY' AND tc.table_name=?"),
+            "SELECT kcu.column_name AS column_name FROM information_schema.table_constraints AS tc JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name AND ccu.table_schema = tc.table_schema WHERE tc.constraint_type='PRIMARY KEY' AND tc.table_name='?'"),
     ORACLE("oracle",
             "oracle.jdbc.driver.OracleDriver",
-            "SELECT  ? FROM DUAL",
+            "SELECT ? FROM DUAL",
             "CREATE TABLE IF NOT EXISTS GenCrudConfig ( id NUMBER PRIMARY KEY,table_name VARCHAR2,column_name VARCHAR2,method VARCHAR2,jsonConf CLOB)",
             "SELECT table_name FROM all_tables where owner=?",
             "SELECT table_name FROM all_tables where owner=? and table_name like concat('v_%',?,'%_gc%')",
@@ -57,7 +57,7 @@ public enum DatabaseType {
             new String[]{},
             "SELECT acc.column_name FROM all_constraints ac JOIN all_cons_columns acc ON ac.constraint_name = acc.constraint_name AND ac.owner = acc.owner WHERE ac.constraint_type = 'R' AND ac.owner = ? AND ac.table_name = ?",
             new String[]{},
-            "SELECT acc.column_name FROM all_constraints ac JOIN all_cons_columns acc ON ac.constraint_name = acc.constraint_name AND ac.owner = acc.owner WHERE ac.constraint_type = 'P' AND ac.owner = ? AND ac.table_name = ?");
+            "SELECT acc.column_name FROM all_constraints ac JOIN all_cons_columns acc ON ac.constraint_name = acc.constraint_name AND ac.owner = acc.owner WHERE ac.constraint_type = 'P' AND ac.owner = ? AND ac.table_name = '?'");
 
     private String name;
     private String driver;
@@ -103,13 +103,13 @@ public enum DatabaseType {
         this.setSequenceQuery(sequence);
         this.setCreateConfigQuery(createConfigQuery);
         this.setQueryTable(queryTable);
-        this.queryCheckViews = queryCheckViews;
-        this.queryColumn = queryColumn;
-        this.queryConstraint = queryConstraint;
-        this.valuequeryConstraint = valuequeryConstraint;
-        this.foreignKeyQuery = foreignKeyQuery;
-        this.valueforeignKeyQuery = valueforeignKeyQuery;
-        this.primaryKeyQuery = primaryKeyQuery;
+        this.setQueryCheckViews(queryCheckViews);
+        this.setQueryColumn(queryColumn);
+        this.setQueryConstraint(queryConstraint);
+        this.setValuequeryConstraint(valuequeryConstraint);
+        this.setForeignKeyQuery(foreignKeyQuery);
+        this.setValueforeignKeyQuery(valueforeignKeyQuery);
+        this.setPrimaryKeyQuery(primaryKeyQuery);
     }
 
     public String getQueryCheckViews() {

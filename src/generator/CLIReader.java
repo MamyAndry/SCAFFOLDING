@@ -107,5 +107,6 @@ public class CLIReader {
     
         //generate -p test -t information -path E:\ITU\TEST -l java
             //generate -p solaire.entity -t all -path E:\ITU\L3\Mr_Tahina\SOLAIRE\src\java -l java
+            //generate -p solaire.entity -t all -path E:\ITU\L3\Mr_Naina\SCAFFOLDING\test -l dotnet
 }
 

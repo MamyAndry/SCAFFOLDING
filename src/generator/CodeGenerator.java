@@ -60,7 +60,8 @@ public class CodeGenerator {
         String separator = File.separator;
         path = path + separator + packageName + separator + fileName + "." + extension;
         File file = new File(path);
-        System.out.println(file.getAbsolutePath() + " succesfully created");
+        System.out.println(file);
+//        System.out.println(file.getAbsolutePath() + " succesfully created");
     }
 
     public static void writeFile(Connection con, String table, String path, String packageName, String fileName, String extension) throws Exception{
@@ -68,13 +69,16 @@ public class CodeGenerator {
         String pack = packageName.replace(".", File.separator);
         path = path + separator + pack + separator + fileName + "." + extension;
         FileWriter writer = new FileWriter(path);
+        System.out.println(writer);
         HashMap<String, String> mapp = DbService.getColumnNameAndType(con, table);
 
         String template = getTemplate(CodeGenerator.class.getResourceAsStream("/Template.code"));
 //        String template = getTemplate("Template.code");
+        System.out.println(extension);
         if(extension.equals("java")){
             template = JavaGenerationService.generate(template, packageName, mapp, table);
         }else if(extension.equals("cs")){
+        System.out.println("HUHUHU");
             template = DotnetGenerationService.generate(template, packageName, mapp, table);
         }
 

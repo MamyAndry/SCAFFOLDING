@@ -135,6 +135,7 @@ public class DotnetGenerationService {
     
     public static String generate(String template, String packageName, HashMap<String, String> mapp, String table){
         String temp = template;
+        System.out.println("HHUHUHUHU");
         temp = temp.replace("%package%", DotnetGenerationService.getPackage(packageName));
         temp = temp.replace("%imports%", DotnetGenerationService.getImports(mapp));
         temp = temp.replace("%class%", DotnetGenerationService.getClass(table));
