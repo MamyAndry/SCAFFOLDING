@@ -1,6 +1,16 @@
 {
-    "databaseType":"POSTGRESQL",
-    "datasource":"jdbc:postgresql://localhost:5432/solaire",
-    "username":"mamisoa",
-    "password":"prom15"
+    "listConnection": {
+        "DefaultConnection": {
+            "datasource":"jdbc:postgresql://localhost:5432/solaire",
+            "username":"mamisoa",
+            "password":"prom15",
+            "databaseType":"POSTGRESQL"
+        },
+        "OtherConnection": {
+            "datasource":"jdbc:postgresql://localhost:5432/postgres",
+            "username":"mamisoa",
+            "password":"prom15",
+            "databaseType":"POSTGRESQL"
+        }
+    }
 }

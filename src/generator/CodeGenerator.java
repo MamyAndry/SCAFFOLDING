@@ -35,6 +35,7 @@ public class CodeGenerator {
     }
 
     public static String getTemplate(InputStream path) throws Exception{
+        System.out.println(path);
         StringBuilder builder = new StringBuilder();
         InputStreamReader fis = new InputStreamReader(path);
         BufferedReader reader = new BufferedReader(fis);

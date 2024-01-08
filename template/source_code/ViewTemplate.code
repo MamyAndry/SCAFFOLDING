@@ -1,0 +1,14 @@
+%package%
+
+%imports%
+
+%class% {
+    
+%fields%
+    //SETTERS AND GETTERS
+        
+%encapsulation%
+    //CONSTRUCTORS
+
+%constructors%
+}
