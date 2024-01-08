@@ -7,19 +7,21 @@ package generator.parser;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 
 /**
  *
  * @author Mamisoa
  */
-public class JsonParser {
+public class JsonUtility {
     
-    public static <T> T parseJson(String path, Class<?> object) throws Exception{
-        File file = new File(path);
+    public static <T> T parseJson(String path, Class<?> objectClass) throws Exception{
         JsonReader reader = new JsonReader(new BufferedReader(new FileReader(path)));
-        Object temp = new Gson().fromJson(reader, object);
+        Object temp = new Gson().fromJson(reader, objectClass);
         return (T)temp;
+    }
+    
+    public static String encodeJson(Object object) throws Exception{
+        return new Gson().toJson(object);
     }
 }

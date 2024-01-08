@@ -1,0 +1,18 @@
+{
+    "languages": {    
+        "java" : {
+            "column":"Column(name='?')",
+            "constraints":{
+                "primaryKey":"Id",
+                "foreignKey":""
+            }
+        },
+        "dotnet" : {
+            "column":"Column(name='?')",
+            "constraints":{
+                "primaryKey":"Id",
+                "foreignKey":""
+            }
+        }
+    }
+}   

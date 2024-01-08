@@ -4,7 +4,7 @@
  */
 package generator.service;
 
-import generator.dao.DbConnection;
+import generator.dao.DbProperties;
 import generator.utils.ObjectUtility;
 import java.util.HashMap;
 
@@ -22,6 +22,11 @@ import java.util.List;
  * @author Mamisoa
  */
 public class DbService {
+    
+    public static String getColumnType(String className){
+        String[] splited = className.split("\\.");
+        return splited[splited.length - 1];
+    }
     
     public static String formatString(String column){
         String[] splited = column.split("_");
@@ -65,7 +70,7 @@ public class DbService {
         int count = rsmd.getColumnCount();
         for(int i = 1; i <= count; i++){
             String key = rsmd.getColumnName(i);
-            String value = rsmd.getColumnClassName(i);
+            String value = getColumnType(rsmd.getColumnClassName(i));
 //            System.out.println(value);
             map.put(key, value);
         }
@@ -83,7 +88,7 @@ public class DbService {
         int count = rsmd.getColumnCount();
         for(int i = 1; i <= count; i++){
             String key = rsmd.getColumnClassName(i);
-            String column = rsmd.getColumnName(i);
+            String column = getColumnType(rsmd.getColumnName(i));
             map.put(column, key);
         }
         return map;
@@ -110,7 +115,7 @@ public class DbService {
 //    }
     
     public static  String getPrimaryKey(Connection con, String tableName) throws Exception{
-        String query = new DbConnection().getDatabaseType().getPrimaryKeyQuery();
+        String query = new DbProperties().getDatabaseType().getPrimaryKeyQuery();
         query = query.replace("?", tableName);
         
         PreparedStatement stmt = con.prepareCall(query);
