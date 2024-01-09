@@ -1,8 +1,12 @@
+package configuration;
+
     /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package generator.service;
+
+
+import generator.parser.JsonUtility;
 
 /**
  *
@@ -29,6 +33,8 @@ public class Imports {
         this.entity = entity;
     }
     //CONSTRUCTOR
-    public Imports(){}
+    public Imports(){}  
+    
+    //METHODS
     
 }

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package generator.mapping;
+package configuration;
 
 import generator.parser.JsonUtility;
 import java.util.HashMap;
@@ -25,12 +25,12 @@ public class TypeProperties {
     
     //CONSTRUCTOR
     public TypeProperties() throws Exception{
-//        read();
+        read();
     }
     
     //METHODS
     public void read() throws Exception{
-        String path = "fieldType.json";
+        String path = "./ressource/fieldType.json";
         TypeProperties temp = JsonUtility.parseJson(path, this.getClass());
         this.setListProperties(temp.getListProperties());
     }
