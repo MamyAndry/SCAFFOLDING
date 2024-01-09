@@ -16,7 +16,7 @@ import java.util.Map;
  * @author Mamisoa
  */
 public class JavaGenerationService {
-
+    
     public static String getPackage(String packageName){
         return "package "+packageName+";";
     }

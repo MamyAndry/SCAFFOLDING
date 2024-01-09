@@ -4,10 +4,11 @@
  */
 package generator;
 
+import configuration.LanguageDetails;
 import generator.dao.DbConnection;
 import generator.parser.FileUtility;
 import generator.parser.JsonUtility;
-import generator.service.LanguageDetails;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -38,10 +39,12 @@ public class Main {
 //            String test = "{\"databaseType\":\"POSTGRESQL\",\"datasource\":\"jdbc:postgresql://localhost:5432/solaire\",\"username\":\"mamisoa\",\"password\":\"prom15\"}";
 //            String primaryKey = DbService.getPrimaryKey(con, "secteur");
 //            System.out.println(primaryKey );
-//            String separator = File.separator;
-            
+//            String separator = File.separator; 
+            URL url = Thread.currentThread().getContextClassLoader().getResource("database.json");
+            System.out.println(url);
             String pathJson = ".\\ressources\\languageDetails.json";
             String path = ".\\ressources";
+            String huhu= "Column(name = )";
 //            String path = ;
             LanguageDetails lg = JsonUtility.parseJson(pathJson, new LanguageDetails().getClass());
 //            System.out.println(FileParser.readOneFile(path));
