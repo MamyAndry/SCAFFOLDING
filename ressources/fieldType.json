@@ -3,32 +3,33 @@
         "java" : {
             "listMapping" : {
                 "Timestamp":{
-                    "type":"Timex":"java.sql.Timestamp"
-                }, 
+                    "type":"Timex",
+                    "packageName":"java.sql.Timestamp"
+                },
                 "Time":{
                     "type":"Time",
                     "packageName":"java.sql.Time"
-                },    
+                },
                 "Date":{
                     "type":"Date",
                     "packageName":"java.sql.Date"
-                },    
+                },
                 "Integer":{
                     "type":"Integer",
                     "packageName":""
-                },    
+                },
                 "Double":{
                     "type":"Double",
                     "packageName":""
-                },    
+                },
                 "Float":{
                     "type":"Double",
                     "packageName":""
-                },    
+                },
                 "Boolean":{
                     "type":"Boolean",
                     "packageName":""
-                },    
+                },
                 "String":{
                     "type":"String",
                     "packageName":""
@@ -56,31 +57,31 @@
                 "Timestamp":{
                     "type":"DateTime",
                     "packageName":""
-                }, 
+                },
                 "Time":{
                     "type":"TimeOnly",
                     "packageName":""
-                },    
+                },
                 "Date":{
                     "type":"DateOnly",
                     "packageName":""
-                },    
+                },
                 "Integer":{
                     "type":"Int",
                     "packageName":""
-                },    
+                },
                 "Double":{
                     "type":"Double",
                     "packageName":""
-                },    
+                },
                 "Float":{
                     "type":"Float",
                     "packageName":""
-                },    
+                },
                 "Boolean":{
                     "type":"bool",
                     "packageName":""
-                },    
+                },
                 "String":{
                     "type":"string",
                     "packageName":""
