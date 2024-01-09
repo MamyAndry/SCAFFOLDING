@@ -3,6 +3,8 @@
         "dotnet" : {
             "importSyntax":"using",
             "packageSyntax":"namespace",
+            "classSyntax":"public class",
+            "endOfInstruction":";",
             "annotationSyntax":"[?]",
             "encapsulation":"\t[Column(name = '?')]\n\tpublic #type# #Field#{\n\t\tget{\n\t\t\treturn #field;\n\t\t}\n\t\tset{\n\t\t\t#field = value;\n\t\t}\n\t}\n",
             "extension":"cs"
@@ -10,6 +12,8 @@
         "java" : {
             "importSyntax":"import",
             "packageSyntax":"package",
+            "classSyntax":"public class",
+            "endOfInstruction":";",
             "annotationSyntax":"@?",
             "encapsulation":"\tpublic #type# get#Field#(){\n\t\treturn this.#field#;\n\t}\n\tpublic void set#Field#(#type# #field#){\n\t\tthis.#field# = #field#;\n\t}\n",
             "extension":"java"

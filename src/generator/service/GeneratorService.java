@@ -1,9 +1,11 @@
 package generator.service;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
 import configuration.*;
+import generator.utils.ObjectUtility;
 
 public class GeneratorService {
     LanguageDetails languageDetails;
@@ -34,12 +36,21 @@ public class GeneratorService {
         return rep;
     }
 
-    public String generateGet(){
-        return "";
+    public String generateGetSet(LanguageProperties lp, HashMap<String, String> columns){
+        String rep = "";
+        for (Map.Entry<String, String> set : columns.entrySet()) {
+            rep += lp.getEncapsulation()
+            .replace("type", set.getValue())
+            .replace("#Field#", ObjectUtility.capitalize(set.getKey()))
+            .replace("#field#", set.getKey());
+        }
+        return rep;
     }
 
-    public String generate(String template, String language, String table) {
-
-        return template;
+    public String generate(Connection con, String template, String language, String table) throws Exception {
+        LanguageDetails languageDetails = new LanguageDetails();
+        TypeProperties properties = new TypeProperties();
+        HashMap<String, String> columns = DbService.getColumnNameAndType(con, table);
+        return generateGetSet(languageDetails.getLanguages().get(language), columns);
     }
 }

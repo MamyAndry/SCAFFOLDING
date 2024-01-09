@@ -25,16 +25,18 @@ public class DbConnection {
     public void setListConnection(HashMap<String, DbProperties> listConnection) {
         this.listConnection = listConnection;
     }
-    
+
     //METHODS
     public void readJson()throws Exception{
         String separator = File.separator;
         String confFile = System.getProperty("user.dir") + separator +"database.json";
-//        System.out.println(confFile);
-        DbConnection temp = JsonUtility.parseJson(confFile, this.getClass());
+       System.out.println(confFile);
+       DbConnection temp = JsonUtility.parseJson(confFile, this.getClass());
+       System.out.println("Huhuhu");
+
         this.setListConnection(temp.getListConnection());
     }
-    
+
     public Connection connect()throws Exception{
         readJson();
         DbProperties prop = this.getListConnection().get("DefaultConnection");
@@ -42,11 +44,11 @@ public class DbConnection {
         Connection con = DriverManager.getConnection(prop.getDatasource(),prop.getUsername(),prop.getPassword());
         return con;
     }
-    
+
     public Connection connect(String connection)throws Exception{
         readJson();
 //        readJson(path);
-        DbProperties prop = this.getListConnection().get(connection); 
+        DbProperties prop = this.getListConnection().get(connection);
         Class.forName(prop.getDatabaseType().getDriver());
         Connection con = DriverManager.getConnection(prop.getDatasource(),prop.getUsername(),prop.getPassword());
         return con;

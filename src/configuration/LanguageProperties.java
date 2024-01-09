@@ -16,6 +16,8 @@ public class LanguageProperties {
     private String annotationSyntax;
     private String encapsulation;
     private String extension;
+    private String classeSyntaxe;
+    private String endOfInstruction;
 
     //GETTERS & SETTERS
     public String getImportSyntax() {
@@ -49,7 +51,7 @@ public class LanguageProperties {
     public void setEncapsulation(String encapsulation) {
         this.encapsulation = encapsulation;
     }
-    
+
 
     public String getExtension() {
         return extension;
@@ -58,8 +60,24 @@ public class LanguageProperties {
     public void setExtension(String extension) {
         this.extension = extension;
     }
-    
+
+    public String getClasseSyntaxe() {
+        return classeSyntaxe;
+    }
+
+    public void setClasseSyntaxe(String classeSyntaxe) {
+        this.classeSyntaxe = classeSyntaxe;
+    }
+
+    public String getEndOfInstruction() {
+        return endOfInstruction;
+    }
+
+    public void setEndOfInstruction(String endOfInstruction) {
+        this.endOfInstruction = endOfInstruction;
+    }
+
     //CONSTRUCTOR
-    public LanguageProperties(){} 
+    public LanguageProperties(){}
 
 }
