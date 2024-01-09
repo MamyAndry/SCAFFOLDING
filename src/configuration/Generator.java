@@ -6,6 +6,7 @@ package configuration;
 
 import generator.service.DbService;
 import generator.utils.ObjectUtility;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -18,6 +19,7 @@ import java.util.Set;
 public class Generator {
     LanguageDetails details;
     TypeProperties types;
+    ImportList importList;
     
 //SETTERS & GETTERS
     public LanguageDetails getDetails() {
@@ -34,6 +36,14 @@ public class Generator {
         this.types = types;
     }
 
+    public ImportList getImportList() {
+        return importList;
+    }
+
+    public void setImportList(ImportList importList) {
+        this.importList = importList;
+    }
+
 //CONSTRUCTORS
     public Generator() throws Exception {
         
@@ -42,41 +52,49 @@ public class Generator {
 //METHODS
     
     public String getPackage(String packageName, String language){
-        return  this.getDetails().getLanguages().get(language.toLowerCase()).getPackageSyntax() + " " + packageName + ";";
+        return  this.getDetails().getLanguages().get(language).getPackageSyntax()
+                + " " + packageName 
+                + this.getDetails().getLanguages().get(language).getEndOfInstruction();
     }
     
-    public String getClassName(String table){
-        return ObjectUtility.capitalize(DbService.formatString(table));
+    public String getClass(String table, String language){
+        return this.getDetails().getLanguages().get(language).getClasseSyntaxe() + " " 
+                + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table));
     }
     
-    public static Set<String> getAllImports(HashMap<String, String> columns){
+    public Set<String> getAllImports(HashMap<String, String> columns, String language){
         Set<String> lst = new HashSet<>();
-
-        lst.add("import annotation.PrimaryKey;\n");
-        lst.add("import annotation.Column;\n");
-        lst.add("import annotation.Table;\n");
-        lst.add("import java.sql.Connection;\n");
-
         for (Map.Entry<String, String> set : columns.entrySet()) {
-            if(set.getValue().equals("java.sql.Date"))
-                lst.add("import java.sql.Date;\n");
-            else if(set.getValue().equals("java.sql.Timestamp"))
-                lst.add("import java.sql.Timestamp;\n");
-            else if(set.getValue().equals("java.sql.Time"))
-                lst.add("import java.sql.Time;\n");
-            else if(set.getValue().equals("java.math.BigDecimal"))
-                lst.add("import java.math.BigDecimal;\n");
-//            else if(set.getValue().equals("org.postgresql.geometric.PGpoint"))
-//                lst.add("import org.postgresql.geometric.PGpoint;\n");
+            lst.add(this.getTypes().getListProperties().get(language).getListMapping().get(set.getValue()).getPackageName()+
+                    ""+this.getDetails().getLanguages().get(language).getEndOfInstruction()+
+                    "\n");
         }
         return lst;
     }
 
-    public String getImports(String table, String language) throws Exception{
-        return "";
+    public String getImports(Connection con, String table, String language) throws Exception{
+        String res = "";
+        HashMap<String, String> column = DbService.getColumnNameAndType(con, table); 
+        Set<String> imports = this.getAllImports(column, language);
+        for (String elem : imports) {
+            res += elem;
+        }
+        return res;
     }
     
     public String getField(String table, String language) throws Exception{
-        return "";
+        String res = "";
+        return res;
     }
+    
+//    public String getEncapsulation(Connection con, String table, String language) throws Exception{
+//        HashMap<String, String> columns = DbService.getColumnNameAndType(con, table);
+//        String res = "";
+//        for (Map.Entry<String, String> set : columns.entrySet()) {
+//            String field = set.getKey();
+//            String type = this.getTypes().getListProperties().get(language).getListMapping().get(set.getKey()).getType();
+//            String 
+//        }
+//        return res;
+//    }
 }

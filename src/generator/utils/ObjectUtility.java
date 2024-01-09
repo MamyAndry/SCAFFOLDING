@@ -19,7 +19,18 @@ public class ObjectUtility {
     public static String capitalize(String text){
         return text.substring(0,1).toUpperCase().concat(text.substring(1));
     }
-    
+
+    public static String formatToCamelCase(String str){
+        String[] splited = str.split("_");
+        if(splited.length <2)
+            return str;
+        String res = splited[0];
+        for(int i = 1; i < splited.length; i++){
+            res += ObjectUtility.capitalize(splited[i]);
+        }
+        return res;
+    }
+
     public static String fillZero(int length, int prefixLength, String num){ //Fill the zero Before the number
         int lim = (length - prefixLength) - num.length();
         String zero = ""+0;
@@ -36,7 +47,7 @@ public class ObjectUtility {
         }
         T[] res = (T[]) array;
         return res;
-        
+
     }
     public static String formatNumber(Double value, String separation){
         DecimalFormat df = new DecimalFormat( "#,###,###,##0.00" );
@@ -101,10 +112,10 @@ public class ObjectUtility {
             i++;
         }
         return res;
-    }      
+    }
     public static boolean isAtDefaultValue(Method field, Object obj) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Object value = field.invoke(obj);
-    
+
         if (value == null) {
             return true;
         } else if (field.getReturnType().isPrimitive()) {
@@ -112,7 +123,7 @@ public class ObjectUtility {
         } else if (value instanceof Collection) {
             return ((Collection<?>) value).isEmpty();
         } else {
-            return false; 
+            return false;
         }
     }
 

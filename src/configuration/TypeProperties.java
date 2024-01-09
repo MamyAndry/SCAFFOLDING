@@ -5,6 +5,8 @@
 package configuration;
 
 import generator.parser.JsonUtility;
+
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 /**
@@ -22,15 +24,17 @@ public class TypeProperties {
     public void setListProperties(HashMap<String, TypeMapping> listProperties) {
         this.listProperties = listProperties;
     }
-    
+
     //CONSTRUCTOR
     public TypeProperties() throws Exception{
         read();
     }
-    
+
     //METHODS
     public void read() throws Exception{
-        String path = "./ressource/fieldType.json";
+        String path = "ressources/fieldType.json";
+        // String confFile = System.getProperty("user.dir");
+        // System.out.println(confFile);
         TypeProperties temp = JsonUtility.parseJson(path, this.getClass());
         this.setListProperties(temp.getListProperties());
     }
