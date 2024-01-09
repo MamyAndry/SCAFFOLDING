@@ -2,12 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package generator;
+
 
 import configuration.LanguageDetails;
 import generator.dao.DbConnection;
 import generator.parser.FileUtility;
 import generator.parser.JsonUtility;
+import generator.service.GeneratorService;
+
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -25,9 +27,11 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         Connection con = null;
         try{// TODO code application logic here
-            
+
             con = new DbConnection().connect();
-            
+            System.out.println(con);
+            GeneratorService generatorService = new GeneratorService();
+            System.out.println(generatorService.generate(con, "", "java", "route"));
 //            while(1 != 2){
 //                Scanner scan = new Scanner(System.in);
 //                System.out.print("Scaffold >> ");
@@ -39,19 +43,19 @@ public class Main {
 //            String test = "{\"databaseType\":\"POSTGRESQL\",\"datasource\":\"jdbc:postgresql://localhost:5432/solaire\",\"username\":\"mamisoa\",\"password\":\"prom15\"}";
 //            String primaryKey = DbService.getPrimaryKey(con, "secteur");
 //            System.out.println(primaryKey );
-//            String separator = File.separator; 
-            URL url = Thread.currentThread().getContextClassLoader().getResource("database.json");
-            System.out.println(url);
-            String pathJson = ".\\ressources\\languageDetails.json";
-            String path = ".\\ressources";
-            String huhu= "Column(name = )";
-//            String path = ;
-            LanguageDetails lg = JsonUtility.parseJson(pathJson, new LanguageDetails().getClass());
-//            System.out.println(FileParser.readOneFile(path));
-//            System.out.println(JsonUtility.encodeJson(lg));
-//            DbConnection onj = new DbConnection();
-            FileUtility.generateFile(path, "test.txt", lg.getLanguages().get("dotnet").getEncapsulation());
-            
+//            String separator = File.separator;
+//             URL url = Thread.currentThread().getContextClassLoader().getResource("database.json");
+//             System.out.println(url);
+//             String pathJson = ".\\ressources\\languageDetails.json";
+//             String path = ".\\ressources";
+//             String huhu= "Column(name = )";
+// //            String path = ;
+//             LanguageDetails lg = JsonUtility.parseJson(pathJson, new LanguageDetails().getClass());
+// //            System.out.println(FileParser.readOneFile(path));
+// //            System.out.println(JsonUtility.encodeJson(lg));
+// //            DbConnection onj = new DbConnection();
+//             FileUtility.generateFile(path, "test.txt", lg.getLanguages().get("dotnet").getEncapsulation());
+
 //            JsonReader reader = new JsonReader(new BufferedReader(new FileReader(path)));
 //            onj = new Gson().fromJson(reader, onj.getClass());
 //            System.out.println(onj.getListConnection());
@@ -69,9 +73,14 @@ public class Main {
         }catch(Exception e){
             e.printStackTrace();
         }finally{
-            con.close();
+            try {
+                con.close();
+            } catch (Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            }
         }
-        
+
     }
-    
+
 }

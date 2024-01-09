@@ -25,15 +25,17 @@ public class LanguageDetails {
     public void setLanguages(HashMap<String, LanguageProperties> languages) {
         this.languages = languages;
     }
-    
+
     //CONSTRUCTOR
     public LanguageDetails() throws Exception{
 //        read();
     }
-    
-    //METHODS 
+
+    //METHODS
     public void read() throws Exception{
         String path = "./ressources/languageDetails.json";
+        String confFile = System.getProperty("user.dir")+"/ressources/languageDetails.json";
+        System.out.println(confFile);
         LanguageDetails temp = JsonUtility.parseJson(path, this.getClass());
         this.setLanguages(temp.getLanguages());
     }
