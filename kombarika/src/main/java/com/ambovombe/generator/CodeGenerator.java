@@ -97,6 +97,7 @@ public class CodeGenerator {
     ) throws Exception{
         LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
         String directory = packageName.replace(".", File.separator);
+        FileUtility.createDirectory(directory,path);
         path = path + File.separator + directory;
         FileUtility.generateFile(path, GeneratorService.getFileName(table+"Controller", languageProperties), content);
     }
