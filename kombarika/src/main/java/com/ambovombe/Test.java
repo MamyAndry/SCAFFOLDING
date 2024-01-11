@@ -20,8 +20,8 @@ public class Test {
      */
     public static void main(String[] args) throws Exception {
         CodeGenerator codeGenerator = new CodeGenerator();
-        codeGenerator.generateController("/Users/rakharrs/s5/Naina", "region", "huhu", "java:java-spring");
-        codeGenerator.generateEntity("/Users/rakharrs/s5/Naina", "region", "huhu", "java:java-spring");
+        codeGenerator.generateController("/Users/rakharrs/s5/Naina", "region", "huhu.controller", "java:java-spring");
+        codeGenerator.generateEntity("/Users/rakharrs/s5/Naina", "region", "huhu.entity", "java:java-spring");
 
 //        Connection con = null;
 //        try{

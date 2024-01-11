@@ -5,12 +5,11 @@
 package com.ambovombe.generator.parser;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -25,7 +24,16 @@ public class FileUtility {
 
     public static void createDirectory(String directory, String path) throws Exception{
         Path directoryPath = Paths.get(path + File.separator + directory)   ;
+        System.out.println(directoryPath);
+        deleteRecursively(directoryPath);
         Files.createDirectories(directoryPath);
+    }
+
+    public static void deleteRecursively(Path path) throws Exception{
+        if(Files.isDirectory(path))
+            for(File file : Objects.requireNonNull(path.toFile().listFiles()))
+                file.delete();
+        Files.deleteIfExists(path);
     }
     
     public static List<String[]> readFile(String path) throws Exception{
