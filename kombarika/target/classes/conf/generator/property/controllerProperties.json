@@ -1,0 +1,29 @@
+{
+    "languages": {
+        "java-spring" : {
+            "path": "RequestMapping(path = '?')",
+            "get": "GetMapping()",
+            "post": "PostMapping()",
+            "put": "PutMapping()",
+            "delete": "DeleteMapping()",
+            "field": "private ?Repository repository;",
+            "returnType": "ResponseEntity<?>",
+            "annotationField": "Autowired",
+            "annotationMethodParameter":"",
+            "annotationArgumentParameterFormData":"RequestParam",
+            "annotationArgumentParameterLink":"PathVariable"
+        },
+        "dotnet" : {
+            "path": "Route('[?]')",
+            "get": "HttpGet(Name = '?')",
+            "post": "HttpPost(Name = '?')",
+            "put": "HttpPut(Name = '?')",
+            "delete": "HttpDelete(Name = '?')",
+            "returnType": "IEnumerable<?>",
+            "field": "private readonly Ilogger<?Controller> _logger;",
+            "annotationField": "",
+            "annotationArgumentParameterFormData":"",
+            "annotationArgumentParameterLink":""
+        }
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "listImport" : {
+        "dotnet" : {
+            "controller":[
+                "System.Diagnostics",
+                "Microsoft.AspNetCore.Mvc"  
+            ],
+            "entity":[
+                "System.ComponentModel.DataAnnotations",
+                "System.ComponentModel.DataAnnotations.Schema"
+            ]
+        },
+        "java-spring" : {
+            "controller":[
+                "org.springframework.beans.factory.annotation.Autowired",
+                "org.springframework.web.bind.annotation.*"
+            ],
+            "entity":[
+                "jakarta.persistence.Column",
+                "jakarta.persistence.Entity",
+                "jakarta.persistence.Id",
+                "jakarta.persistence.Table"
+            ]
+        }
+    }
+}

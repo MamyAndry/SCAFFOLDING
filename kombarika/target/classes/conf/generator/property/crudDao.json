@@ -1,0 +1,18 @@
+{
+    "languages": {
+        "java-spring" : {
+            "findAll": "repository.findAll()",
+            "findById":"repository.findById(#Id#)",
+            "delete": "repository.delete(#Id#)",
+            "update": "repository.delete(#object#)",
+            "save": "repository.save(#object#)"
+        },
+        "dotnet" : {
+            "findAll": "",
+            "findById":"",
+            "delete": "",
+            "update": "",
+            "save": ""
+        }
+    }
+}

@@ -3,14 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 
-
-import configuration.LanguageDetails;
 import generator.dao.DbConnection;
-import generator.parser.FileUtility;
-import generator.parser.JsonUtility;
 import generator.service.GeneratorService;
-
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 

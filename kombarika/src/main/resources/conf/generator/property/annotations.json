@@ -1,0 +1,24 @@
+{
+    "languages": {
+        "java-spring" : {
+            "table":"Table(name = '?')",
+            "column":"Column(name = '?')",
+            "entity": "Entity",
+            "controller": "RestController",
+            "constraints":{
+                "primaryKey":"Id",
+                "foreignKey":[""]
+            }
+        },
+        "dotnet" : {
+            "table":"Table(name = '?')",
+            "column":"Column(name = '?')",
+            "entity": "",
+            "controller": "ApiController",
+            "constraints":{
+                "primaryKey":"Id",
+                "foreignKey":[""]
+            }
+        }
+    }
+}
