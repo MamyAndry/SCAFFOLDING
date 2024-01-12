@@ -6,6 +6,7 @@ package configuration;
  */
 
 
+import configuration.mapping.Imports;
 import generator.parser.JsonUtility;
 import java.util.HashMap;
 
@@ -13,7 +14,7 @@ import java.util.HashMap;
  *
  * @author Mamisoa
  */
-public class ImportList {
+public class ImportList extends Configuration{
     HashMap<String, Imports> listImport;
 
     public HashMap<String, Imports> getListImport() {
@@ -24,13 +25,12 @@ public class ImportList {
         this.listImport = listImport;
     }
 
-    public ImportList() {
-    }
-    
-    //METHODS
-    public void read() throws Exception{
-        String path = "./ressources/Imports.json";
-        ImportList temp = JsonUtility.parseJson(path, this.getClass());
-        this.setListImport(temp.getListImport());
+    public ImportList(){}
+
+    @Override
+    public void init() throws Exception{
+        setJsonPath("import.json");
+        ImportList importList = this.read();
+        setListImport(importList.getListImport());
     }
 }

@@ -2,100 +2,127 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package generator;
+package com.ambovombe.generator;
 
-import generator.dao.DbConnection;
+import com.ambovombe.configuration.*;
+import com.ambovombe.configuration.main.LanguageDetails;
+import com.ambovombe.configuration.mapping.*;
+import com.ambovombe.utils.Misc;
+import com.ambovombe.database.DbConnection;
+import com.ambovombe.generator.parser.FileUtility;
+import com.ambovombe.generator.service.GeneratorService;
+import com.ambovombe.generator.service.controller.ControllerService;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.*;
 import java.sql.Connection;
-import generator.service.DbService;
-import generator.service.DotnetGenerationService;
-import generator.service.JavaGenerationService;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
 
 /**
- *
  * @author Mamisoa
+ * @author rakharrs
  */
+@Getter @Setter
 public class CodeGenerator {
+    DbConnection dbConnection;
+    TypeProperties typeProperties;
+    LanguageDetails languageDetails;
+    //FrameworkDetails frameworkDetails;
 
-    public static void createPackage(String packageName, String path) throws Exception{
-        packageName = packageName.replace(".", File.separator);
-        System.out.println(packageName);
-        Path directoryPath = Paths.get(path + File.separator + packageName)   ;
-        Files.createDirectories(directoryPath);
-        System.out.println(directoryPath.toString() + " created");
+    public CodeGenerator() throws Exception {
+        this.dbConnection = new DbConnection();
+        this.dbConnection.init();
+        this.languageDetails = new LanguageDetails();
+        this.languageDetails.init();
+        this.typeProperties = new TypeProperties();
+        this.typeProperties.init();
     }
 
-    public static String getTemplate(InputStream path) throws Exception{
-        System.out.println(path);
-        StringBuilder builder = new StringBuilder();
-        InputStreamReader fis = new InputStreamReader(path);
-        BufferedReader reader = new BufferedReader(fis);
-        String line;
-        while((line = reader.readLine()) != null){
-            builder.append(line).append("\n");
-        }
-        return builder.toString();
+    public void generateEntity(String path, String table, String packageName, String lang) throws Exception{
+        String[] splittedLang = lang.split(":");
+        String language = splittedLang[0]; String framework = splittedLang[1];
+        String entity = buildEntity(table, packageName, language, framework);
+        generateEntityFile(path, table, packageName, language, framework);
     }
 
-    public static String getTemplate(String path) throws Exception{
-        StringBuilder builder = new StringBuilder();
-        BufferedReader reader = new BufferedReader(new FileReader(path));
-        String line;
-        while((line = reader.readLine()) != null){
-            builder.append(line).append("\n");
-        }
-        return builder.toString();
+    public void generateController(String path, String table, String packageName, String lang) throws Exception{
+        String[] splittedLang = lang.split(":");
+        String language = splittedLang[0]; String framework = splittedLang[1];
+        String controller = buildController(table, packageName, language, framework);
+        generateFile(path, table, packageName, language, framework, controller);
     }
 
-    public static void createFile(String packageName, String path, String fileName, String extension) throws Exception{
-        packageName = packageName.replace(".", File.separator);
-        String separator = File.separator;
-        path = path + separator + packageName + separator + fileName + "." + extension;
-        File file = new File(path);
-        System.out.println(file);
-//        System.out.println(file.getAbsolutePath() + " succesfully created");
+    public String buildController(String table, String packageName, String language, String framework) throws Exception{
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
+        String template = frameworkProperties.getTemplate();
+        return ControllerService.generateController(
+                frameworkProperties.getCrudMethod(),
+                template,
+                table,
+                packageName,
+                frameworkProperties.getControllerProperty(),
+                languageProperties,
+                frameworkProperties.getImports(),
+                frameworkProperties.getAnnotationProperty()
+        );
+    }
+    /**
+     * eg : generate -p path -t table1, table2, table3 -package name -l java:java-spring
+     * @author rakharrs
+     */
+    public String buildEntity(String table, String packageName, String language, String framework) throws Exception {
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
+        String template = frameworkProperties.getTemplate();
+        return GeneratorService
+                .generateEntity(
+                        getDbConnection(),
+                        template,
+                        table,
+                        packageName,
+                        languageProperties,
+                        frameworkProperties,
+                        getTypeProperties()
+                );
     }
 
-    public static void writeFile(Connection con, String table, String path, String packageName, String fileName, String extension) throws Exception{
-        String separator = File.separator;
-        String pack = packageName.replace(".", File.separator);
-        path = path + separator + pack + separator + fileName + "." + extension;
-        FileWriter writer = new FileWriter(path);
-        System.out.println(writer);
-        HashMap<String, String> mapp = DbService.getColumnNameAndType(con, table);
-
-        String template = getTemplate(CodeGenerator.class.getResourceAsStream("/Template.code"));
-//        String template = getTemplate("Template.code");
-        System.out.println(extension);
-        if(extension.equals("java")){
-            template = JavaGenerationService.generate(template, packageName, mapp, table);
-        }else if(extension.equals("cs")){
-        System.out.println("HUHUHU");
-            template = DotnetGenerationService.generate(template, packageName, mapp, table);
-        }
-
-        writer.write(template);
-        writer.close();
+    public void generateFile(
+            String path,
+            String table,
+            String packageName,
+            String language,
+            String framework,
+            String content
+    ) throws Exception{
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        String directory = packageName.replace(".", File.separator);
+        FileUtility.createDirectory(directory,path);
+        path = path + File.separator + directory;
+        FileUtility.generateFile(path, GeneratorService.getFileName(table+"Controller", languageProperties), content);
     }
 
-    public static void generateSource(Connection con, String path, String table, String packageName, String extension) throws Exception{
-        boolean state = false;
-        if(con == null){
-            con = new DbConnection().connect();
-            state = true;
-        }
-        String fileName = JavaGenerationService.getClassName(table);
-        createFile(packageName, path, fileName, extension);
-        writeFile(con, table, path, packageName, fileName, extension);
-        if( state == true) con.close();
+    public void generateEntityFile(String path, String table, String packageName, String language, String framework) throws Exception{
+        String entity = buildEntity(table, packageName, language, framework);
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        String directory = packageName.replace(".", File.separator);
+        FileUtility.createDirectory(directory,path);
+        path = path + File.separator + directory;
+        FileUtility.generateFile(path, GeneratorService.getFileName(table, languageProperties), entity);
     }
+
+    public static String getTemplate() throws Exception{
+        String path = Misc.getSourceTemplateLocation() + File.separator + "Template.code";
+        return FileUtility.readOneFile(path);
+    }
+
+    public static void generateEntity(String path, String table, String packageName, Connection con, DbConnection dbConnection, LanguageProperties languageProperties, TypeMapping typeProperties, Imports imports, AnnotationProperty annotationProperty) throws Exception{
+        String template = getTemplate();
+        String entityTemplate = GeneratorService.generateEntity(con, dbConnection, template, table, packageName, languageProperties, typeProperties, imports, annotationProperty);
+        String directory = packageName.replace(".", File.separator);
+        path = path + File.separator + directory;
+        FileUtility.generateFile(path, GeneratorService.getFileName(table, languageProperties), entityTemplate);
+    }
+
+
 }

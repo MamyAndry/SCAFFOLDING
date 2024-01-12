@@ -1,44 +1,39 @@
-package generator.service;
+package com.ambovombe.generator.service;
 
 import java.sql.Connection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import configuration.*;
-import generator.utils.ObjectUtility;
+import com.ambovombe.configuration.TypeProperties;
+import com.ambovombe.configuration.mapping.LanguageProperties;
+import com.ambovombe.configuration.mapping.*;
+import com.ambovombe.database.DbConnection;
+import com.ambovombe.generator.utils.ObjectUtility;
 
 public class GeneratorService {
-    LanguageDetails languageDetails;
-    ImportList importList;
-    TypeProperties typeProperties;
-
-    public String generatePackage(LanguageProperties languageProperties, String packageName){
+    public static String getPackage(LanguageProperties languageProperties, String packageName){
         return languageProperties.getPackageSyntax() + " " + packageName + ";\n";
     }
 
-    public String getAllImport(LanguageProperties lp, Imports imports, HashMap<String, String> columns, TypeMapping typeMapping){
+    public  static String getEntityClass(String table, LanguageProperties language, AnnotationProperty annotation){
         String res = "";
-        String imp = lp.getImportSyntax();
-        for(String item : imports.getEntity()){
-            res += imp+ " " +item+";\n";
-        }
-
-        for (Map.Entry<String, String> set : columns.entrySet()) {
-            res += imp+ " " +typeMapping.getListMapping().get(set.getValue()).getPackageName()+";\n";
-        }
-
+        if(!annotation.getEntity().equals(""))
+            res += language.getAnnotationSyntax().replace("?", annotation.getEntity())  + "\n";
+        res +=  language.getAnnotationSyntax().replace("?", annotation.getTable()).replace("?", table) + "\n"
+                + language.getClassSyntax() + " "
+                + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table));
         return res;
     }
-    public String getClass(String table, LanguageProperties language){
-        return language.getClasseSyntaxe() + " "
-                + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table));
-    }
 
-    public Set<String> getAllImports(HashMap<String, String> columns, TypeMapping type, LanguageProperties language) {
+    public static String getConstructor(LanguageProperties languageProperties,String table){
+        String res = "";
+        res =  "\t"
+                + languageProperties.getConstructorSyntax().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)));
+        return res;
+    }
+    public static Set<String> getAllImports(HashMap<String, String> columns, TypeMapping type, LanguageProperties language) {
         Set<String> lst = new HashSet<>();
         for (Map.Entry<String, String> set : columns.entrySet()) {
+            if(type.getListMapping().get(set.getValue()).getPackageName().equals("")) { continue; }
             lst.add(type.getListMapping().get(set.getValue()).getPackageName()+
                     "" + language.getEndOfInstruction()+
                     "\n");
@@ -46,37 +41,91 @@ public class GeneratorService {
         return lst;
     }
 
-    public String getImports(HashMap<String, String> columns, TypeMapping type, LanguageProperties language) throws Exception{
+    public static String getImports(HashMap<String, String> columns, TypeMapping type, LanguageProperties language) throws Exception{
         String res = "";
-        Set<String> imports = this.getAllImports(columns, type, language);
+        String imp = language.getImportSyntax();
+        Set<String> imports = getAllImports(columns, type, language);
         for (String elem : imports) {
-            res += elem;
+            res += imp + " " + elem;
         }
         return res;
     }
 
-
-    public String getClasse(LanguageProperties lp, String table){
-        String rep = lp.getAnnotationSyntax().replace("?", "Table")+"(name = " + "\"" + table + "\")\n";
-        rep += "public class " + table;
-        return rep;
+    public static String getEntityImport(HashMap<String, String> columns, TypeMapping typeMapping,LanguageProperties lp, Imports imports) throws Exception{
+        String res = "";
+        String imp = lp.getImportSyntax();
+        for(String item : imports.getEntity()){
+            res += imp+ " " + item + "" + lp.getEndOfInstruction() + "\n";
+        }
+        res += "\n";
+        res.concat(getImports(columns, typeMapping, lp));
+        return res;
     }
 
-    public String generateGetSet(LanguageProperties lp, HashMap<String, String> columns){
+    public static String generateEntityField(HashMap<String, String> columns, List<String> primaryKeys, TypeMapping typeMapping, LanguageProperties lp, AnnotationProperty annotation){
+        String res = "";
+
+        for (Map.Entry<String, String> set : columns.entrySet()) {
+            if (primaryKeys.contains(set.getKey())) {
+                res += "\t"
+                        + lp.getAnnotationSyntax().replace("?", annotation.getConstraints().getPrimaryKey()) + "\n";
+            }
+            res += "\t"
+                    + lp.getAnnotationSyntax().replace("?", annotation.getColumn()).replace("?", set.getKey()) + "\n";
+
+            res += "\t"
+                + typeMapping.getListMapping().get(set.getValue()).getType() + " "
+                + ObjectUtility.formatToCamelCase(set.getKey())
+                + lp.getEndOfInstruction()
+                + "\n";
+        }
+        return res;
+    }
+
+    public static String generateEncapsulation(LanguageProperties lp, HashMap<String, String> columns){
         String rep = "";
         for (Map.Entry<String, String> set : columns.entrySet()) {
             rep += lp.getEncapsulation()
             .replace("#type#", set.getValue())
-            .replace("#Field#", ObjectUtility.capitalize(set.getKey()))
-            .replace("#field#", set.getKey());
+            .replace("#Field#", ObjectUtility.formatToCamelCase(ObjectUtility.capitalize(set.getKey())))
+            .replace("#field#", ObjectUtility.formatToCamelCase(set.getKey()));
         }
         return rep;
     }
 
-    public String generate(Connection con, String template, String language, String table) throws Exception {
-        LanguageDetails languageDetails = new LanguageDetails();
-        TypeProperties properties = new TypeProperties();
-        HashMap<String, String> columns = DbService.getColumnNameAndType(con, table);
-        return generateGetSet(languageDetails.getLanguages().get(language), columns);
+    public static String generateEntity(
+            DbConnection dbConnection,
+            String template, String table,
+            String packageName,
+            LanguageProperties languageProperties,
+            FrameworkProperties frameworkProperties,
+            TypeProperties typeProperties
+    ) throws Exception{
+        Connection con = dbConnection.getConnection();
+
+        TypeMapping typeMapping = typeProperties.getListProperties().get(languageProperties.getName());
+        Imports imports = frameworkProperties.getImports();
+        AnnotationProperty annotationProperty = frameworkProperties.getAnnotationProperty();
+
+        return generateEntity(con, dbConnection, template, table, packageName, languageProperties, typeMapping, imports, annotationProperty);
     }
+
+    public static String generateEntity(Connection con, DbConnection dbConnection, String template, String table, String packageName, LanguageProperties languageProperties, TypeMapping properties, Imports imports, AnnotationProperty annotationProperty) throws Exception {
+        boolean t = con.isClosed();
+        HashMap<String, String> columns = DbService.getColumnNameAndType(con, table);
+        List<String> primaryKeyColumn = DbService.getPrimaryKey(con, dbConnection, table);
+        String res = template.replace("#package#", getPackage(languageProperties, packageName))
+                .replace("#imports#", getEntityImport(columns, properties, languageProperties, imports))
+                .replace("#class#", getEntityClass(table, languageProperties, annotationProperty))
+                .replace("#fields#", generateEntityField(columns, primaryKeyColumn, properties, languageProperties, annotationProperty))
+                .replace("#constructors#", getConstructor(languageProperties, table))
+                .replace("#methods#", "")
+                .replace("#encapsulation#", generateEncapsulation(languageProperties, columns));
+        return res;
+    }
+
+    public static String getFileName(String table, LanguageProperties languageProperties){
+        return ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)).concat("." + languageProperties.getExtension());
+    }
+
 }

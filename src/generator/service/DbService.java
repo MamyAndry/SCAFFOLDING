@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package generator.service;
+package com.ambovombe.generator.service;
 
-import generator.dao.DbProperties;
-import generator.utils.ObjectUtility;
+import com.ambovombe.database.DbConnection;
+import com.ambovombe.database.DbProperties;
+import com.ambovombe.generator.utils.ObjectUtility;
 import java.util.HashMap;
 
 import java.sql.Connection;
@@ -63,7 +64,7 @@ public class DbService {
         HashMap<String, String> map = new HashMap<>();
         
         String query = "SELECT * FROM "+tableName;
-        
+        boolean t = con.isClosed();
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(query);
         ResultSetMetaData rsmd = rs.getMetaData();
@@ -71,7 +72,6 @@ public class DbService {
         for(int i = 1; i <= count; i++){
             String key = rsmd.getColumnName(i);
             String value = getColumnType(rsmd.getColumnClassName(i));
-//            System.out.println(value);
             map.put(key, value);
         }
         return map;
@@ -114,14 +114,28 @@ public class DbService {
 //        }
 //    }
     
-    public static  String getPrimaryKey(Connection con, String tableName) throws Exception{
-        String query = new DbProperties().getDatabaseType().getPrimaryKeyQuery();
+//    public static  List<String> getPrimaryKey(DbProperties dbProperties, String tableName) throws Exception{
+//        Connection con = dbProperties.connect();
+//        String query = dbProperties.getDatabaseType().getPrimaryKeyQuery();
+//        ArrayList<String> listPrimaryKeys = new ArrayList<>();
+//        query = query.replace("?", tableName);
+//        PreparedStatement stmt = con.prepareCall(query);
+//        ResultSet rs = stmt.executeQuery();
+//        while (rs.next())
+//            listPrimaryKeys.add(rs.getString(1));
+//        con.close();
+//        return listPrimaryKeys;
+//    }
+
+    public static  List<String> getPrimaryKey(Connection con, DbConnection dbConnection, String tableName) throws Exception{
+        String query = dbConnection.getListConnection().get(dbConnection.getInUseConnection()).getDatabaseType().getPrimaryKeyQuery();
+        ArrayList<String> listPrimaryKeys = new ArrayList<>();
         query = query.replace("?", tableName);
-        
         PreparedStatement stmt = con.prepareCall(query);
         ResultSet rs = stmt.executeQuery();
-        rs.next();
-        return rs.getString(1);
+        while (rs.next())
+            listPrimaryKeys.add(rs.getString(1));
+        return listPrimaryKeys;
     }
 
     
@@ -144,11 +158,6 @@ public class DbService {
             System.out.println("-------------------------------------");
         }
 //        return map;   
-    }
-    
-    
-    public static void getTableConstraints(Connection con, String tableName) throws Exception{
-        getPrimaryKey(con, tableName);
     }
 
 }

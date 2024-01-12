@@ -2,15 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package generator.parser;
+package com.ambovombe.generator.parser;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
+import java.nio.file.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -21,6 +20,20 @@ public class FileUtility {
     
     public static String[] splitLine(String string){
         return string.split("=");
+    }
+
+    public static void createDirectory(String directory, String path) throws Exception{
+        Path directoryPath = Paths.get(path + File.separator + directory)   ;
+        System.out.println(directoryPath);
+        deleteRecursively(directoryPath);
+        Files.createDirectories(directoryPath);
+    }
+
+    public static void deleteRecursively(Path path) throws Exception{
+        if(Files.isDirectory(path))
+            for(File file : Objects.requireNonNull(path.toFile().listFiles()))
+                file.delete();
+        Files.deleteIfExists(path);
     }
     
     public static List<String[]> readFile(String path) throws Exception{
@@ -35,6 +48,10 @@ public class FileUtility {
         return res;
     }
     public static String readOneFile(String path) throws Exception{
+        return getString(path);
+    }
+
+    public static String getString(String path) throws IOException {
         StringBuilder builder = new StringBuilder();
         BufferedReader reader = new BufferedReader(new FileReader(path));
         String line;
@@ -43,13 +60,11 @@ public class FileUtility {
         }
         return builder.toString();
     }
-    
+
     public static void createFile(String path, String fileName) throws Exception{
         String separator = File.separator;
         path = path + separator + fileName;
         File file = new File(path);
-        System.out.println(file);
-//        System.out.println(file.getAbsolutePath() + " succesfully created");
     }
     
     public static void writeFile(String path, String body) throws Exception{

@@ -12,6 +12,7 @@ import com.ambovombe.database.DbConnection;
 import com.ambovombe.generator.parser.FileUtility;
 import com.ambovombe.generator.service.GeneratorService;
 import com.ambovombe.generator.service.controller.ControllerService;
+import com.ambovombe.generator.service.controller.RepositoryService;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -67,8 +68,29 @@ public class CodeGenerator {
                 frameworkProperties.getAnnotationProperty()
         );
     }
+    
+    public void generateRepository(String path, String table, String packageName, String entityPackage, String lang) throws Exception{
+        String[] splittedLang = lang.split(":");
+        String language = splittedLang[0]; String framework = splittedLang[1];
+        String repository = buildRepository(table, packageName, entityPackage, language, framework);
+        generateFile(path, table, packageName, language, framework, controller);
+    }
+
+    public String buildRepository(String table, String packageName, String entityPackage, String language, String framework) throws Exception{
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
+        return RepositoryService.generateRepository(
+                table,
+                languageProperties,
+                frameworkProperties,
+                packageName,
+                entityPackage
+        );
+    }
+
+
     /**
-     * eg : generate -p path -t table1, table2, table3 -package name -l java:java-spring
+     * eg : generate -p path -t table1, table2, table3 -package name -l java:spring-boot
      * @author rakharrs
      */
     public String buildEntity(String table, String packageName, String language, String framework) throws Exception {
@@ -86,6 +108,7 @@ public class CodeGenerator {
                         getTypeProperties()
                 );
     }
+
 
     public void generateFile(
             String path,
@@ -111,13 +134,13 @@ public class CodeGenerator {
         FileUtility.generateFile(path, GeneratorService.getFileName(table, languageProperties), entity);
     }
 
-    public static String getEntityTemplate() throws Exception{
-        String path = Misc.getSourceTemplateLocation() + File.separator + "EntityTemplate.code";
+    public static String getTemplate() throws Exception{
+        String path = Misc.getSourceTemplateLocation() + File.separator + "Template.code";
         return FileUtility.readOneFile(path);
     }
 
     public static void generateEntity(String path, String table, String packageName, Connection con, DbConnection dbConnection, LanguageProperties languageProperties, TypeMapping typeProperties, Imports imports, AnnotationProperty annotationProperty) throws Exception{
-        String template = getEntityTemplate();
+        String template = getTemplate();
         String entityTemplate = GeneratorService.generateEntity(con, dbConnection, template, table, packageName, languageProperties, typeProperties, imports, annotationProperty);
         String directory = packageName.replace(".", File.separator);
         path = path + File.separator + directory;

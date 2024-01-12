@@ -21,7 +21,8 @@ public class ControllerService {
         args += language.getAnnotationSyntax().replace("?", controllerProperty.getAnnotationArgumentParameterFormData()) + " "
                 + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)) + " "
                 + ObjectUtility.formatToCamelCase(table);
-        body += method.getSave().replace("#object#", ObjectUtility.formatToCamelCase(table));
+        System.out.println(body);
+        body += "\t" + method.getSave().replace("#object#", ObjectUtility.formatToCamelCase(table));
         String function =  language.getMethodSyntax()
                 .replace("#name#", "save")
                 .replace("#type#", controllerProperty.getReturnType().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
@@ -32,7 +33,7 @@ public class ControllerService {
 
     public static String findAll(String table, LanguageProperties language,  CrudMethod method, ControllerProperty controllerProperty){
         String body = "";
-        body += method.getFindAll().replace("#object#", ObjectUtility.formatToCamelCase(table));
+        body += "\t" + method.getFindAll().replace("#object#", ObjectUtility.formatToCamelCase(table));
         String function =  language.getMethodSyntax()
                 .replace("#name#", "findAll")
                 .replace("#type#", controllerProperty.getReturnType().replace("?", language.getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))))
@@ -60,6 +61,7 @@ public class ControllerService {
                     ;
         return res;
     }
+    
 
     public  static String getControllerClass(String table, LanguageProperties language, AnnotationProperty annotations, ControllerProperty controllerProperty){
         String res = "";
@@ -71,7 +73,6 @@ public class ControllerService {
                 + language.getClassSyntax() + " "
                 + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table).concat("Controller")) + "\n";
         return res;
-
     }
 
     public static String getControllerImport(LanguageProperties lp, Imports imports) throws Exception{
@@ -81,6 +82,7 @@ public class ControllerService {
             res += imp+ " " + item + "" + lp.getEndOfInstruction() + "\n";
         return res;
     }
+    
     public static String generateController(
             CrudMethod crudMethod,
             String template,

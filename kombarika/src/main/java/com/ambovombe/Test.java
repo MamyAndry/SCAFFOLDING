@@ -18,10 +18,15 @@ public class Test {
      * @param args the command line arguments
      * @throws SQLException
      */
+     
     public static void main(String[] args) throws Exception {
         CodeGenerator codeGenerator = new CodeGenerator();
-        codeGenerator.generateController("/Users/rakharrs/s5/Naina", "region", "huhu.controller", "java:java-spring");
-        codeGenerator.generateEntity("/Users/rakharrs/s5/Naina", "region", "huhu.entity", "java:java-spring");
+        String path = "./";
+        String table = "produit";
+        String framework = "java:spring-boot";
+        codeGenerator.generateController(path, table, "huhu.controller", framework);
+        codeGenerator.generateEntity(path, table, "huhu.entity", framework);
+        codeGenerator.generateRepository(path, table, "huhu.entity", "huhu.repository", framework);
 
 //        Connection con = null;
 //        try{
@@ -42,7 +47,7 @@ public class Test {
 //            crudDao.init();
 //
 //            String language = "java";
-//            String framework = "java-spring";
+//            String framework = "spring-boot";
 //
 //            String table = "region";
 //
@@ -67,9 +72,9 @@ public class Test {
 ////            CodeGenerator.generatorate(path, table, "huhu", con, dbConnection,lp, type, imports, ann);
 //        }catch (Exception e){
 //            e.printStackTrace();
-//        }finally {
-//            con.close();
-//        }
+    //    }finally {
+        //    con.close();
+    //    }
     }
 
 }

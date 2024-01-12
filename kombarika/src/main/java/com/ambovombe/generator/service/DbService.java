@@ -93,6 +93,7 @@ public class DbService {
         }
         return map;
     }
+    
     //AZA FAFANA 
 //    public static  void getPrimaryKey(Connection con, String tableName) throws Exception{
 ////        HashMap<String, String> map = new HashMap<>();

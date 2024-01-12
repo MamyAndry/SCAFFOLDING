@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package generator;
+package com.ambovombe.generator;
 
-import generator.service.DbService;
+import com.ambovombe.generator.parser.FileUtility;
+import com.ambovombe.generator.service.DbService;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,40 +74,5 @@ public class CLIReader {
             }
         }
     }
-    
-    public static void showAllTables(Connection con) throws Exception{
-        List<String> lst = DbService.getAllTables(con);
-        for(String item : lst)
-            System.out.println(item);
-    }
-    
-    public String[] getTables(Connection con) throws Exception{
-        if(this.getTable().equals("all"))
-            return DbService.getAllTablesArrays(con);
-        return this.getTable().split(",");
-    }
-    
-    public void read(Connection con, String str) throws Exception{
-        if(str.equals("list all tables") || str.equals("show all tables")){
-            showAllTables(con);
-            return;
-        }
-        List<String> lst = new ArrayList<>();
-        String[] array = str.split(" ");
-        getData(array); 
-        String[] list = getTables(con);
-        CodeGenerator.createPackage(getPackageName(), getPath());
-        if(getLang().equals("java")){
-            for(String item : list)
-                CodeGenerator.generateSource(con, getPath(),item, getPackageName(), "java");
-        }else if(getLang().equals("dotnet")){
-            for(String item : list)
-                CodeGenerator.generateSource(con, getPath(),item, getPackageName(), "cs");
-        }
-    }
-    
-        //generate -p test -t information -path E:\ITU\TEST -l java
-            //generate -p solaire.entity -t all -path E:\ITU\L3\Mr_Tahina\SOLAIRE\src\java -l java
-            //generate -p solaire.entity -t all -path E:\ITU\L3\Mr_Naina\SCAFFOLDING\test -l dotnet
 }
 

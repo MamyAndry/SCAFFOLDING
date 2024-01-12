@@ -1,7 +1,9 @@
 {
   "frameworks" : {
     "dotnet" : {
-      "template" : "EntityTemplate.code",
+      "language" : "dotnet",
+      "repository": "",
+      "template" : "Template.code",
       "imports": {
         "controller":[
           "System.Diagnostics",
@@ -42,8 +44,10 @@
         "annotationArgumentParameterLink":""
       }
     },
-    "java-spring" : {
-      "template" : "EntityTemplate.code",
+    "spring-boot" : {
+      "language" : "java",
+      "repository": "RepositoryTemplate.code",
+      "template" : "Template.code",
       "imports" : {
         "controller":[
           "org.springframework.beans.factory.annotation.Autowired",
