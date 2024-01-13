@@ -7,31 +7,19 @@ package com.ambovombe.configuration.mapping;
 
 
 import com.ambovombe.generator.parser.JsonUtility;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author Mamisoa
  */
+@Getter @Setter
 public class Imports {
     private String[] controller;
     private String[] entity;
+    private String[] repository;
     
-    //GETTERS & SETTERS 
-    public String[] getController() {
-        return controller;
-    }
-
-    public void setController(String[] controller) {
-        this.controller = controller;
-    }
-    
-    public String[] getEntity() {
-        return entity;
-    }
-
-    public void setEntity(String[] entity) {
-        this.entity = entity;
-    }
     //CONSTRUCTOR
     public Imports(){}  
     

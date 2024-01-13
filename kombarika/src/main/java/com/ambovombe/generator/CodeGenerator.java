@@ -4,14 +4,15 @@
  */
 package com.ambovombe.generator;
 
-import com.ambovombe.configuration.*;
 import com.ambovombe.configuration.main.LanguageDetails;
+import com.ambovombe.configuration.main.TypeProperties;
 import com.ambovombe.configuration.mapping.*;
 import com.ambovombe.utils.Misc;
 import com.ambovombe.database.DbConnection;
 import com.ambovombe.generator.parser.FileUtility;
 import com.ambovombe.generator.service.GeneratorService;
 import com.ambovombe.generator.service.controller.ControllerService;
+import com.ambovombe.generator.service.repository.RepositoryService;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,8 +26,8 @@ import java.sql.Connection;
 @Getter @Setter
 public class CodeGenerator {
     DbConnection dbConnection;
-    TypeProperties typeProperties;
     LanguageDetails languageDetails;
+    TypeProperties typeProperties;
     //FrameworkDetails frameworkDetails;
 
     public CodeGenerator() throws Exception {
@@ -67,8 +68,29 @@ public class CodeGenerator {
                 frameworkProperties.getAnnotationProperty()
         );
     }
+    
+    public void generateRepository(String path, String table, String packageName, String entityPackage, String lang) throws Exception{
+        String[] splittedLang = lang.split(":");
+        String language = splittedLang[0]; String framework = splittedLang[1];
+        String repository = buildRepository(table, packageName, entityPackage, language, framework);
+        generateRepositoryFile(path, table, packageName, language, framework, repository);
+    }
+
+    public String buildRepository(String table, String packageName, String entityPackage, String language, String framework) throws Exception{
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
+        return RepositoryService.generateRepository(
+                table,
+                languageProperties,
+                frameworkProperties,
+                packageName,
+                entityPackage
+        );
+    }
+
+
     /**
-     * eg : generate -p path -t table1, table2, table3 -package name -l java:java-spring
+     * eg : generate -p path -t table1, table2, table3 -package name -l java:spring-boot
      * @author rakharrs
      */
     public String buildEntity(String table, String packageName, String language, String framework) throws Exception {
@@ -87,6 +109,7 @@ public class CodeGenerator {
                 );
     }
 
+
     public void generateFile(
             String path,
             String table,
@@ -101,6 +124,21 @@ public class CodeGenerator {
         path = path + File.separator + directory;
         FileUtility.generateFile(path, GeneratorService.getFileName(table+"Controller", languageProperties), content);
     }
+    public void generateRepositoryFile(
+            String path,
+            String table,
+            String packageName,
+            String language,
+            String framework,
+            String content
+    ) throws Exception{
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        if (languageProperties.getFrameworks().get(framework).getRepository().equals("")) return;
+        String directory = packageName.replace(".", File.separator);
+        FileUtility.createDirectory(directory,path);
+        path = path + File.separator + directory;
+        FileUtility.generateFile(path, GeneratorService.getFileName(table+"Repository", languageProperties), content);
+    }
 
     public void generateEntityFile(String path, String table, String packageName, String language, String framework) throws Exception{
         String entity = buildEntity(table, packageName, language, framework);
@@ -111,13 +149,13 @@ public class CodeGenerator {
         FileUtility.generateFile(path, GeneratorService.getFileName(table, languageProperties), entity);
     }
 
-    public static String getEntityTemplate() throws Exception{
-        String path = Misc.getSourceTemplateLocation() + File.separator + "EntityTemplate.code";
+    public static String getTemplate() throws Exception{
+        String path = Misc.getSourceTemplateLocation() + File.separator + "Template.code";
         return FileUtility.readOneFile(path);
     }
 
     public static void generateEntity(String path, String table, String packageName, Connection con, DbConnection dbConnection, LanguageProperties languageProperties, TypeMapping typeProperties, Imports imports, AnnotationProperty annotationProperty) throws Exception{
-        String template = getEntityTemplate();
+        String template = getTemplate();
         String entityTemplate = GeneratorService.generateEntity(con, dbConnection, template, table, packageName, languageProperties, typeProperties, imports, annotationProperty);
         String directory = packageName.replace(".", File.separator);
         path = path + File.separator + directory;

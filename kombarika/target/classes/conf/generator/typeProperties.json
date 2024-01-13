@@ -3,7 +3,7 @@
         "java" : {
             "listMapping" : {
                 "Timestamp":{
-                    "type":"Timex",
+                    "type":"TimeStamp",
                     "packageName":"java.sql.Timestamp"
                 },
                 "Time":{

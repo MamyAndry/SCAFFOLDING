@@ -12,15 +12,17 @@ import java.io.File;
  */
 @Getter @Setter
 public class FrameworkProperties {
-    String language;
     String template;
+    String repository;
     Imports imports;
     AnnotationProperty annotationProperty;
     CrudMethod crudMethod;
     ControllerProperty controllerProperty;
+    RepositoryProperty repositoryProperty;
     boolean init = false;
 
     public FrameworkProperties(){}
+
     public String getTemplatePath(){
         return Misc.getSourceTemplateLocation() + File.separator + this.template;
     }

@@ -28,9 +28,9 @@ public class DbConnection {
     public boolean init = false;
     @Setter
     public Connection connection = null;
-    //SETTERS & GETTERS
     @Getter
     private HashMap<String, DbProperties> listConnection;
+    //SETTERS & GETTERS
 
     public void setListConnection(HashMap<String, DbProperties> listConnection) {
         this.listConnection = listConnection;

@@ -21,7 +21,7 @@ public class ControllerService {
         args += language.getAnnotationSyntax().replace("?", controllerProperty.getAnnotationArgumentParameterFormData()) + " "
                 + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)) + " "
                 + ObjectUtility.formatToCamelCase(table);
-        body += method.getSave().replace("#object#", ObjectUtility.formatToCamelCase(table));
+        body += Misc.tabulate(method.getSave().replace("#object#", ObjectUtility.formatToCamelCase(table)));
         String function =  language.getMethodSyntax()
                 .replace("#name#", "save")
                 .replace("#type#", controllerProperty.getReturnType().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
@@ -30,9 +30,37 @@ public class ControllerService {
         return Misc.tabulate(language.getAnnotationSyntax().replace("?", controllerProperty.getPut()) + "\n" + function);
     }
 
+    public static String update(String table, LanguageProperties language, CrudMethod method, ControllerProperty controllerProperty) throws Exception{
+        String body = "";
+        String args = "";
+        args += language.getAnnotationSyntax().replace("?", controllerProperty.getAnnotationArgumentParameterFormData()) + " "
+                + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)) + " "
+                + ObjectUtility.formatToCamelCase(table);
+        body += Misc.tabulate(method.getUpdate().replace("#object#", ObjectUtility.formatToCamelCase(table)));
+        String function =  language.getMethodSyntax()
+                .replace("#name#", "update")
+                .replace("#type#", controllerProperty.getReturnType().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
+                .replace("#arg#", args)
+                .replace("#body#", body);
+        return Misc.tabulate(language.getAnnotationSyntax().replace("?", controllerProperty.getPut()) + "\n" + function);
+    }
+    public static String delete(String table, LanguageProperties language, CrudMethod method, ControllerProperty controllerProperty) throws Exception{
+        String body = "";
+        String args = "";
+        args += language.getAnnotationSyntax().replace("?", controllerProperty.getAnnotationArgumentParameterFormData()) + " "
+                + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)) + " "
+                + ObjectUtility.formatToCamelCase(table);
+        body += Misc.tabulate(method.getDelete().replace("#object#", ObjectUtility.formatToCamelCase(table)));
+        String function =  language.getMethodSyntax()
+                .replace("#name#", "delete")
+                .replace("#type#", controllerProperty.getReturnType().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
+                .replace("#arg#", args)
+                .replace("#body#", body);
+        return Misc.tabulate(language.getAnnotationSyntax().replace("?", controllerProperty.getPut()) + "\n" + function);
+    }
     public static String findAll(String table, LanguageProperties language,  CrudMethod method, ControllerProperty controllerProperty){
         String body = "";
-        body += method.getFindAll().replace("#object#", ObjectUtility.formatToCamelCase(table));
+        body += "\t" + method.getFindAll().replace("#object#", ObjectUtility.formatToCamelCase(table));
         String function =  language.getMethodSyntax()
                 .replace("#name#", "findAll")
                 .replace("#type#", controllerProperty.getReturnType().replace("?", language.getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))))
@@ -41,13 +69,23 @@ public class ControllerService {
         return Misc.tabulate(language.getAnnotationSyntax().replace("?", controllerProperty.getGet()) + "\n" + function);
     }
 
-    public static String getCrudMethods(String table, LanguageProperties language,  CrudMethod method, ControllerProperty controllerProperty){
+    public static String findById(String table, LanguageProperties language, CrudMethod method, ControllerProperty controllerProperty) throws Exception{
+        String res = "";
+        return res;
+    }
+    public static String getCrudMethods(String table, LanguageProperties language,  CrudMethod method, ControllerProperty controllerProperty) throws Exception {
         StringBuilder stringBuilder = new StringBuilder();
         String save = save(table, language,  method, controllerProperty);
         String findAll = findAll(table, language,  method, controllerProperty);
-        stringBuilder.append(findAll);
-        stringBuilder.append("\n");
+        String update = update(table, language,  method, controllerProperty);
+        String delete = delete(table, language,  method, controllerProperty);
         stringBuilder.append(save);
+        stringBuilder.append("\n");
+        stringBuilder.append(update);
+        stringBuilder.append("\n");
+        stringBuilder.append(delete);
+        stringBuilder.append("\n");
+        stringBuilder.append(findAll);
         return stringBuilder.toString();
     }
 
@@ -60,6 +98,7 @@ public class ControllerService {
                     ;
         return res;
     }
+    
 
     public  static String getControllerClass(String table, LanguageProperties language, AnnotationProperty annotations, ControllerProperty controllerProperty){
         String res = "";
@@ -71,7 +110,6 @@ public class ControllerService {
                 + language.getClassSyntax() + " "
                 + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table).concat("Controller")) + "\n";
         return res;
-
     }
 
     public static String getControllerImport(LanguageProperties lp, Imports imports) throws Exception{
@@ -81,6 +119,7 @@ public class ControllerService {
             res += imp+ " " + item + "" + lp.getEndOfInstruction() + "\n";
         return res;
     }
+    
     public static String generateController(
             CrudMethod crudMethod,
             String template,

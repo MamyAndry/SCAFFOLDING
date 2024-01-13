@@ -3,7 +3,7 @@ package com.ambovombe.generator.service;
 import java.sql.Connection;
 import java.util.*;
 
-import com.ambovombe.configuration.TypeProperties;
+import com.ambovombe.configuration.main.TypeProperties;
 import com.ambovombe.configuration.mapping.LanguageProperties;
 import com.ambovombe.configuration.mapping.*;
 import com.ambovombe.database.DbConnection;
