@@ -10,7 +10,7 @@
             "annotationSyntax":"[?]",
             "constructorSyntax": "public ?(){}",
             "methodSyntax": "public #type# #name#(#arg#){\n #body#\n}",
-            "encapsulation":"\t[Column(name = '?')]\n\tpublic #type# #Field#{\n\t\tget{\n\t\t\treturn #field;\n\t\t}\n\t\tset{\n\t\t\t#field = value;\n\t\t}\n\t}\n",
+            "encapsulation":"\t[Column(name = \"?\")]\n\tpublic #type# #Field#{\n\t\tget{\n\t\t\treturn #field;\n\t\t}\n\t\tset{\n\t\t\t#field = value;\n\t\t}\n\t}\n",
             "extension":"cs",
             "frameworks" : {
                 "dotnet" : {
@@ -29,8 +29,8 @@
                         ]
                     },
                     "annotationProperty" : {
-                        "table":"Table(name = '?')",
-                        "column":"Column(name = '?')",
+                        "table":"Table(name = \"?\")",
+                        "column":"Column(name = \"?\")",
                         "entity": "",
                         "controller": "ApiController",
                         "constraints":{
@@ -47,10 +47,10 @@
                     },
                     "controllerProperty" : {
                         "path": "Route('[?]')",
-                        "get": "HttpGet(Name = '?')",
-                        "post": "HttpPost(Name = '?')",
-                        "put": "HttpPut(Name = '?')",
-                        "delete": "HttpDelete(Name = '?')",
+                        "get": "HttpGet(Name = \"?\")",
+                        "post": "HttpPost(Name = \"?\")",
+                        "put": "HttpPut(Name = \"?\")",
+                        "delete": "HttpDelete(Name = \"?\")",
                         "returnType": "IEnumerable<?>",
                         "field": "private readonly Ilogger<?Controller> _logger;",
                         "annotationField": "",
@@ -81,6 +81,7 @@
                     "repository": "Template.code",
                     "imports" : {
                         "controller":[
+                            "packageName.classNameRepository",
                             "org.springframework.beans.factory.annotation.Autowired",
                             "org.springframework.web.bind.annotation.*"
                         ],
@@ -97,8 +98,8 @@
                         ]
                     },
                     "annotationProperty" : {
-                        "table": "Table(name = '?')",
-                        "column": "Column(name = '?')",
+                        "table": "Table(name = \"?\")",
+                        "column": "Column(name = \"?\")",
                         "entity": "Entity",
                         "controller": "RestController",
                         "constraints": {
@@ -116,7 +117,7 @@
                         "save": "repository.save(#object#)"
                     },
                     "controllerProperty" : {
-                        "path": "RequestMapping(path = '?')",
+                        "path": "RequestMapping(path = \"?\")",
                         "get": "GetMapping()",
                         "post": "PostMapping()",
                         "put": "PutMapping()",

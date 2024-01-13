@@ -22,12 +22,12 @@ public class Test {
     public static void main(String[] args) throws Exception {
         CodeGenerator codeGenerator = new CodeGenerator();
         String path = "./";
-        String table = "departement";
-        String framework = "dotnet:dotnet";
-        codeGenerator.generateController(path, table, "huhu.controller", framework);
-        codeGenerator.generateEntity(path, table, "huhu.entity", framework);
-        codeGenerator.generateRepository(path, table, "huhu.repository", "huhu.entity", framework);
-
+        String table = "brand";
+        String framework = "java:spring-boot";
+        codeGenerator.generateEntity(path, table, "carselling.selling.entity", framework);
+        codeGenerator.generateRepository(path, table, "carselling.selling.repository", "carselling.selling.entity", framework);
+        codeGenerator.generateController(path, table, "carselling.selling.controller", "carselling.selling.repository", framework);
+        codeGenerator.getDbConnection().close();
 //        Connection con = null;
 //        try{
 //            DbConnection dbConnection = new DbConnection();

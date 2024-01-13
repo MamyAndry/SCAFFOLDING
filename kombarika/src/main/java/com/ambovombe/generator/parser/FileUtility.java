@@ -6,7 +6,6 @@ package com.ambovombe.generator.parser;
 
 import java.io.*;
 import java.nio.file.*;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,7 +24,7 @@ public class FileUtility {
     public static void createDirectory(String directory, String path) throws Exception{
         Path directoryPath = Paths.get(path + File.separator + directory)   ;
         System.out.println(directoryPath);
-        deleteRecursively(directoryPath);
+        // deleteRecursively(directoryPath);
         Files.createDirectories(directoryPath);
     }
 

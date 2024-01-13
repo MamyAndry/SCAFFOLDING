@@ -2,9 +2,9 @@
     "defaultConnection" : "DefaultConnection",
     "listConnection": {
         "DefaultConnection": {
-            "datasource":"jdbc:postgresql://localhost:5432/postgres",
-            "username":"postgres",
-            "password":"root",
+            "datasource":"jdbc:postgresql://localhost:5432/car",
+            "username":"mamisoa",
+            "password":"prom15",
             "databaseType":"POSTGRESQL"
         },
         "OtherConnection": {

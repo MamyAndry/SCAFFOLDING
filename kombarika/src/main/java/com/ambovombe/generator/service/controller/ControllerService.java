@@ -21,7 +21,7 @@ public class ControllerService {
         args += language.getAnnotationSyntax().replace("?", controllerProperty.getAnnotationArgumentParameterFormData()) + " "
                 + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)) + " "
                 + ObjectUtility.formatToCamelCase(table);
-        body += Misc.tabulate(method.getSave().replace("#object#", ObjectUtility.formatToCamelCase(table)));
+        body += Misc.tabulate(method.getSave().replace("#object#", ObjectUtility.formatToCamelCase(table))) + language.getEndOfInstruction();
         String function =  language.getMethodSyntax()
                 .replace("#name#", "save")
                 .replace("#type#", controllerProperty.getReturnType().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
@@ -36,7 +36,7 @@ public class ControllerService {
         args += language.getAnnotationSyntax().replace("?", controllerProperty.getAnnotationArgumentParameterFormData()) + " "
                 + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)) + " "
                 + ObjectUtility.formatToCamelCase(table);
-        body += Misc.tabulate(method.getUpdate().replace("#object#", ObjectUtility.formatToCamelCase(table)));
+        body += Misc.tabulate(method.getUpdate().replace("#object#", ObjectUtility.formatToCamelCase(table))) + language.getEndOfInstruction();
         String function =  language.getMethodSyntax()
                 .replace("#name#", "update")
                 .replace("#type#", controllerProperty.getReturnType().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
@@ -44,13 +44,14 @@ public class ControllerService {
                 .replace("#body#", body);
         return Misc.tabulate(language.getAnnotationSyntax().replace("?", controllerProperty.getPut()) + "\n" + function);
     }
+
     public static String delete(String table, LanguageProperties language, CrudMethod method, ControllerProperty controllerProperty) throws Exception{
         String body = "";
         String args = "";
         args += language.getAnnotationSyntax().replace("?", controllerProperty.getAnnotationArgumentParameterFormData()) + " "
                 + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)) + " "
                 + ObjectUtility.formatToCamelCase(table);
-        body += Misc.tabulate(method.getDelete().replace("#object#", ObjectUtility.formatToCamelCase(table)));
+        body += Misc.tabulate(method.getDelete().replace("#object#", ObjectUtility.formatToCamelCase(table))) + language.getEndOfInstruction();
         String function =  language.getMethodSyntax()
                 .replace("#name#", "delete")
                 .replace("#type#", controllerProperty.getReturnType().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
@@ -58,9 +59,10 @@ public class ControllerService {
                 .replace("#body#", body);
         return Misc.tabulate(language.getAnnotationSyntax().replace("?", controllerProperty.getPut()) + "\n" + function);
     }
+
     public static String findAll(String table, LanguageProperties language,  CrudMethod method, ControllerProperty controllerProperty){
         String body = "";
-        body += "\t" + method.getFindAll().replace("#object#", ObjectUtility.formatToCamelCase(table));
+        body += Misc.tabulate(method.getFindAll().replace("#object#", ObjectUtility.formatToCamelCase(table))) + language.getEndOfInstruction();
         String function =  language.getMethodSyntax()
                 .replace("#name#", "findAll")
                 .replace("#type#", controllerProperty.getReturnType().replace("?", language.getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))))
@@ -112,11 +114,13 @@ public class ControllerService {
         return res;
     }
 
-    public static String getControllerImport(LanguageProperties lp, Imports imports) throws Exception{
+    public static String getControllerImport(LanguageProperties lp, Imports imports, String repository, String table) throws Exception{
         String res = "";
         String imp = lp.getImportSyntax();
-        for(String item : imports.getController())
+        for(String item : imports.getController()){
+            item = item.replace("packageName", repository).replace("className", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)));
             res += imp+ " " + item + "" + lp.getEndOfInstruction() + "\n";
+        }
         return res;
     }
     
@@ -125,13 +129,14 @@ public class ControllerService {
             String template,
             String table,
             String packageName,
+            String repository,
             ControllerProperty property,
             LanguageProperties languageProperties,
             Imports imports,
             AnnotationProperty annotationProperty
     ) throws Exception {
         String res = template.replace("#package#", GeneratorService.getPackage(languageProperties, packageName))
-                .replace("#imports#", getControllerImport(languageProperties, imports))
+                .replace("#imports#", getControllerImport(languageProperties, imports, repository, table))
                 .replace("#class#", getControllerClass(table, languageProperties, annotationProperty, property))
                 .replace("#fields#", getControllerField(table, languageProperties, property))
                 .replace("#constructors#", "")
