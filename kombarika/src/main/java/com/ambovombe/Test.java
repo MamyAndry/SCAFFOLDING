@@ -26,7 +26,7 @@ public class Test {
         String framework = "java:spring-boot";
         codeGenerator.generateEntity(path, table, "carselling.selling.entity", framework);
         codeGenerator.generateRepository(path, table, "carselling.selling.repository", "carselling.selling.entity", framework);
-        codeGenerator.generateController(path, table, "carselling.selling.controller", "carselling.selling.repository", framework);
+        codeGenerator.generateController(path, table, "carselling.selling.controller", "carselling.selling.repository", "carselling.selling.entity", framework);
         codeGenerator.getDbConnection().close();
 //        Connection con = null;
 //        try{

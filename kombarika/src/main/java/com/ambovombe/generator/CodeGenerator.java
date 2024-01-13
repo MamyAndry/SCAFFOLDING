@@ -46,14 +46,14 @@ public class CodeGenerator {
         generateEntityFile(path, table, packageName, language, framework);
     }
 
-    public void generateController(String path, String table, String packageName, String repository, String lang) throws Exception{
+    public void generateController(String path, String table, String packageName, String repository, String entity, String lang) throws Exception{
         String[] splittedLang = lang.split(":");
         String language = splittedLang[0]; String framework = splittedLang[1];
-        String controller = buildController(table, packageName, repository, language, framework);
+        String controller = buildController(table, packageName, repository, entity, language, framework);
         generateFile(path, table, packageName, language, framework, controller);
     }
 
-    public String buildController(String table, String packageName, String repository, String language, String framework) throws Exception{
+    public String buildController(String table, String packageName, String repository, String entity, String language, String framework) throws Exception{
         LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
         FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
         String template = frameworkProperties.getTemplate();
@@ -63,6 +63,7 @@ public class CodeGenerator {
                 table,
                 packageName,
                 repository,
+                entity,
                 frameworkProperties.getControllerProperty(),
                 languageProperties,
                 frameworkProperties.getImports(),

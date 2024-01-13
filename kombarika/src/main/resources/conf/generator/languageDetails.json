@@ -70,7 +70,7 @@
             "classSyntax":"public class",
             "endOfInstruction":";",
             "annotationSyntax":"@?",
-            "listSyntax" : "List<?>",
+            "listSyntax" : "Iterable<?>",
             "constructorSyntax": "public ?(){}",
             "methodSyntax": "public #type# #name#(#arg#){\n #body#\n}",
             "encapsulation":"\tpublic #type# get#Field#(){\n\t\treturn this.#field#;\n\t}\n\tpublic void set#Field#(#type# #field#){\n\t\tthis.#field# = #field#;\n\t}\n",
@@ -82,6 +82,8 @@
                     "imports" : {
                         "controller":[
                             "packageName.classNameRepository",
+                            "entity.className",
+                            "org.springframework.http.*",
                             "org.springframework.beans.factory.annotation.Autowired",
                             "org.springframework.web.bind.annotation.*"
                         ],
@@ -110,11 +112,11 @@
                         }
                     },
                     "crudMethod" : {
-                        "findAll": "repository.findAll()",
-                        "findById":"repository.findById(#Id#)",
-                        "delete": "repository.delete(#object#)",
-                        "update": "repository.save(#object#)",
-                        "save": "repository.save(#object#)"
+                        "findAll": "ResponseEntity.ok(repository.findAll())",
+                        "findById":"ResponseEntity.ok(repository.findById(#Id#))",
+                        "delete": "ResponseEntity.ok(repository.deleteById(#object#))",
+                        "update": "ResponseEntity.ok(repository.save(#object#))",
+                        "save": "ResponseEntity.ok(repository.save(#object#))"
                     },
                     "controllerProperty" : {
                         "path": "RequestMapping(path = \"?\")",
