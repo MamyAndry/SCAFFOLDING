@@ -5,6 +5,7 @@ package com.ambovombe;/*
 
 
 import com.ambovombe.generator.CodeGenerator;
+import com.ambovombe.generator.service.DbService;
 
 import java.sql.SQLException;
 
@@ -22,59 +23,16 @@ public class Test {
     public static void main(String[] args) throws Exception {
         CodeGenerator codeGenerator = new CodeGenerator();
         String path = "./";
-        String table = "brand";
         String framework = "java:spring-boot";
-        codeGenerator.generateEntity(path, table, "carselling.selling.entity", framework);
-        codeGenerator.generateRepository(path, table, "carselling.selling.repository", "carselling.selling.entity", framework);
-        codeGenerator.generateController(path, table, "carselling.selling.controller", "carselling.selling.repository", "carselling.selling.entity", framework);
-        codeGenerator.getDbConnection().close();
-//        Connection con = null;
-//        try{
-//            DbConnection dbConnection = new DbConnection();
-//            con = dbConnection.connect();
-//
-//            LanguageDetails languageDetails = new LanguageDetails();
-//            languageDetails.init();
-//            TypeProperties properties = new TypeProperties();
-//            properties.init();
-//            ImportList list = new ImportList();
-//            list.init();
-//            Annotations annotations = new Annotations();
-//            annotations.init();
-//            ControllerProperties controllerProperties = new ControllerProperties();
-//            controllerProperties.init();
-//            CrudDao crudDao = new CrudDao();
-//            crudDao.init();
-//
-//            String language = "java";
-//            String framework = "spring-boot";
-//
-//            String table = "region";
-//
-//            //CONSTRUCTORS
-//
-//            LanguageProperties lp = languageDetails.getLanguages().get(language);
-//            TypeMapping type = properties.getListProperties().get(language);
-//            Imports imports = list.getListImport().get(framework);
-//            AnnotationProperty ann = annotations.getLanguages().get(framework);
-//            ControllerProperty controller = controllerProperties.getLanguages().get(framework);
-//            CrudMethod method = crudDao.getLanguages().get(framework);
-//            String path = ".";
-////            System.out.println(ControllerService.getControllerClass(table, lp, ann, controller));
-////            System.out.println(ControllerService.getControllerField(table, lp, controller));
-////            System.out.println(ControllerService.getCrudMethods(table, lp, method, controller));
-//            String template = Misc.getSourceTemplateLocation() + File.separator + "EntityTemplate.code";
-//            template = FileUtility.readOneFile(template);
-//            System.out.println(ControllerService.generateController(method, template, table, "huu", controller, lp, imports, ann));
-////            FileUtility.createDirectory(table, ".");
-////            System.out.println(printlnGeneratorService.generate(con, "", "region", "huhu", lp, type);
-//
-////            CodeGenerator.generatorate(path, table, "huhu", con, dbConnection,lp, type, imports, ann);
-//        }catch (Exception e){
-//            e.printStackTrace();
-    //    }finally {
-        //    con.close();
-    //    }
+        String packageName = "carselling.selling";
+        try{
+            String[] tables = DbService.getAllTablesArrays(codeGenerator.getDbConnection());
+            codeGenerator.generateAll(path, packageName, tables, framework);
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            codeGenerator.getDbConnection().close();
+        }
     }
 
 }

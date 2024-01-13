@@ -39,6 +39,7 @@ public class DbService {
         }
         return res;
     }
+
     public static List<String> getAllTables(Connection con) throws Exception{
         List<String> lst = new ArrayList<>();
         DatabaseMetaData meta = (DatabaseMetaData) con.getMetaData();
@@ -50,6 +51,7 @@ public class DbService {
         }
         return lst;
     }
+
     public static String[] getAllTablesArrays(Connection con) throws Exception{
         List<String> lst = getAllTables(con);
         String[] array= new String[lst.size()];
@@ -59,6 +61,26 @@ public class DbService {
         return array;
     }
     
+    public static List<String> getAllTables(DbConnection con) throws Exception{
+        List<String> lst = new ArrayList<>();
+        DatabaseMetaData meta = (DatabaseMetaData) con.getConnection().getMetaData();
+        ResultSet rs = meta.getTables(null, null,  null, new String[] {
+         "TABLE"
+      });
+        while (rs.next()) {
+          lst.add(rs.getString(3));
+        }
+        return lst;
+    }
+
+    public static String[] getAllTablesArrays(DbConnection con) throws Exception{
+        List<String> lst = getAllTables(con);
+        String[] array= new String[lst.size()];
+        for(int i = 0; i < lst.size(); i++){
+            array[i] = lst.get(i);
+        }
+        return array;
+    }
     
     public static HashMap<String, String> getColumnNameAndType(Connection con, String tableName) throws Exception{
         HashMap<String, String> map = new HashMap<>();

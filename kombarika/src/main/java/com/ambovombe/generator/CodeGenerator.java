@@ -17,7 +17,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.*;
-import java.sql.Connection;
 
 /**
  * @author Mamisoa
@@ -39,7 +38,7 @@ public class CodeGenerator {
         this.typeProperties.init();
     }
 
-    public void generateEntity(String path, String table, String packageName, String lang) throws Exception{
+    public  void generateEntity(String path, String table, String packageName, String lang) throws Exception{
         String[] splittedLang = lang.split(":");
         String language = splittedLang[0]; String framework = splittedLang[1];
         String entity = buildEntity(table, packageName, language, framework);
@@ -155,13 +154,13 @@ public class CodeGenerator {
         String path = Misc.getSourceTemplateLocation() + File.separator + "Template.code";
         return FileUtility.readOneFile(path);
     }
-
-    public static void generateEntity(String path, String table, String packageName, Connection con, DbConnection dbConnection, LanguageProperties languageProperties, TypeMapping typeProperties, Imports imports, AnnotationProperty annotationProperty) throws Exception{
-        String template = getTemplate();
-        String entityTemplate = GeneratorService.generateEntity(con, dbConnection, template, table, packageName, languageProperties, typeProperties, imports, annotationProperty);
-        String directory = packageName.replace(".", File.separator);
-        path = path + File.separator + directory;
-        FileUtility.generateFile(path, GeneratorService.getFileName(table, languageProperties), entityTemplate);
+    
+    public  void generateAll(String path, String packageName, String[] tables, String framework) throws Exception{
+        for (String table : tables) {
+            generateEntity(path, table, packageName + "." + "entity", framework);
+            generateRepository(path, table, packageName + "." + "repository", packageName + "." + "entity", framework);
+            generateController(path, table, packageName + "." + "controller", packageName + "." + "repository", packageName + "." + "entity", framework);   
+        }
     }
 
 

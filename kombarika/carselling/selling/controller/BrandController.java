@@ -17,16 +17,16 @@ public class BrandController
 	private BrandRepository repository;
 
 
-	@PutMapping()
-	public ResponseEntity<Brand> save(@RequestParam Brand brand){
+	@PostMapping()
+	public ResponseEntity<Brand> save(@RequestBody Brand brand){
 	 	return ResponseEntity.ok(repository.save(brand));
 	}
 	@PutMapping()
-	public ResponseEntity<Brand> update(@RequestParam Brand brand){
+	public ResponseEntity<Brand> update(@RequestBody Brand brand){
 	 	return ResponseEntity.ok(repository.save(brand));
 	}
-	@PutMapping()
-	public void delete(@RequestParam Brand brand){
+	@DeleteMapping()
+	public void delete(@RequestBody Brand brand){
 	 	repository.delete(brand);
 	}
 	@GetMapping()

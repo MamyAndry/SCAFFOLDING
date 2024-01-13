@@ -128,7 +128,7 @@
                         "returnType": "ResponseEntity<?>",
                         "annotationField": "Autowired",
                         "annotationMethodParameter":"",
-                        "annotationArgumentParameterFormData":"RequestParam",
+                        "annotationArgumentParameterFormData":"RequestBody",
                         "annotationArgumentParameterLink":"PathVariable"
                     },
                     "repositoryProperty" : {
