@@ -27,7 +27,7 @@ public class BrandController
 	}
 	@PutMapping()
 	public void delete(@RequestParam Brand brand){
-	 	return ResponseEntity.ok(repository.deleteById(brand));
+	 	repository.delete(brand);
 	}
 	@GetMapping()
 	public ResponseEntity<Iterable<Brand>> findAll(){

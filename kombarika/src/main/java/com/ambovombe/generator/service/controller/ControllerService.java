@@ -29,7 +29,7 @@ public class ControllerService {
                 .replace("#type#", controllerProperty.getReturnType().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
                 .replace("#arg#", args)
                 .replace("#body#", body);
-        return Misc.tabulate(language.getAnnotationSyntax().replace("?", controllerProperty.getPut()) + "\n" + function);
+        return Misc.tabulate(language.getAnnotationSyntax().replace("?", controllerProperty.getPost()) + "\n" + function);
     }
 
     public static String update(String table, LanguageProperties language, CrudMethod method, ControllerProperty controllerProperty) throws Exception{
@@ -50,20 +50,18 @@ public class ControllerService {
     }
 
     public static String delete(String table, LanguageProperties language, CrudMethod method, ControllerProperty controllerProperty) throws Exception{
-        String body = "";
+        String body = "";   
         String args = "";
         args += language.getAnnotationSyntax().replace("?", controllerProperty.getAnnotationArgumentParameterFormData()) + " "
                 + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)) + " "
                 + ObjectUtility.formatToCamelCase(table);
-        body += Misc.tabulate(
-            "return " + 
-            method.getDelete().replace("#object#", ObjectUtility.formatToCamelCase(table))) + language.getEndOfInstruction();
+        body += Misc.tabulate(method.getDelete().replace("#object#", ObjectUtility.formatToCamelCase(table))) + language.getEndOfInstruction();
         String function =  language.getMethodSyntax()
                 .replace("#name#", "delete")
                 .replace("#type#", "void")
                 .replace("#arg#", args)
                 .replace("#body#", body);
-        return Misc.tabulate(language.getAnnotationSyntax().replace("?", controllerProperty.getPut()) + "\n" + function);
+        return Misc.tabulate(language.getAnnotationSyntax().replace("?", controllerProperty.getDelete()) + "\n" + function);
     }
 
     public static String findAll(String table, LanguageProperties language,  CrudMethod method, ControllerProperty controllerProperty){

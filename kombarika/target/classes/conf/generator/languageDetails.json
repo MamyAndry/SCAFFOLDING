@@ -114,7 +114,7 @@
                     "crudMethod" : {
                         "findAll": "ResponseEntity.ok(repository.findAll())",
                         "findById":"ResponseEntity.ok(repository.findById(#Id#))",
-                        "delete": "ResponseEntity.ok(repository.deleteById(#object#))",
+                        "delete": "repository.delete(#object#)",
                         "update": "ResponseEntity.ok(repository.save(#object#))",
                         "save": "ResponseEntity.ok(repository.save(#object#))"
                     },
