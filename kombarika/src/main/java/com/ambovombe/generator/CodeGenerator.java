@@ -10,6 +10,7 @@ import com.ambovombe.configuration.mapping.*;
 import com.ambovombe.utils.Misc;
 import com.ambovombe.database.DbConnection;
 import com.ambovombe.generator.parser.FileUtility;
+import com.ambovombe.generator.parser.JsonUtility;
 import com.ambovombe.generator.service.GeneratorService;
 import com.ambovombe.generator.service.controller.ControllerService;
 import com.ambovombe.generator.service.repository.RepositoryService;
@@ -27,7 +28,6 @@ public class CodeGenerator {
     DbConnection dbConnection;
     LanguageDetails languageDetails;
     TypeProperties typeProperties;
-    //FrameworkDetails frameworkDetails;
 
     public CodeGenerator() throws Exception {
         this.dbConnection = new DbConnection();
@@ -41,7 +41,6 @@ public class CodeGenerator {
     public  void generateEntity(String path, String table, String packageName, String lang) throws Exception{
         String[] splittedLang = lang.split(":");
         String language = splittedLang[0]; String framework = splittedLang[1];
-        String entity = buildEntity(table, packageName, language, framework);
         generateEntityFile(path, table, packageName, language, framework);
     }
 
@@ -96,17 +95,17 @@ public class CodeGenerator {
      */
     public String buildEntity(String table, String packageName, String language, String framework) throws Exception {
         LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        TypeMapping typeMapping = getTypeProperties().getListProperties().get(language);
         FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
         String template = frameworkProperties.getTemplate();
-        return GeneratorService
-                .generateEntity(
+        return GeneratorService.generateEntity(
                         getDbConnection(),
                         template,
                         table,
                         packageName,
                         languageProperties,
                         frameworkProperties,
-                        getTypeProperties()
+                        typeMapping
                 );
     }
 
@@ -155,11 +154,11 @@ public class CodeGenerator {
         return FileUtility.readOneFile(path);
     }
     
-    public  void generateAll(String path, String packageName, String[] tables, String framework) throws Exception{
+    public  void generateAll(String path, String packageName, String entity, String controller, String repository,String[] tables, String framework) throws Exception{
         for (String table : tables) {
-            generateEntity(path, table, packageName + "." + "entity", framework);
-            generateRepository(path, table, packageName + "." + "repository", packageName + "." + "entity", framework);
-            generateController(path, table, packageName + "." + "controller", packageName + "." + "repository", packageName + "." + "entity", framework);   
+            generateEntity(path, table, packageName + "." + entity, framework);
+            generateRepository(path, table, packageName + "." + repository, packageName + "." + entity, framework);
+            generateController(path, table, packageName + "." + controller, packageName + "." + repository, packageName + "." + "entity", framework);   
         }
     }
 

@@ -25,9 +25,14 @@ public class Test {
         String path = "./";
         String framework = "java:spring-boot";
         String packageName = "carselling.selling";
+        String entity = "entity";
+        String controller = "controller";
+        String repository = "repository";
         try{
-            String[] tables = DbService.getAllTablesArrays(codeGenerator.getDbConnection());
-            codeGenerator.generateAll(path, packageName, tables, framework);
+            String[] tables = {"car"};
+
+            // String[] tables = DbService.getAllTablesArrays(codeGenerator.getDbConnection());
+            codeGenerator.generateAll(path, packageName, entity, controller, repository, tables, framework);
         }catch(Exception e){
             e.printStackTrace();
         }finally{

@@ -43,7 +43,7 @@
                     "packageName":"java.math.BigDecimal"
                 },
                 "BigInt":{
-                    "type":"BigDecimal",
+                    "type":"BigInt",
                     "packageName":"java.math.BigInt"
                 },
                 "[B":{

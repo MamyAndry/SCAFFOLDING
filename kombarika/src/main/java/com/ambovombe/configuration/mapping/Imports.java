@@ -5,8 +5,6 @@ package com.ambovombe.configuration.mapping;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-
-import com.ambovombe.generator.parser.JsonUtility;
 import lombok.Getter;
 import lombok.Setter;
 

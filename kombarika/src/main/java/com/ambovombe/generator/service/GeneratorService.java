@@ -7,6 +7,7 @@ import com.ambovombe.configuration.main.TypeProperties;
 import com.ambovombe.configuration.mapping.LanguageProperties;
 import com.ambovombe.configuration.mapping.*;
 import com.ambovombe.database.DbConnection;
+import com.ambovombe.generator.parser.JsonUtility;
 import com.ambovombe.generator.utils.ObjectUtility;
 
 public class GeneratorService {
@@ -32,6 +33,7 @@ public class GeneratorService {
     }
     public static Set<String> getAllImports(HashMap<String, String> columns, TypeMapping type, LanguageProperties language) {
         Set<String> lst = new HashSet<>();
+        
         for (Map.Entry<String, String> set : columns.entrySet()) {
             if(type.getListMapping().get(set.getValue()).getPackageName().equals("")) { continue; }
             lst.add(type.getListMapping().get(set.getValue()).getPackageName()+
@@ -58,7 +60,9 @@ public class GeneratorService {
             res += imp+ " " + item + "" + lp.getEndOfInstruction() + "\n";
         }
         res += "\n";
-        res.concat(getImports(columns, typeMapping, lp));
+        res += getImports(columns, typeMapping, lp);
+
+        System.out.println(res);
         return res;
     }
 
@@ -99,18 +103,16 @@ public class GeneratorService {
             String packageName,
             LanguageProperties languageProperties,
             FrameworkProperties frameworkProperties,
-            TypeProperties typeProperties
+            TypeMapping typeMapping
     ) throws Exception{
         Connection con = dbConnection.getConnection();
-
-        TypeMapping typeMapping = typeProperties.getListProperties().get(languageProperties.getName());
         Imports imports = frameworkProperties.getImports();
         AnnotationProperty annotationProperty = frameworkProperties.getAnnotationProperty();
 
-        return generateEntity(con, dbConnection, template, table, packageName, languageProperties, typeMapping, imports, annotationProperty);
+        return generateEntityString(con, dbConnection, template, table, packageName, languageProperties, typeMapping, imports, annotationProperty);
     }
 
-    public static String generateEntity(Connection con, DbConnection dbConnection, String template, String table, String packageName, LanguageProperties languageProperties, TypeMapping properties, Imports imports, AnnotationProperty annotationProperty) throws Exception {
+    public static String generateEntityString(Connection con, DbConnection dbConnection, String template, String table, String packageName, LanguageProperties languageProperties, TypeMapping properties, Imports imports, AnnotationProperty annotationProperty) throws Exception {
         boolean t = con.isClosed();
         HashMap<String, String> columns = DbService.getColumnNameAndType(con, table);
         List<String> primaryKeyColumn = DbService.getPrimaryKey(con, dbConnection, table);

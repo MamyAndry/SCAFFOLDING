@@ -22,8 +22,7 @@ public class FileUtility {
     }
 
     public static void createDirectory(String directory, String path) throws Exception{
-        Path directoryPath = Paths.get(path + File.separator + directory)   ;
-        System.out.println(directoryPath);
+        Path directoryPath = Paths.get(path + File.separator + directory);
         // deleteRecursively(directoryPath);
         Files.createDirectories(directoryPath);
     }
@@ -64,6 +63,7 @@ public class FileUtility {
         String separator = File.separator;
         path = path + separator + fileName;
         File file = new File(path);
+        System.out.println(file.getPath() + " created");
     }
     
     public static void writeFile(String path, String body) throws Exception{
