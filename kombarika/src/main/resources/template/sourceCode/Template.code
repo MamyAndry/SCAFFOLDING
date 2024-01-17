@@ -2,7 +2,7 @@
 
 #imports#
 
-#class# {
+#class# #open-bracket#
 
 #fields#
 
@@ -12,4 +12,4 @@
 
 #encapsulation#
 
-}
+#close-bracket#

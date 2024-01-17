@@ -1,7 +1,0 @@
-    
-    public #type# get#field#(){
-        return this.#field#;
-    }
-    public set#field#(#type# #field#){
-        this.#field# = #field#;
-    }

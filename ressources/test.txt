@@ -1,9 +1,0 @@
-	[Column(name = '?')]
-	public #type# #Field#{
-		get{
-			return #field;
-		}
-		set{
-			#field = value;
-		}
-	}
