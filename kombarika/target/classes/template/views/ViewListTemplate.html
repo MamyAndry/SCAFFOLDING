@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSP - Hello World</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <table>
+        <thead id="table-head">
+
+        </thead>
+        <tbody id="table-body">
+
+        </tbody>
+    </table>
+</body>
+<script>
+    $.ajax({
+        //url: 'http://localhost:8000/district',
+
+        url: '#url#/#link#',
+        type: 'GET',
+        success: function(data) {
+            //console.log(data)
+            var keys = Object.keys(data[0]); // Prend les clés du premier objet de data
+            var thead = $('#table-head');
+            var tbody = $('#table-body');
+
+            // Crée un tr pour le thead
+            var tr = $('<tr></tr>');
+            for (let i = 0; i < keys.length; i++) {
+                tr.append('<th>' + keys[i] + '</th>');
+            }
+            tr.append('<th></th>');
+            thead.append(tr);
+
+            // Boucle sur les données pour le tbody
+            for (let i = 0; i < data.length; i++) {
+                var tr = $('<tr></tr>');
+                for (let j = 0; j < keys.length; j++) {
+                    tr.append('<td>' + data[i][keys[j]] + '</td>');
+                }
+                tr.append('<td><button class="delete-button" data-json=\'' + JSON.stringify(data[i]) + '\'>Delete</button></td>');
+                tr.append('<td><button class="update-button" data-json=\'' + JSON.stringify(data[i]) + '\'>Update</button></td>');
+                tbody.append(tr)
+            }
+
+            $('.delete-button').click(function() {
+                var jsonData = $(this).data('json');
+                $.ajax({
+                    // url: 'http://localhost:8000/region/',
+                    url: '#url#/#link#',
+                    type: 'DELETE',
+                    data: JSON.stringify(jsonData),
+                    contentType: 'application/json',
+                    success: function(result) {
+                        // Faites quelque chose avec le résultat
+                    },
+                    error: function(error) {
+                        console.log('Erreur : ', error);
+                    }
+                });
+            });
+        },
+        error: function(error) {
+            console.log('Erreur : ', error);
+        }
+    });
+</script>
+</html>
