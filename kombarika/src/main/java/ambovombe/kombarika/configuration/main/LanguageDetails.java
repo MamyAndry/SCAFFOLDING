@@ -12,7 +12,7 @@ import ambovombe.kombarika.configuration.mapping.LanguageProperties;
 import java.util.HashMap;
 
 /**
- *
+ *j
  * @author Mamisoa
  */
 public class LanguageDetails extends Configuration {

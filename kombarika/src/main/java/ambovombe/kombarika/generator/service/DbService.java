@@ -18,6 +18,7 @@ import java.sql.PreparedStatement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 /**
  *
  * @author Mamisoa
@@ -150,17 +151,28 @@ public class DbService {
 //        return listPrimaryKeys;
 //    }
 
-    public static  List<String> getPrimaryKey(Connection con, DbConnection dbConnection, String tableName) throws Exception{
+    public static  List<String> getPrimaryKey(DbConnection dbConnection, String tableName) throws Exception{
         String query = dbConnection.getListConnection().get(dbConnection.getInUseConnection()).getDatabaseType().getPrimaryKeyQuery();
         ArrayList<String> listPrimaryKeys = new ArrayList<>();
         query = query.replace("?", tableName);
-        PreparedStatement stmt = con.prepareCall(query);
+        PreparedStatement stmt = dbConnection.getConnection().prepareCall(query);
         ResultSet rs = stmt.executeQuery();
         while (rs.next())
             listPrimaryKeys.add(rs.getString(1));
         return listPrimaryKeys;
     }
 
+    public static  List<String> getPrimaryKeyType(DbConnection dbConnection, String tableName) throws Exception{
+        List<String> primaryKeys = getPrimaryKey(dbConnection, tableName);
+        HashMap<String, String> columns = getDetailsColumn(dbConnection.getConnection(), tableName);
+        ArrayList<String> listPrimaryKeysType = new ArrayList<>();
+        for (Map.Entry<String, String> set : columns.entrySet()) {
+            if (primaryKeys.contains(set.getKey())) {
+                listPrimaryKeysType.add(set.getValue().split("\\.")[set.getValue().split("\\.").length - 1]);
+            }
+        }
+        return listPrimaryKeysType;
+    }
     
     public static void getForeignKeys(Connection con, String tableName) throws Exception{
         String query = "SELECT * FROM "+tableName;

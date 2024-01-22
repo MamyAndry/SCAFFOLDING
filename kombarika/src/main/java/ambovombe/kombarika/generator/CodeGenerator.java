@@ -84,7 +84,8 @@ public class CodeGenerator {
                 languageProperties,
                 frameworkProperties,
                 packageName,
-                entityPackage
+                entityPackage,
+                dbConnection
         );
     }
 

@@ -25,12 +25,12 @@ public class Test {
         CodeGenerator codeGenerator = new CodeGenerator();
         String path = "./";
         String framework = "java:spring-boot";
-        String packageName = "com.district.test";
-        String entity = "entity";
+        String packageName = "carselling.selling";
+        String entity = "entity";   
         String controller = "controller";
         String repository = "repository";
         try{
-            // String[] tables = {"model_fuel_type","model_gear_box","model_motor"};
+            // String[] tables = {"commission","fund","profit"};
             String[] tables = DbService.getAllTablesArrays(codeGenerator.getDbConnection());
             // for(String table: tables)
             //     System.out.println(table);

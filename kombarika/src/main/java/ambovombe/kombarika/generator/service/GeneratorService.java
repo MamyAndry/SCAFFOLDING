@@ -1,13 +1,10 @@
 package ambovombe.kombarika.generator.service;
 
-import java.sql.Connection;
 import java.util.*;
 
-import ambovombe.kombarika.configuration.main.TypeProperties;
 import ambovombe.kombarika.configuration.mapping.LanguageProperties;
 import ambovombe.kombarika.configuration.mapping.*;
 import ambovombe.kombarika.database.DbConnection;
-import ambovombe.kombarika.generator.parser.JsonUtility;
 import ambovombe.kombarika.generator.utils.ObjectUtility;
 
 public class GeneratorService {
@@ -103,17 +100,16 @@ public class GeneratorService {
             FrameworkProperties frameworkProperties,
             TypeMapping typeMapping
     ) throws Exception{
-        Connection con = dbConnection.getConnection();
         Imports imports = frameworkProperties.getImports();
         AnnotationProperty annotationProperty = frameworkProperties.getAnnotationProperty();
 
-        return generateEntityString(con, dbConnection, template, table, packageName, languageProperties, typeMapping, imports, annotationProperty);
+        return generateEntityString(dbConnection, template, table, packageName, languageProperties, typeMapping, imports, annotationProperty);
     }
 
-    public static String generateEntityString(Connection con, DbConnection dbConnection, String template, String table, String packageName, LanguageProperties languageProperties, TypeMapping properties, Imports imports, AnnotationProperty annotationProperty) throws Exception {
-        boolean t = con.isClosed();
-        HashMap<String, String> columns = DbService.getColumnNameAndType(con, table);
-        List<String> primaryKeyColumn = DbService.getPrimaryKey(con, dbConnection, table);
+    public static String generateEntityString(DbConnection dbConnection, String template, String table, String packageName, LanguageProperties languageProperties, TypeMapping properties, Imports imports, AnnotationProperty annotationProperty) throws Exception {
+        // boolean t = con.isClosed();
+        HashMap<String, String> columns = DbService.getColumnNameAndType(dbConnection.getConnection(), table);
+        List<String> primaryKeyColumn = DbService.getPrimaryKey(dbConnection, table);
         String res = template.replace("#package#", getPackage(languageProperties, packageName))
                 .replace("#imports#", getEntityImport(columns, properties, languageProperties, imports))
                 .replace("#class#", getEntityClass(table, languageProperties, annotationProperty))
