@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: bureauvote; Type: TABLE; Schema: public; Owner: rakharrs
+-- Name: bureauvote; Type: TABLE; Schema: public; Owner: mamisoa
 --
 
 CREATE TABLE public.bureauvote (
@@ -33,10 +33,10 @@ CREATE TABLE public.bureauvote (
 );
 
 
-ALTER TABLE public.bureauvote OWNER TO rakharrs;
+ALTER TABLE public.bureauvote OWNER TO mamisoa;
 
 --
--- Name: bureauvote_id_fokontany_seq; Type: SEQUENCE; Schema: public; Owner: rakharrs
+-- Name: bureauvote_id_fokontany_seq; Type: SEQUENCE; Schema: public; Owner: mamisoa
 --
 
 CREATE SEQUENCE public.bureauvote_id_fokontany_seq
@@ -48,17 +48,17 @@ CREATE SEQUENCE public.bureauvote_id_fokontany_seq
     CACHE 1;
 
 
-ALTER TABLE public.bureauvote_id_fokontany_seq OWNER TO rakharrs;
+ALTER TABLE public.bureauvote_id_fokontany_seq OWNER TO mamisoa;
 
 --
--- Name: bureauvote_id_fokontany_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rakharrs
+-- Name: bureauvote_id_fokontany_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mamisoa
 --
 
 ALTER SEQUENCE public.bureauvote_id_fokontany_seq OWNED BY public.bureauvote.id_fokontany;
 
 
 --
--- Name: commune; Type: TABLE; Schema: public; Owner: rakharrs
+-- Name: commune; Type: TABLE; Schema: public; Owner: mamisoa
 --
 
 CREATE TABLE public.commune (
@@ -68,10 +68,10 @@ CREATE TABLE public.commune (
 );
 
 
-ALTER TABLE public.commune OWNER TO rakharrs;
+ALTER TABLE public.commune OWNER TO mamisoa;
 
 --
--- Name: commune_id_district_seq; Type: SEQUENCE; Schema: public; Owner: rakharrs
+-- Name: commune_id_district_seq; Type: SEQUENCE; Schema: public; Owner: mamisoa
 --
 
 CREATE SEQUENCE public.commune_id_district_seq
@@ -83,17 +83,17 @@ CREATE SEQUENCE public.commune_id_district_seq
     CACHE 1;
 
 
-ALTER TABLE public.commune_id_district_seq OWNER TO rakharrs;
+ALTER TABLE public.commune_id_district_seq OWNER TO mamisoa;
 
 --
--- Name: commune_id_district_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rakharrs
+-- Name: commune_id_district_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mamisoa
 --
 
 ALTER SEQUENCE public.commune_id_district_seq OWNED BY public.commune.id_district;
 
 
 --
--- Name: commune_id_seq; Type: SEQUENCE; Schema: public; Owner: rakharrs
+-- Name: commune_id_seq; Type: SEQUENCE; Schema: public; Owner: mamisoa
 --
 
 CREATE SEQUENCE public.commune_id_seq
@@ -105,17 +105,17 @@ CREATE SEQUENCE public.commune_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.commune_id_seq OWNER TO rakharrs;
+ALTER TABLE public.commune_id_seq OWNER TO mamisoa;
 
 --
--- Name: commune_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rakharrs
+-- Name: commune_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mamisoa
 --
 
 ALTER SEQUENCE public.commune_id_seq OWNED BY public.commune.id;
 
 
 --
--- Name: district; Type: TABLE; Schema: public; Owner: rakharrs
+-- Name: district; Type: TABLE; Schema: public; Owner: mamisoa
 --
 
 CREATE TABLE public.district (
@@ -125,10 +125,10 @@ CREATE TABLE public.district (
 );
 
 
-ALTER TABLE public.district OWNER TO rakharrs;
+ALTER TABLE public.district OWNER TO mamisoa;
 
 --
--- Name: district_id_region_seq; Type: SEQUENCE; Schema: public; Owner: rakharrs
+-- Name: district_id_region_seq; Type: SEQUENCE; Schema: public; Owner: mamisoa
 --
 
 CREATE SEQUENCE public.district_id_region_seq
@@ -140,17 +140,17 @@ CREATE SEQUENCE public.district_id_region_seq
     CACHE 1;
 
 
-ALTER TABLE public.district_id_region_seq OWNER TO rakharrs;
+ALTER TABLE public.district_id_region_seq OWNER TO mamisoa;
 
 --
--- Name: district_id_region_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rakharrs
+-- Name: district_id_region_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mamisoa
 --
 
 ALTER SEQUENCE public.district_id_region_seq OWNED BY public.district.id_region;
 
 
 --
--- Name: district_id_seq; Type: SEQUENCE; Schema: public; Owner: rakharrs
+-- Name: district_id_seq; Type: SEQUENCE; Schema: public; Owner: mamisoa
 --
 
 CREATE SEQUENCE public.district_id_seq
@@ -162,17 +162,17 @@ CREATE SEQUENCE public.district_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.district_id_seq OWNER TO rakharrs;
+ALTER TABLE public.district_id_seq OWNER TO mamisoa;
 
 --
--- Name: district_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rakharrs
+-- Name: district_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mamisoa
 --
 
 ALTER SEQUENCE public.district_id_seq OWNED BY public.district.id;
 
 
 --
--- Name: fokontany; Type: TABLE; Schema: public; Owner: rakharrs
+-- Name: fokontany; Type: TABLE; Schema: public; Owner: mamisoa
 --
 
 CREATE TABLE public.fokontany (
@@ -182,10 +182,10 @@ CREATE TABLE public.fokontany (
 );
 
 
-ALTER TABLE public.fokontany OWNER TO rakharrs;
+ALTER TABLE public.fokontany OWNER TO mamisoa;
 
 --
--- Name: fokontany_id_commune_seq; Type: SEQUENCE; Schema: public; Owner: rakharrs
+-- Name: fokontany_id_commune_seq; Type: SEQUENCE; Schema: public; Owner: mamisoa
 --
 
 CREATE SEQUENCE public.fokontany_id_commune_seq
@@ -197,17 +197,17 @@ CREATE SEQUENCE public.fokontany_id_commune_seq
     CACHE 1;
 
 
-ALTER TABLE public.fokontany_id_commune_seq OWNER TO rakharrs;
+ALTER TABLE public.fokontany_id_commune_seq OWNER TO mamisoa;
 
 --
--- Name: fokontany_id_commune_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rakharrs
+-- Name: fokontany_id_commune_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mamisoa
 --
 
 ALTER SEQUENCE public.fokontany_id_commune_seq OWNED BY public.fokontany.id_commune;
 
 
 --
--- Name: fokontany_id_seq; Type: SEQUENCE; Schema: public; Owner: rakharrs
+-- Name: fokontany_id_seq; Type: SEQUENCE; Schema: public; Owner: mamisoa
 --
 
 CREATE SEQUENCE public.fokontany_id_seq
@@ -219,17 +219,17 @@ CREATE SEQUENCE public.fokontany_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.fokontany_id_seq OWNER TO rakharrs;
+ALTER TABLE public.fokontany_id_seq OWNER TO mamisoa;
 
 --
--- Name: fokontany_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rakharrs
+-- Name: fokontany_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mamisoa
 --
 
 ALTER SEQUENCE public.fokontany_id_seq OWNED BY public.fokontany.id;
 
 
 --
--- Name: region; Type: TABLE; Schema: public; Owner: rakharrs
+-- Name: region; Type: TABLE; Schema: public; Owner: mamisoa
 --
 
 CREATE TABLE public.region (
@@ -238,10 +238,10 @@ CREATE TABLE public.region (
 );
 
 
-ALTER TABLE public.region OWNER TO rakharrs;
+ALTER TABLE public.region OWNER TO mamisoa;
 
 --
--- Name: region_id_seq; Type: SEQUENCE; Schema: public; Owner: rakharrs
+-- Name: region_id_seq; Type: SEQUENCE; Schema: public; Owner: mamisoa
 --
 
 CREATE SEQUENCE public.region_id_seq
@@ -253,73 +253,73 @@ CREATE SEQUENCE public.region_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.region_id_seq OWNER TO rakharrs;
+ALTER TABLE public.region_id_seq OWNER TO mamisoa;
 
 --
--- Name: region_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rakharrs
+-- Name: region_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mamisoa
 --
 
 ALTER SEQUENCE public.region_id_seq OWNED BY public.region.id;
 
 
 --
--- Name: bureauvote id_fokontany; Type: DEFAULT; Schema: public; Owner: rakharrs
+-- Name: bureauvote id_fokontany; Type: DEFAULT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.bureauvote ALTER COLUMN id_fokontany SET DEFAULT nextval('public.bureauvote_id_fokontany_seq'::regclass);
 
 
 --
--- Name: commune id; Type: DEFAULT; Schema: public; Owner: rakharrs
+-- Name: commune id; Type: DEFAULT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.commune ALTER COLUMN id SET DEFAULT nextval('public.commune_id_seq'::regclass);
 
 
 --
--- Name: commune id_district; Type: DEFAULT; Schema: public; Owner: rakharrs
+-- Name: commune id_district; Type: DEFAULT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.commune ALTER COLUMN id_district SET DEFAULT nextval('public.commune_id_district_seq'::regclass);
 
 
 --
--- Name: district id; Type: DEFAULT; Schema: public; Owner: rakharrs
+-- Name: district id; Type: DEFAULT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.district ALTER COLUMN id SET DEFAULT nextval('public.district_id_seq'::regclass);
 
 
 --
--- Name: district id_region; Type: DEFAULT; Schema: public; Owner: rakharrs
+-- Name: district id_region; Type: DEFAULT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.district ALTER COLUMN id_region SET DEFAULT nextval('public.district_id_region_seq'::regclass);
 
 
 --
--- Name: fokontany id; Type: DEFAULT; Schema: public; Owner: rakharrs
+-- Name: fokontany id; Type: DEFAULT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.fokontany ALTER COLUMN id SET DEFAULT nextval('public.fokontany_id_seq'::regclass);
 
 
 --
--- Name: fokontany id_commune; Type: DEFAULT; Schema: public; Owner: rakharrs
+-- Name: fokontany id_commune; Type: DEFAULT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.fokontany ALTER COLUMN id_commune SET DEFAULT nextval('public.fokontany_id_commune_seq'::regclass);
 
 
 --
--- Name: region id; Type: DEFAULT; Schema: public; Owner: rakharrs
+-- Name: region id; Type: DEFAULT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.region ALTER COLUMN id SET DEFAULT nextval('public.region_id_seq'::regclass);
 
 
 --
--- Data for Name: bureauvote; Type: TABLE DATA; Schema: public; Owner: rakharrs
+-- Data for Name: bureauvote; Type: TABLE DATA; Schema: public; Owner: mamisoa
 --
 
 COPY public.bureauvote (id, id_fokontany, centre_vote, bureau_vote, code_bureau) FROM stdin;
@@ -27702,7 +27702,7 @@ COPY public.bureauvote (id, id_fokontany, centre_vote, bureau_vote, code_bureau)
 
 
 --
--- Data for Name: commune; Type: TABLE DATA; Schema: public; Owner: rakharrs
+-- Data for Name: commune; Type: TABLE DATA; Schema: public; Owner: mamisoa
 --
 
 COPY public.commune (id, id_district, nom_commune) FROM stdin;
@@ -29414,7 +29414,7 @@ COPY public.commune (id, id_district, nom_commune) FROM stdin;
 
 
 --
--- Data for Name: district; Type: TABLE DATA; Schema: public; Owner: rakharrs
+-- Data for Name: district; Type: TABLE DATA; Schema: public; Owner: mamisoa
 --
 
 COPY public.district (id, id_region, nom_district) FROM stdin;
@@ -29541,7 +29541,7 @@ COPY public.district (id, id_region, nom_district) FROM stdin;
 
 
 --
--- Data for Name: fokontany; Type: TABLE DATA; Schema: public; Owner: rakharrs
+-- Data for Name: fokontany; Type: TABLE DATA; Schema: public; Owner: mamisoa
 --
 
 COPY public.fokontany (id, id_commune, nom_fokontany) FROM stdin;
@@ -48878,7 +48878,7 @@ COPY public.fokontany (id, id_commune, nom_fokontany) FROM stdin;
 
 
 --
--- Data for Name: region; Type: TABLE DATA; Schema: public; Owner: rakharrs
+-- Data for Name: region; Type: TABLE DATA; Schema: public; Owner: mamisoa
 --
 
 COPY public.region (id, nom_region) FROM stdin;
@@ -48910,63 +48910,63 @@ COPY public.region (id, nom_region) FROM stdin;
 
 
 --
--- Name: bureauvote_id_fokontany_seq; Type: SEQUENCE SET; Schema: public; Owner: rakharrs
+-- Name: bureauvote_id_fokontany_seq; Type: SEQUENCE SET; Schema: public; Owner: mamisoa
 --
 
 SELECT pg_catalog.setval('public.bureauvote_id_fokontany_seq', 1, false);
 
 
 --
--- Name: commune_id_district_seq; Type: SEQUENCE SET; Schema: public; Owner: rakharrs
+-- Name: commune_id_district_seq; Type: SEQUENCE SET; Schema: public; Owner: mamisoa
 --
 
 SELECT pg_catalog.setval('public.commune_id_district_seq', 1, false);
 
 
 --
--- Name: commune_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rakharrs
+-- Name: commune_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mamisoa
 --
 
 SELECT pg_catalog.setval('public.commune_id_seq', 1704, true);
 
 
 --
--- Name: district_id_region_seq; Type: SEQUENCE SET; Schema: public; Owner: rakharrs
+-- Name: district_id_region_seq; Type: SEQUENCE SET; Schema: public; Owner: mamisoa
 --
 
 SELECT pg_catalog.setval('public.district_id_region_seq', 1, false);
 
 
 --
--- Name: district_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rakharrs
+-- Name: district_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mamisoa
 --
 
 SELECT pg_catalog.setval('public.district_id_seq', 119, true);
 
 
 --
--- Name: fokontany_id_commune_seq; Type: SEQUENCE SET; Schema: public; Owner: rakharrs
+-- Name: fokontany_id_commune_seq; Type: SEQUENCE SET; Schema: public; Owner: mamisoa
 --
 
 SELECT pg_catalog.setval('public.fokontany_id_commune_seq', 1, false);
 
 
 --
--- Name: fokontany_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rakharrs
+-- Name: fokontany_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mamisoa
 --
 
 SELECT pg_catalog.setval('public.fokontany_id_seq', 19329, true);
 
 
 --
--- Name: region_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rakharrs
+-- Name: region_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mamisoa
 --
 
 SELECT pg_catalog.setval('public.region_id_seq', 23, true);
 
 
 --
--- Name: bureauvote bureauvote_pkey; Type: CONSTRAINT; Schema: public; Owner: rakharrs
+-- Name: bureauvote bureauvote_pkey; Type: CONSTRAINT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.bureauvote
@@ -48974,7 +48974,7 @@ ALTER TABLE ONLY public.bureauvote
 
 
 --
--- Name: commune commune_pkey; Type: CONSTRAINT; Schema: public; Owner: rakharrs
+-- Name: commune commune_pkey; Type: CONSTRAINT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.commune
@@ -48982,7 +48982,7 @@ ALTER TABLE ONLY public.commune
 
 
 --
--- Name: district district_pkey; Type: CONSTRAINT; Schema: public; Owner: rakharrs
+-- Name: district district_pkey; Type: CONSTRAINT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.district
@@ -48990,7 +48990,7 @@ ALTER TABLE ONLY public.district
 
 
 --
--- Name: fokontany fokontany_pkey; Type: CONSTRAINT; Schema: public; Owner: rakharrs
+-- Name: fokontany fokontany_pkey; Type: CONSTRAINT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.fokontany
@@ -48998,7 +48998,7 @@ ALTER TABLE ONLY public.fokontany
 
 
 --
--- Name: region region_nom_region_key; Type: CONSTRAINT; Schema: public; Owner: rakharrs
+-- Name: region region_nom_region_key; Type: CONSTRAINT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.region
@@ -49006,7 +49006,7 @@ ALTER TABLE ONLY public.region
 
 
 --
--- Name: region region_pkey; Type: CONSTRAINT; Schema: public; Owner: rakharrs
+-- Name: region region_pkey; Type: CONSTRAINT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.region
@@ -49014,7 +49014,7 @@ ALTER TABLE ONLY public.region
 
 
 --
--- Name: bureauvote bureauvote_id_fokontany_fkey; Type: FK CONSTRAINT; Schema: public; Owner: rakharrs
+-- Name: bureauvote bureauvote_id_fokontany_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.bureauvote
@@ -49022,7 +49022,7 @@ ALTER TABLE ONLY public.bureauvote
 
 
 --
--- Name: commune commune_id_district_fkey; Type: FK CONSTRAINT; Schema: public; Owner: rakharrs
+-- Name: commune commune_id_district_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.commune
@@ -49030,7 +49030,7 @@ ALTER TABLE ONLY public.commune
 
 
 --
--- Name: district district_id_region_fkey; Type: FK CONSTRAINT; Schema: public; Owner: rakharrs
+-- Name: district district_id_region_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.district
@@ -49038,7 +49038,7 @@ ALTER TABLE ONLY public.district
 
 
 --
--- Name: fokontany fokontany_id_commune_fkey; Type: FK CONSTRAINT; Schema: public; Owner: rakharrs
+-- Name: fokontany fokontany_id_commune_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mamisoa
 --
 
 ALTER TABLE ONLY public.fokontany

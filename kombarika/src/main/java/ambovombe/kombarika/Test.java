@@ -25,16 +25,16 @@ public class Test {
         CodeGenerator codeGenerator = new CodeGenerator();
         String path = "./";
         String framework = "java:spring-boot";
-        String packageName = "carselling.selling";
+        String packageName = "com.district.test";
         String entity = "entity";
         String controller = "controller";
         String repository = "repository";
         try{
             // String[] tables = {"model_fuel_type","model_gear_box","model_motor"};
             String[] tables = DbService.getAllTablesArrays(codeGenerator.getDbConnection());
-            for(String table: tables)
-                System.out.println(table);
-            // codeGenerator.generateAll(path, packageName, entity, controller, repository, tables, framework);
+            // for(String table: tables)
+            //     System.out.println(table);
+            codeGenerator.generateAll(path, packageName, entity, controller, repository, tables, framework);
             // codeGenerator.generateEntity(path, "car", packageName+".entity", framework);
         }catch(Exception e){
             e.printStackTrace();
