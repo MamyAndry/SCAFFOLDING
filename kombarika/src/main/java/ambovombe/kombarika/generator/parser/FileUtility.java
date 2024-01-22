@@ -16,6 +16,16 @@ import java.util.Scanner;
  * @author Mamisoa
  */
 public class FileUtility {    
+
+    /**
+     * retrieve every files of the parameter's directory
+     * @param directory
+     * @return array of files
+     */
+    public static File[] listfiles(String directory){
+        File directoryPath = new File(directory);
+        return directoryPath.listFiles();
+    } 
     
     public static String[] splitLine(String string){
         return string.split("=");
