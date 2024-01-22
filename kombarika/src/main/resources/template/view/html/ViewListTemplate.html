@@ -7,6 +7,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
+<div>
+    <button data-toggle="modal" data-target="#insert-modal">Ajouter</button>
+</div>
 <table>
     <thead id="table-head">
 
@@ -15,6 +18,29 @@
 
     </tbody>
 </table>
+
+<div class="modal fade" id="insert-modal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="insert">
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 </body>
 <script>
     $.ajax({
@@ -27,11 +53,13 @@
             var keys = Object.keys(data[0]); // Prend les clés du premier objet de data
             var thead = $('#table-head');
             var tbody = $('#table-body');
+            var add_form = $('#insert');
 
             // Crée un tr pour le thead
             var tr = $('<tr></tr>');
             for (let i = 0; i < keys.length; i++) {
                 tr.append('<th>' + keys[i] + '</th>');
+                add_form.append('<input type="text" name="'+keys[i]+'" placeholder="'+keys[i]+'"> <br>');
             }
             tr.append('<th></th>');
             thead.append(tr);
@@ -39,13 +67,7 @@
             // Boucle sur les données pour le tbody
             for (let i = 0; i < data.length; i++) {
                 var tr = $('<tr></tr>');
-                for (let j = 0; j < keys.length; j++) {
-                    tr.append('<td>' + data[i][keys[j]] + '</td>');
-                }
-                tr.append('<td><button id="delete-'+data[i][keys[0]]+'" class="delete-button">Delete</button></td>');
-                tr.append('<td><button data-toggle="modal" data-target="#updatemodal-'+data[i][keys[0]]+'" id="update-'+data[i][keys[0]]+'" class="update-button">Update</button></td>');
-
-                let update_modal = `
+                var update_modal = `
                 <div class="modal fade" id="updatemodal-`+data[i][keys[0]]+`" role="dialog">
                     <div class="modal-dialog">
 
@@ -56,7 +78,8 @@
                       <h4 class="modal-title">Modal Header</h4>
                     </div>
                     <div class="modal-body">
-                      <p>Some text in the modal.</p>
+                      <form action="" method="put">`;
+                var end_update_modal = `</form>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -65,9 +88,16 @@
 
                 </div>
                 `;
+                for (let j = 0; j < keys.length; j++) {
+                    tr.append('<td>' + data[i][keys[j]] + '</td>');
+                    update_modal += '<input type="text" name="'+keys[j]+'" placeholder="'+keys[j]+'"> <br>';
+                }
+
+                tr.append('<td><button id="delete-'+data[i][keys[0]]+'" class="delete-button">Delete</button></td>');
+                tr.append('<td><button data-toggle="modal" data-target="#updatemodal-'+data[i][keys[0]]+'" id="update-'+data[i][keys[0]]+'" class="update-button">Update</button></td>');
 
                 tbody.append(tr)
-                tbody.append(update_modal);
+                tbody.append(update_modal+end_update_modal);
 
                 $('#delete-'+data[i][keys[0]]).click(function() {
                     var d = data[i]
