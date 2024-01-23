@@ -3,7 +3,8 @@ package ambovombe.kombarika.generator.service.repository;
 import ambovombe.kombarika.configuration.mapping.LanguageProperties;
 import ambovombe.kombarika.configuration.mapping.*;
 import ambovombe.kombarika.generator.parser.FileUtility;
-import ambovombe.kombarika.generator.service.GeneratorService;
+import ambovombe.kombarika.generator.service.DbService;
+import ambovombe.kombarika.generator.service.entity.GeneratorService;
 import ambovombe.kombarika.generator.utils.ObjectUtility;
 import ambovombe.kombarika.utils.Misc;
 

@@ -8,8 +8,11 @@ import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import ambovombe.kombarika.generator.parser.JsonUtility;
 
 /**
  *
@@ -18,6 +21,28 @@ import java.util.List;
 public class ObjectUtility {
     public static String capitalize(String text){
         return text.substring(0,1).toUpperCase().concat(text.substring(1));
+    }
+
+    public static List<Integer> getUpperCaseIndex(String txt){
+        ArrayList<Integer> res = new ArrayList<>();
+        for(int i = 0; i < txt.length(); i++){
+            if(Character.isUpperCase(txt.charAt(i)))
+                res.add(i);
+        }
+        return res;
+    }
+
+    public static String formatToSpacedString(String text){
+        String temp = formatToCamelCase(text);
+        List<Integer> lst = getUpperCaseIndex(temp);
+        String res = "";
+        int i = 0;
+        for (Integer index : lst) {
+            res += capitalize(temp.substring(i, index)) + " ";
+            i = index; 
+        }
+        res += temp.substring(i, temp.length());
+        return capitalize(res);
     }
 
     public static String formatToCamelCase(String str){

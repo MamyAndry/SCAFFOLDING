@@ -1,13 +1,12 @@
-package ambovombe.kombarika.generator.service;
+package ambovombe.kombarika.generator.service.entity;
 
 import java.sql.Connection;
 import java.util.*;
 
-import ambovombe.kombarika.configuration.main.TypeProperties;
 import ambovombe.kombarika.configuration.mapping.LanguageProperties;
 import ambovombe.kombarika.configuration.mapping.*;
 import ambovombe.kombarika.database.DbConnection;
-import ambovombe.kombarika.generator.parser.JsonUtility;
+import ambovombe.kombarika.generator.service.DbService;
 import ambovombe.kombarika.generator.utils.ObjectUtility;
 
 public class GeneratorService {
@@ -31,6 +30,7 @@ public class GeneratorService {
                 + languageProperties.getConstructorSyntax().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)));
         return res;
     }
+    
     public static Set<String> getAllImports(HashMap<String, String> columns, TypeMapping type, LanguageProperties language) {
         Set<String> lst = new HashSet<>();
         
@@ -113,7 +113,7 @@ public class GeneratorService {
     public static String generateEntityString(Connection con, DbConnection dbConnection, String template, String table, String packageName, LanguageProperties languageProperties, TypeMapping properties, Imports imports, AnnotationProperty annotationProperty) throws Exception {
         boolean t = con.isClosed();
         HashMap<String, String> columns = DbService.getColumnNameAndType(con, table);
-        List<String> primaryKeyColumn = DbService.getPrimaryKey(con, dbConnection, table);
+        List<String> primaryKeyColumn = DbService.getPrimaryKey(dbConnection, table);
         String res = template.replace("#package#", getPackage(languageProperties, packageName))
                 .replace("#imports#", getEntityImport(columns, properties, languageProperties, imports))
                 .replace("#class#", getEntityClass(table, languageProperties, annotationProperty))

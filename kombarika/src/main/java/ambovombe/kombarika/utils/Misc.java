@@ -20,6 +20,11 @@ public class Misc {
     public static String getSourceTemplateLocation(){
         return getTemplateLocation() + File.separator + "sourceCode";
     }
+
+    public static String getViewTemplateLocation(){
+        return getTemplateLocation() + File.separator + "view";
+    }
+
     public static String getConfigLocation(){
         return currentLocation("conf");
     }

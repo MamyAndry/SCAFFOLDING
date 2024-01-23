@@ -1,0 +1,20 @@
+{
+    "inputInsert":"\t\t\t\t\t<div  class=\"mb-3\"> \n \t\t\t\t\t\t<label class=\"form-label\">#label#</label> \n \t\t\t\t\t\t<input class=\"form-control\" type=\"#type#\" name=\"#name#\" > \n \t\t\t\t\t</div>",
+    "inputUpdate":"\t\t\t\t\t\t\t\t\t<div class=\"mb-3\"> \n \t\t\t\t\t\t\t\t\t\t<label class=\"form-label\">#label#</label> \n \t\t\t\t\t\t\t\t\t\t<input class=\"form-control\" type=\"#type#\" name=\"#name#\" value=\"`+data[i][\"#name#\"]+`\"> \n\t\t\t\t\t\t\t\t\t</div>",
+    "tableHeader":"\t<th> #label# </th>",
+    "template":"html/ViewTemplate.html",
+    "listMapping" : {
+        "Timestamp":"date-time local",
+        "Time":"time",
+        "Date":"Date",
+        "Integer":"number",
+        "Double":"number",
+        "Float":"number",
+        "Boolean":"text",
+        "String":"text",
+        "Char":"text",
+        "BigDecimal":"number",
+        "BigInt":"number",
+        "[B":"file"
+    }
+}

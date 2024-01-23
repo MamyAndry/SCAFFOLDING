@@ -150,11 +150,11 @@ public class DbService {
 //        return listPrimaryKeys;
 //    }
 
-    public static  List<String> getPrimaryKey(Connection con, DbConnection dbConnection, String tableName) throws Exception{
+    public static  List<String> getPrimaryKey(DbConnection dbConnection, String tableName) throws Exception{
         String query = dbConnection.getListConnection().get(dbConnection.getInUseConnection()).getDatabaseType().getPrimaryKeyQuery();
         ArrayList<String> listPrimaryKeys = new ArrayList<>();
         query = query.replace("?", tableName);
-        PreparedStatement stmt = con.prepareCall(query);
+        PreparedStatement stmt = dbConnection.getConnection().prepareCall(query);
         ResultSet rs = stmt.executeQuery();
         while (rs.next())
             listPrimaryKeys.add(rs.getString(1));
@@ -162,25 +162,25 @@ public class DbService {
     }
 
     
-    public static void getForeignKeys(Connection con, String tableName) throws Exception{
-        String query = "SELECT * FROM "+tableName;
-        DatabaseMetaData meta = con.getMetaData();
-        ResultSet tablesRs = meta.getTables(null, null, tableName, new String[]{"TABLE"});
-        ResultSet primaryKeys = meta.getPrimaryKeys(null, null, tableName);
-        ResultSet foreignKeys = meta.getExportedKeys(null, null, tableName);
-        ResultSetMetaData rsmd2 = foreignKeys.getMetaData();
+//     public static void getForeignKeys(Connection con, String tableName) throws Exception{
+//         String query = "SELECT * FROM "+tableName;
+//         DatabaseMetaData meta = con.getMetaData();
+//         ResultSet tablesRs = meta.getTables(null, null, tableName, new String[]{"TABLE"});
+//         ResultSet primaryKeys = meta.getPrimaryKeys(null, null, tableName);
+//         ResultSet foreignKeys = meta.getExportedKeys(null, null, tableName);
+//         ResultSetMetaData rsmd2 = foreignKeys.getMetaData();
         
-        int count2  = rsmd2.getColumnCount();
-        System.out.println("");
-        System.out.println("--------- FOREIGN KEY ----------------");     
-//        System.out.println(foreignKeys.next());
-        while(foreignKeys.next()){
-            for(int i = 1; i <= count2; i++){
-                System.out.println(" column NAME = " + rsmd2.getColumnName(i) + " column VALUES = " + foreignKeys.getString(i) + " column TYPE = "+rsmd2.getColumnClassName(i));
-            }
-            System.out.println("-------------------------------------");
-        }
-//        return map;   
-    }
+//         int count2  = rsmd2.getColumnCount();
+//         System.out.println("");
+//         System.out.println("--------- FOREIGN KEY ----------------");     
+// //        System.out.println(foreignKeys.next());
+//         while(foreignKeys.next()){
+//             for(int i = 1; i <= count2; i++){
+//                 System.out.println(" column NAME = " + rsmd2.getColumnName(i) + " column VALUES = " + foreignKeys.getString(i) + " column TYPE = "+rsmd2.getColumnClassName(i));
+//             }
+//             System.out.println("-------------------------------------");
+//         }
+// //        return map;   
+//     }
 
 }
