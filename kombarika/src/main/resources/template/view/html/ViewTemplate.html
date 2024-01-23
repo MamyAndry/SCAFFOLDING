@@ -15,10 +15,12 @@
         <div class="col"></div>
         <div class="col"></div>
         <div class="col">
-            <button data-toggle="modal" data-target="#insert-modal" class="btn btn-primary">Ajouter</button>
+            <button data-toggle="modal" data-target="#insert-modal" class="btn btn-success">Add</button>
         </div>
     </div>
 </div>
+<br>
+<h3>List of #entity#</h3>
 <br>
 <table class="table">
     <thead id="table-head">
@@ -39,7 +41,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Insert #entity#</h4>
+                <h4 class="modal-title">Add #entity#</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -48,7 +50,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" id="insert-button" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                <button type="button" id="insert-button" class="btn btn-success" data-dismiss="modal">Save</button>
             </div>
         </div>
 
@@ -91,7 +93,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="update-button-`+data[i]["#label#"]+`" data-dismiss="modal">Submit</button>
+                        <button type="button" class="btn btn-warning" id="update-button-`+data[i]["#label#"]+`" data-dismiss="modal">Update</button>
                         </div>
                         </div>
                 </div>`;
