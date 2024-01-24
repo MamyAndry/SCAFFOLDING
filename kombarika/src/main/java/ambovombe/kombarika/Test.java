@@ -35,7 +35,7 @@ public class Test {
         String view = "view";
         String url = "http://localhost:8080";
         try{
-            String[] tables = {"district"};
+            String[] tables = {"region"};
             // String[] tables = DbService.getAllTablesArrays(codeGenerator.getDbConnection());
             // for(String table: tables)
             //     System.out.println(table);
