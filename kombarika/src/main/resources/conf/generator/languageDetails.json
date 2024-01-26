@@ -32,6 +32,7 @@
                     },
                     "annotationProperty" : {
                         "table":"Table(name = \"?\")",
+                        "autoIncrement":"",
                         "column":"Column(name = \"?\")",
                         "entity": "",
                         "controller": "ApiController",
@@ -105,9 +106,10 @@
                     },
                     "annotationProperty" : {
                         "table": "Table(name = \"?\")",
+                        "autoIncrement":"GeneratedValue(strategy=GenerationType.IDENTITY)",
                         "column": "Column(name = \"?\")",
                         "entity": "Entity",
-                        "controller": "RestController",
+                        "controller": "RestController\n@CrossOrigin(*)",
                         "constraints": {
                             "primaryKey": "Id",
                             "foreignKey": [

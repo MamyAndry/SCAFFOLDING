@@ -6,38 +6,40 @@ import java.util.List;
 import java.util.Map;
 
 import ambovombe.kombarika.configuration.main.ViewDetails;
-import ambovombe.kombarika.configuration.mapping.FrameworkProperties;
-import ambovombe.kombarika.configuration.mapping.LanguageProperties;
 import ambovombe.kombarika.database.DbConnection;
 import ambovombe.kombarika.generator.parser.FileUtility;
 import ambovombe.kombarika.generator.service.DbService;
 import ambovombe.kombarika.generator.utils.ObjectUtility;
 import ambovombe.kombarika.utils.Misc;
+import lombok.Getter;
+import lombok.Setter;
 
-public class ViewService {
-    
-    public static String getInputInsert(ViewDetails viewDetails, HashMap<String, String> columns, List<String> primaryKeys){
+@Getter @Setter
+public class View {
+    ViewDetails viewDetails;
+
+    public String getInputInsert(HashMap<String, String> columns, List<String> primaryKeys){
         String res ="";
-        String template = viewDetails.getInputInsert();
+        String template = this.getViewDetails().getInputInsert();
         for (Map.Entry<String, String> set : columns.entrySet()) {
             if (!primaryKeys.contains(set.getKey())) {
                 res += template
                 .replace("#label#", ObjectUtility.formatToSpacedString(set.getKey()))
-                .replace("#type#", viewDetails.getListMapping().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
+                .replace("#type#", this.getViewDetails().getListMapping().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
                 .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";        
             }
         }
         return res;
     }
 
-    public static String getInputUpdate(ViewDetails viewDetails, HashMap<String, String> columns, List<String> primaryKeys){
+    public String getInputUpdate(HashMap<String, String> columns, List<String> primaryKeys){
         String res ="";
-        String template = viewDetails.getInputUpdate();
+        String template = this.getViewDetails().getInputUpdate();
         for (Map.Entry<String, String> set : columns.entrySet()) {
             if (!primaryKeys.contains(set.getKey())) {
                 res +=  template
                 .replace("#label#", ObjectUtility.formatToSpacedString(set.getKey()))
-                .replace("#type#", viewDetails.getListMapping().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
+                .replace("#type#", this.getViewDetails().getListMapping().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
                 .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";        
             }else{
                 res += template
@@ -49,9 +51,9 @@ public class ViewService {
         return res;
     }
 
-    public static String getHeaders(ViewDetails viewDetails,HashMap<String, String> columns){
+    public String getHeaders(HashMap<String, String> columns){
         String res ="";
-        String template = viewDetails.getTableHeader();
+        String template = this.getViewDetails().getTableHeader();
         for (Map.Entry<String, String> set : columns.entrySet()) {
             res += "\t\t" + template
             .replace("#label#", ObjectUtility.formatToSpacedString(set.getKey())) + "\n";
@@ -59,20 +61,15 @@ public class ViewService {
         return res;
     }
 
-    public static String generateView(
-        String table, 
-        String url,
-        ViewDetails viewDetails,
-        DbConnection dbConnection
-    ) throws Exception{
+    public String generateView(String table, String url, DbConnection dbConnection) throws Exception{
         String res = "";        
-        String tempPath = Misc.getViewTemplateLocation().concat(File.separator).concat(viewDetails.getTemplate());
+        String tempPath = Misc.getViewTemplateLocation().concat(File.separator).concat(this.getViewDetails().getTemplate());
         String template = FileUtility.readOneFile(tempPath);
         List<String> primaryKeys = DbService.getPrimaryKey(dbConnection, table);
         HashMap<String, String> columns = DbService.getDetailsColumn(dbConnection.getConnection(), table);
-        res = template.replace("#header#", getHeaders(viewDetails, columns))
-        .replace("#inputInsert#", getInputInsert(viewDetails, columns, primaryKeys))
-        .replace("#inputUpdate#", getInputUpdate(viewDetails, columns, primaryKeys))
+        res = template.replace("#header#", getHeaders( columns))
+        .replace("#inputInsert#", getInputInsert(columns, primaryKeys))
+        .replace("#inputUpdate#", getInputUpdate(columns, primaryKeys))
         .replace("#entity#", ObjectUtility.formatToSpacedString(table))
         .replace("#url#", url)
         .replace("#path#", ObjectUtility.formatToCamelCase(table))

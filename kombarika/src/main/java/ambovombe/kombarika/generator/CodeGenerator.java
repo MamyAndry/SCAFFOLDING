@@ -8,15 +8,13 @@ import ambovombe.kombarika.configuration.main.LanguageDetails;
 import ambovombe.kombarika.configuration.main.TypeProperties;
 import ambovombe.kombarika.configuration.main.ViewDetails;
 import ambovombe.kombarika.configuration.mapping.*;
-import ambovombe.kombarika.utils.Misc;
 import ambovombe.kombarika.database.DbConnection;
 import ambovombe.kombarika.generator.parser.FileUtility;
-import ambovombe.kombarika.generator.parser.JsonUtility;
-import ambovombe.kombarika.generator.service.controller.ControllerService;
-import ambovombe.kombarika.generator.service.entity.GeneratorService;
-import ambovombe.kombarika.generator.service.repository.RepositoryService;
-import ambovombe.kombarika.generator.service.view.ViewService;
-import ambovombe.kombarika.generator.utils.ObjectUtility;
+import ambovombe.kombarika.generator.service.GeneratorService;
+import ambovombe.kombarika.generator.service.controller.Controller;
+import ambovombe.kombarika.generator.service.entity.Entity;
+import ambovombe.kombarika.generator.service.repository.Repository;
+import ambovombe.kombarika.generator.service.view.View;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -69,32 +67,6 @@ public class CodeGenerator {
         generateControllerFile(path, table, packageName, language, framework, controller);
     }
 
-    public String buildController(
-        String table, 
-        String packageName, 
-        String repository, 
-        String entity, 
-        String language, 
-        String framework
-    ) throws Exception{
-        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
-        FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
-        String template = frameworkProperties.getTemplate();
-        return ControllerService.generateController(
-                frameworkProperties.getCrudMethod(),
-                template,
-                table,
-                packageName,
-                repository,
-                entity,
-                frameworkProperties.getControllerProperty(),
-                languageProperties,
-                frameworkProperties.getImports(),
-                frameworkProperties.getAnnotationProperty()
-        );
-    }
-    
-
     public void generateRepository(
         String path, 
         String table, 
@@ -108,78 +80,35 @@ public class CodeGenerator {
         generateRepositoryFile(path, table, packageName, language, framework, repository);
     }
 
-    public String buildRepository(
-        String table, 
-        String packageName, 
-        String entityPackage, 
-        String language, 
-        String framework
-    ) throws Exception{
-        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
-        FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
-        return RepositoryService.generateRepository(
-                table,
-                languageProperties,
-                frameworkProperties,
-                packageName,
-                entityPackage
-        );
-    }
 
+    public void generateView(
+        String path, 
+        String table,
+        String directory, 
+        String url
+    ) throws Exception{
+        String view = buildView(table, url);
+        FileUtility.createDirectory(directory,path);
+        path = path + File.separator + directory;
+        String fileName = GeneratorService.getFileName(table, "html");
+        FileUtility.generateFile(path, fileName, view);
+    }
 
     /**
      * eg : generate -p path -t table1, table2, table3 -package name -l java:spring-boot
      * @author rakharrs
      */
-    public String buildEntity(
-        String table, 
-        String packageName, 
-        String language, 
-        String framework
-    ) throws Exception {
+    public String buildEntity(String table, String packageName, String language, String framework) throws Exception {
         LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
         TypeMapping typeMapping = getTypeProperties().getListProperties().get(language);
         FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
         String template = frameworkProperties.getTemplate();
-        return GeneratorService.generateEntity(
-                        getDbConnection(),
-                        template,
-                        table,
-                        packageName,
-                        languageProperties,
-                        frameworkProperties,
-                        typeMapping
-                );
-    }
-
-    public void generateControllerFile(
-        String path,
-        String table,
-        String packageName,
-        String language,
-        String framework,
-        String content
-    ) throws Exception{
-        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
-        String directory = packageName.replace(".", File.separator);
-        FileUtility.createDirectory(directory,path);
-        path = path + File.separator + directory;
-        FileUtility.generateFile(path, GeneratorService.getFileName(table+"Controller", languageProperties), content);
-    }
-    public void generateRepositoryFile(
-        String path,
-        String table,
-        String packageName,
-        String language,
-        String framework,
-        String content
-    ) throws Exception{
-        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
-        if (languageProperties.getFrameworks().get(framework).getRepository().equals("")) return;
-        String directory = packageName.replace(".", File.separator);
-        FileUtility.createDirectory(directory,path);
-        path = path + File.separator + directory;
-        FileUtility.generateFile(path, GeneratorService.getFileName(table+"Repository", languageProperties), content);
+        Entity entity = new Entity();
+        entity.setAnnotationProperty(frameworkProperties.getAnnotationProperty());
+        entity.setLanguageProperties(languageProperties);
+        entity.setTypeMapping(typeMapping);
+        entity.setImports(frameworkProperties.getImports());
+        return entity.generateEntity(getDbConnection(), template, table, packageName);
     }
 
     public void generateEntityFile(
@@ -194,27 +123,77 @@ public class CodeGenerator {
         String directory = packageName.replace(".", File.separator);
         FileUtility.createDirectory(directory,path);
         path = path + File.separator + directory;
-        FileUtility.generateFile(path, GeneratorService.getFileName(table, languageProperties), entity);
+        FileUtility.generateFile(path, GeneratorService.getFileName(table, languageProperties.getExtension()), entity);
     }
 
-    public void generateView(
-        String path, 
+    public String buildController(String table, String packageName, String repository, String entity, String language, String framework) throws Exception{
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
+        String template = frameworkProperties.getTemplate();
+        Controller controller = new Controller();
+        controller.setAnnotationProperty(frameworkProperties.getAnnotationProperty());
+        controller.setControllerProperty(frameworkProperties.getControllerProperty());
+        controller.setCrudMethod(frameworkProperties.getCrudMethod());
+        controller.setImports(frameworkProperties.getImports());
+        controller.setLanguageProperties(languageProperties);
+        return controller.generateController(template, table, packageName, repository, entity);
+    }
+
+    public void generateControllerFile(
+        String path,
         String table,
-        String directory, 
-        String url
+        String packageName,
+        String language,
+        String framework,
+        String content
     ) throws Exception{
-        String view = ViewService.generateView(table, url, this.getViewDetails(), this.getDbConnection());
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        String directory = packageName.replace(".", File.separator);
         FileUtility.createDirectory(directory,path);
         path = path + File.separator + directory;
-        String fileName = ObjectUtility.formatToCamelCase(table) + ".html";
-        FileUtility.generateFile(path, fileName, view);
+        FileUtility.generateFile(path, GeneratorService.getFileName(table+"Controller", languageProperties.getExtension()), content);
     }
 
-    
-    public static String getTemplate() throws Exception{
-        String path = Misc.getSourceTemplateLocation() + File.separator + "Template.code";
-        return FileUtility.readOneFile(path);
+    public String buildRepository(
+        String table, 
+        String packageName, 
+        String entityPackage, 
+        String language, 
+        String framework
+    ) throws Exception{
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
+        Repository repository = new Repository();
+        repository.setFrameworkProperties(frameworkProperties);
+        repository.setLanguageProperties(languageProperties);
+        return repository.generateRepository(table, packageName, entityPackage);
     }
+
+    public void generateRepositoryFile(
+        String path,
+        String table,
+        String packageName,
+        String language,
+        String framework,
+        String content
+    ) throws Exception{
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        if(languageProperties.getFrameworks().get(framework).getRepository().equals("")) return;
+        String directory = packageName.replace(".", File.separator);
+        FileUtility.createDirectory(directory,path);
+        path = path + File.separator + directory;
+        FileUtility.generateFile(path, GeneratorService.getFileName(table+"Repository", languageProperties.getExtension()), content);
+    }
+
+    public String buildView(String table, String url) throws Exception{
+        View view = new View();
+        view.setViewDetails(this.getViewDetails());
+        return view.generateView(table, url, dbConnection);
+    }
+    // public static String getTemplate() throws Exception{
+    //     String path = Misc.getSourceTemplateLocation() + File.separator + "Template.code";
+    //     return FileUtility.readOneFile(path);
+    // }
     
     public void generateAll(
         String path, 

@@ -6,6 +6,7 @@ import lombok.Setter;
 
 public class AnnotationProperty {
     String table;
+    String autoIncrement;
     String column;
     String entity;
     String controller;

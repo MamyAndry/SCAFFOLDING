@@ -5,7 +5,6 @@
 package ambovombe.kombarika.generator.service;
 
 import ambovombe.kombarika.database.DbConnection;
-import ambovombe.kombarika.database.DbProperties;
 import ambovombe.kombarika.generator.utils.ObjectUtility;
 import java.util.HashMap;
 
