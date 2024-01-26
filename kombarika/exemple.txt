@@ -1,0 +1,101 @@
+// In MyController.cs
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+
+public class MyItem
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
+
+public class MyDbContext : DbContext
+{
+    public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
+    {
+    }
+
+    public DbSet<MyItem> MyItems { get; set; }
+}
+
+[Route("api/[controller]")]
+[ApiController]
+public class MyController : ControllerBase
+{
+    private readonly MyDbContext _context;
+
+    public MyController(MyDbContext context)
+    {
+        _context = context;
+    }
+
+    // GET: api/My
+    [HttpGet]
+    public ActionResult<IEnumerable<MyItem>> Get()
+    {
+        return Ok(_context.MyItems.ToList());
+    }
+
+    // GET: api/My/5
+    [HttpGet("{id}")]
+    public ActionResult<MyItem> Get(int id)
+    {
+        var item = _context.MyItems.Find(id);
+
+        if (item != null)
+        {
+            return Ok(item);
+        }
+        else
+        {
+            return NotFound();
+        }
+    }
+
+    // POST: api/My
+    [HttpPost]
+    public ActionResult Post([FromBody] MyItem value)
+    {
+        _context.MyItems.Add(value);
+        _context.SaveChanges();
+        return Ok();
+    }
+
+    // PUT: api/My/5
+    [HttpPut("{id}")]
+    public ActionResult Put(int id, [FromBody] MyItem value)
+    {
+        var item = _context.MyItems.Find(id);
+
+        if (item != null)
+        {
+            item.Name = value.Name;
+            _context.SaveChanges();
+            return Ok();
+        }
+        else
+        {
+            return NotFound();
+        }
+    }
+
+    // DELETE: api/My/5
+    [HttpDelete("{id}")]
+    public ActionResult Delete(int id)
+    {
+        var item = _context.MyItems.Find(id);
+
+        if (item != null)
+        {
+            _context.MyItems.Remove(item);
+            _context.SaveChanges();
+            return Ok();
+        }
+        else
+        {
+            return NotFound();
+        }
+    }
+}
