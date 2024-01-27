@@ -10,6 +10,7 @@ import ambovombe.kombarika.configuration.main.ViewDetails;
 import ambovombe.kombarika.configuration.mapping.*;
 import ambovombe.kombarika.database.DbConnection;
 import ambovombe.kombarika.generator.parser.FileUtility;
+import ambovombe.kombarika.generator.service.DbService;
 import ambovombe.kombarika.generator.service.GeneratorService;
 import ambovombe.kombarika.generator.service.controller.Controller;
 import ambovombe.kombarika.generator.service.entity.Entity;
@@ -19,6 +20,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.*;
+import java.util.List;
 
 /**
  * @author Mamisoa
@@ -163,10 +165,13 @@ public class CodeGenerator {
     ) throws Exception{
         LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
         FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
+        TypeMapping typeMapping = getTypeProperties().getListProperties().get(language);
+        List<String> primaryKeysType = DbService.getPrimaryKeyType(dbConnection, table);
         Repository repository = new Repository();
         repository.setFrameworkProperties(frameworkProperties);
         repository.setLanguageProperties(languageProperties);
-        return repository.generateRepository(table, packageName, entityPackage);
+        repository.setTypeMapping(typeMapping);
+        return repository.generateRepository(table, packageName, entityPackage, primaryKeysType);
     }
 
     public void generateRepositoryFile(

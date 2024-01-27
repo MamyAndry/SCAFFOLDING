@@ -138,7 +138,7 @@
                         "annotationArgumentParameterLink":"PathVariable"
                     },
                     "repositoryProperty" : {
-                        "classSyntax": "public interface ?Repository extends CrudRepository<?, String>"
+                        "classSyntax": "public interface ?Repository extends CrudRepository<?, #type#>"
                     }
 
                 }

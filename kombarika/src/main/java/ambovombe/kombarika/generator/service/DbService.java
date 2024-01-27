@@ -5,6 +5,7 @@
 package ambovombe.kombarika.generator.service;
 
 import ambovombe.kombarika.database.DbConnection;
+import ambovombe.kombarika.generator.parser.JsonUtility;
 import ambovombe.kombarika.generator.utils.ObjectUtility;
 import java.util.HashMap;
 
@@ -17,6 +18,7 @@ import java.sql.PreparedStatement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 /**
  *
  * @author Mamisoa
@@ -135,19 +137,7 @@ public class DbService {
 ////            }
 //        }
 //    }
-    
-//    public static  List<String> getPrimaryKey(DbProperties dbProperties, String tableName) throws Exception{
-//        Connection con = dbProperties.connect();
-//        String query = dbProperties.getDatabaseType().getPrimaryKeyQuery();
-//        ArrayList<String> listPrimaryKeys = new ArrayList<>();
-//        query = query.replace("?", tableName);
-//        PreparedStatement stmt = con.prepareCall(query);
-//        ResultSet rs = stmt.executeQuery();
-//        while (rs.next())
-//            listPrimaryKeys.add(rs.getString(1));
-//        con.close();
-//        return listPrimaryKeys;
-//    }
+
 
     public static  List<String> getPrimaryKey(DbConnection dbConnection, String tableName) throws Exception{
         String query = dbConnection.getListConnection().get(dbConnection.getInUseConnection()).getDatabaseType().getPrimaryKeyQuery();
@@ -158,6 +148,22 @@ public class DbService {
         while (rs.next())
             listPrimaryKeys.add(rs.getString(1));
         return listPrimaryKeys;
+    }
+
+    public static String getType(String str){
+        return str.split("\\.")[str.split("\\.").length -1];
+    }
+
+    public static  List<String> getPrimaryKeyType(DbConnection dbConnection, String tableName) throws Exception{
+        ArrayList<String> listPrimaryKeysType = new ArrayList<>();
+        HashMap<String ,String> map = getDetailsColumn(dbConnection.getConnection(), tableName);
+        List<String> primaryKeys = getPrimaryKey(dbConnection, tableName);
+        for (Map.Entry<String, String> set : map.entrySet()) {
+            if (primaryKeys.contains(set.getKey())) {
+                listPrimaryKeysType.add(getType(set.getValue()));
+            }
+        }
+        return listPrimaryKeysType;
     }
 
     

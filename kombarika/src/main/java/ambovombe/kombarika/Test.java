@@ -33,7 +33,7 @@ public class Test {
         String controller = "controller";
         String repository = "repository";
         String view = "view";
-        String url = "http://localhost: 8080";
+        String url = "http://localhost:8080";
         try{
             String[] tables = {"district","region"};
             // String[] tables = DbService.getAllTablesArrays(codeGenerator.getDbConnection());
