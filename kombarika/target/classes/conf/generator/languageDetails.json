@@ -38,13 +38,19 @@
                         "controller": "ApiController",
                         "constraints":{
                             "primaryKey":"Id",
-                            "foreignKey":[""]
+                            "foreignKey":{
+                                "annotation":"JoinColumn(name = \"?\")",
+                                "manyToOne":"ManyToOne",
+                                "manyToMany":"",
+                                "oneToMany":"",
+                                "oneToOne":""
+                            }
                         }
                     },
                     "crudMethod" : {
                         "findAll": "",
                         "findById":"",
-                        "delete": "",
+                        "delete": "Ok(_context.#object#.ToList())",
                         "update": "",
                         "save": ""
                     },
@@ -93,10 +99,7 @@
                             "org.springframework.web.bind.annotation.*"
                         ],
                         "entity":[
-                            "jakarta.persistence.Column",
-                            "jakarta.persistence.Entity",
-                            "jakarta.persistence.Id",
-                            "jakarta.persistence.Table"
+                            "jakarta.persistence.*"
                         ],
                         "repository":[
                             "packageName.className",
@@ -112,9 +115,13 @@
                         "controller": "RestController\n@CrossOrigin(*)",
                         "constraints": {
                             "primaryKey": "Id",
-                            "foreignKey": [
-                                ""
-                            ]
+                            "foreignKey": {
+                                "annotation":"JoinColumn(name = \"?\")",
+                                "manyToOne":"ManyToOne",
+                                "manyToMany":"",
+                                "oneToMany":"",
+                                "oneToOne":""
+                            }
                         }
                     },
                     "crudMethod" : {

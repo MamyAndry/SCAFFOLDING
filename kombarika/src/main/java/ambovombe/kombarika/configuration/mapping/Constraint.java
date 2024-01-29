@@ -7,5 +7,5 @@ public class Constraint {
     @Getter @Setter
     String primaryKey;
     @Getter @Setter
-    String[] foreignKey;
+    ForeignKey foreignKey;
 }

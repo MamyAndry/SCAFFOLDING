@@ -1,6 +1,10 @@
 {
     "inputInsert":"\t\t\t\t\t<div  class=\"mb-3\"> \n \t\t\t\t\t\t<label class=\"form-label\">#label#</label> \n \t\t\t\t\t\t<input class=\"form-control\" type=\"#type#\" name=\"#name#\" > \n \t\t\t\t\t</div>",
     "inputUpdate":"\t\t\t\t\t\t\t\t\t<div class=\"mb-3\"> \n \t\t\t\t\t\t\t\t\t\t<label class=\"form-label\">#label#</label> \n \t\t\t\t\t\t\t\t\t\t<input class=\"form-control\" type=\"#type#\" name=\"#name#\" value=\"`+data[i][\"#name#\"]+`\"> \n\t\t\t\t\t\t\t\t\t</div>",
+    "select":"\t\t\t\t\t<div  class=\"mb-3\"> \n \t\t\t\t\t\t<label class=\"form-label\">#label#</label> \n \t\t\t\t\t\t<select class=\"form-control\" name=\"#name#\" id=\"select-#name#\"> #option# </select>\n \t\t\t\t\t</div>",
+    "selectUpdate":"\t\t\t\t\t<div  class=\"mb-3\"> \n \t\t\t\t\t\t<label class=\"form-label\">#label#</label> \n \t\t\t\t\t\t<select class=\"form-control\" name=\"#name#\" id=\"select-#name#-`+data[i][\"#id#\"]+`\"> </select>\n \t\t\t\t\t</div>",
+    "option":"<script>\n$.ajax({\nurl: '#url#/#path#',\ntype: 'GET',\nsuccess: function(data) {\nvar keys = Object.keys(data[0]);\nvar select = $(\"#select-#label#\");\nfor (let i = 0; i < data.length; i++) { \n var option = `<option value=`+data[i][\"#id#\"]+`>`+data[i][\"#value#\"]+`</option>`;\nselect.append(option);\n}\n}\n})\n</script>\n",
+    "optionUpdate":"\n$.ajax({\nurl: '#url#/#path#',\ntype: 'GET',\nsuccess: function(data#Name#) {\nvar keys = Object.keys(data#Name#[0]);\nvar select = $(\"#select-#label#-\"+data[i][\"#id#\"]);\nfor (let j = 0; j < data#Name#.length; j++) { \n var option = `<option value=`+data#Name#[j][\"#id#\"]+`>`+data[j][\"#value#\"]+`</option>`;\nselect.append(option);\n}\n}\n});",
     "tableHeader":"\t<th> #label# </th>",
     "template":"html/ViewTemplate.html",
     "listMapping" : {

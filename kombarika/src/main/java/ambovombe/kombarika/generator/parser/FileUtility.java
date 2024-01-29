@@ -67,6 +67,7 @@ public class FileUtility {
         while((line = reader.readLine()) != null){
             builder.append(line).append("\n");
         }
+        reader.close();
         return builder.toString();
     }
 

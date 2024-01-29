@@ -1,6 +1,5 @@
 package ambovombe.kombarika.generator.service.entity;
 
-import java.sql.Connection;
 import java.util.*;
 
 import ambovombe.kombarika.configuration.mapping.*;
@@ -67,7 +66,7 @@ public class Entity {
         return res;
     }
 
-    public String getEntityField(HashMap<String, String> columns, List<String> primaryKeys){
+    public String getEntityField(HashMap<String, String> columns, HashMap<String, String> foreignKeys ,List<String> primaryKeys){
         String res = "";
 
         for (Map.Entry<String, String> set : columns.entrySet()) {
@@ -75,11 +74,24 @@ public class Entity {
                 res += "\t"
                         + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getConstraints().getPrimaryKey()) + "\n";
                 if(set.getValue().equals("Integer") && !this.getAnnotationProperty().getAutoIncrement().equals("")){
-                    if (primaryKeys.contains(set.getKey())) {
-                        res += "\t"
-                                + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getAutoIncrement()) + "\n";
-                    }
+                    res += "\t"
+                        + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getAutoIncrement()) + "\n";
+                    
                 }
+            }
+            String temp = foreignKeys.get(set.getKey());
+            if(temp != null){
+                res += "\t"
+                        + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getConstraints().getForeignKey().getAnnotation()
+                            .replace("?", set.getKey())) + "\n";
+                res += "\t"
+                        + this.getLanguageProperties().getAnnotationSyntax().replace("?",this.getAnnotationProperty().getConstraints().getForeignKey().getManyToOne())+ "\n";
+                res += "\t"
+                    + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)) + " "
+                    + ObjectUtility.formatToCamelCase(temp)
+                    + this.getLanguageProperties().getEndOfInstruction()
+                    + "\n";
+                continue;
             }
             res += "\t"
                     + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getColumn()).replace("?", set.getKey()) + "\n";
@@ -93,9 +105,18 @@ public class Entity {
         return res;
     }
 
-    public String getEncapsulation(HashMap<String, String> columns){
+    public String getEncapsulation(HashMap<String, String> columns, HashMap<String, String> foreignKeys){
         String rep = "";
         for (Map.Entry<String, String> set : columns.entrySet()) {
+
+            String temp = foreignKeys.get(set.getKey());
+            if(temp != null){
+                rep += this.getLanguageProperties().getEncapsulation()
+                .replace("#type#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
+                .replace("#Field#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
+                .replace("#field#", ObjectUtility.formatToCamelCase(temp));
+                continue;
+            }
             rep += this.getLanguageProperties().getEncapsulation()
             .replace("#type#", set.getValue())
             .replace("#Field#", ObjectUtility.formatToCamelCase(ObjectUtility.capitalize(set.getKey())))
@@ -106,16 +127,17 @@ public class Entity {
 
     public String generateEntity(DbConnection dbConnection, String template, String table, String packageName) throws Exception {
         HashMap<String, String> columns = DbService.getColumnNameAndType(dbConnection.getConnection(), table);
+        HashMap<String, String> foreignKeys = DbService.getForeignKeys(dbConnection, table);
         List<String> primaryKeyColumn = DbService.getPrimaryKey(dbConnection, table);
         String res = template.replace("#package#", GeneratorService.getPackage(this.getLanguageProperties(), packageName))
                 .replace("#imports#", getEntityImport(columns))
                 .replace("#class#", getEntityClass(table))
                 .replace("#open-bracket#", this.getLanguageProperties().getOpenBracket())
                 .replace("#close-bracket#", this.getLanguageProperties().getCloseBracket())
-                .replace("#fields#", getEntityField(columns, primaryKeyColumn))
+                .replace("#fields#", getEntityField(columns, foreignKeys, primaryKeyColumn))
                 .replace("#constructors#", getConstructor(table))
                 .replace("#methods#", "")
-                .replace("#encapsulation#", getEncapsulation(columns));
+                .replace("#encapsulation#", getEncapsulation(columns, foreignKeys));
         return res;
     }
 

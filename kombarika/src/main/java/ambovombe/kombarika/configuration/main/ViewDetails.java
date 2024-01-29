@@ -15,6 +15,10 @@ public class ViewDetails extends Configuration{
     String inputUpdate;
     String tableHeader;
     String template;
+    String select;
+    String option;
+    String selectUpdate;
+    String optionUpdate;
     HashMap<String, String> listMapping;
 
     @Override
@@ -25,6 +29,10 @@ public class ViewDetails extends Configuration{
         this.setInputUpdate(v.getInputUpdate());
         this.setListMapping(v.getListMapping());
         this.setTableHeader(v.getTableHeader());
+        this.setOption(v.getOption());
+        this.setSelect(v.getSelect());
+        this.setOptionUpdate(v.getOptionUpdate());
+        this.setSelectUpdate(v.getSelectUpdate());
         this.setTemplate(v.getTemplate());
     }
 }

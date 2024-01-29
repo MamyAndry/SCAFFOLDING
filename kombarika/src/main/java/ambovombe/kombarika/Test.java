@@ -4,15 +4,13 @@ package ambovombe.kombarika;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 
-
-import ambovombe.kombarika.configuration.main.ViewDetails;
+import ambovombe.kombarika.database.DbConnection;
 import ambovombe.kombarika.generator.CodeGenerator;
-import ambovombe.kombarika.generator.parser.JsonUtility;
 import ambovombe.kombarika.generator.service.DbService;
-import ambovombe.kombarika.generator.utils.ObjectUtility;
 
 import java.sql.SQLException;
-
+import java.util.Map;
+import java.util.HashMap;
 /**
  *
  *  @author Mamisoa
@@ -36,6 +34,14 @@ public class Test {
         String url = "http://localhost:8080";
         try{
             String[] tables = {"district","region"};
+            // DbConnection dbConnection = codeGenerator.getDbConnection();
+            // String str = dbConnection.getListConnection().get(dbConnection.getInUseConnection()).getDatabaseType().getForeignKeyQuery();
+            // str = str.replace("?", "commune");
+            // System.out.println(str);
+            // HashMap<String, String> foreignKeys = DbService.getForeignKeys(dbConnection, "commune");
+            // for (Map.Entry<String, String> set : foreignKeys.entrySet()) {
+            //     System.out.println(set.getKey() + " " + set.getValue());
+            // }
             // String[] tables = DbService.getAllTablesArrays(codeGenerator.getDbConnection());
             // for(String table: tables)
             //     System.out.println(table);

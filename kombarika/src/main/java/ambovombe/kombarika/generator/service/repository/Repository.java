@@ -4,7 +4,6 @@ import ambovombe.kombarika.configuration.mapping.FrameworkProperties;
 import ambovombe.kombarika.configuration.mapping.LanguageProperties;
 import ambovombe.kombarika.configuration.mapping.TypeMapping;
 import ambovombe.kombarika.generator.parser.FileUtility;
-import ambovombe.kombarika.generator.parser.JsonUtility;
 import ambovombe.kombarika.generator.service.GeneratorService;
 import ambovombe.kombarika.generator.utils.ObjectUtility;
 import ambovombe.kombarika.utils.Misc;

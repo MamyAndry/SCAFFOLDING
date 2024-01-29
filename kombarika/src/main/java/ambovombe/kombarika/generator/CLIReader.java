@@ -4,12 +4,6 @@
  */
 package ambovombe.kombarika.generator;
 
-import ambovombe.kombarika.generator.parser.FileUtility;
-import ambovombe.kombarika.generator.service.DbService;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  * @author Mamisoa

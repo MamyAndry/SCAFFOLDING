@@ -5,7 +5,6 @@
 package ambovombe.kombarika.generator.service;
 
 import ambovombe.kombarika.database.DbConnection;
-import ambovombe.kombarika.generator.parser.JsonUtility;
 import ambovombe.kombarika.generator.utils.ObjectUtility;
 import java.util.HashMap;
 
@@ -87,7 +86,6 @@ public class DbService {
         HashMap<String, String> map = new HashMap<>();
         
         String query = "SELECT * FROM "+tableName;
-        boolean t = con.isClosed();
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(query);
         ResultSetMetaData rsmd = rs.getMetaData();
@@ -139,7 +137,7 @@ public class DbService {
 //    }
 
 
-    public static  List<String> getPrimaryKey(DbConnection dbConnection, String tableName) throws Exception{
+    public static List<String> getPrimaryKey(DbConnection dbConnection, String tableName) throws Exception{
         String query = dbConnection.getListConnection().get(dbConnection.getInUseConnection()).getDatabaseType().getPrimaryKeyQuery();
         ArrayList<String> listPrimaryKeys = new ArrayList<>();
         query = query.replace("?", tableName);
@@ -148,6 +146,18 @@ public class DbService {
         while (rs.next())
             listPrimaryKeys.add(rs.getString(1));
         return listPrimaryKeys;
+    }
+
+    public static HashMap<String, String> getForeignKeys(DbConnection dbConnection, String tableName) throws Exception{
+        String query = dbConnection.getListConnection().get(dbConnection.getInUseConnection()).getDatabaseType().getForeignKeyQuery();
+        HashMap<String, String> listForeignKeysKeys = new HashMap<>();
+        query = query.replace("?", tableName);
+        PreparedStatement stmt = dbConnection.getConnection().prepareCall(query);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()){
+            listForeignKeysKeys.put(rs.getString(1), rs.getString(2));
+        }
+        return listForeignKeysKeys;
     }
 
     public static String getType(String str){

@@ -73,8 +73,13 @@
             for (let i = 0; i < data.length; i++) {
                 var tr = $('<tr></tr>');
 
-                for (let j = 0; j < keys.length; j++) {
-                    tr.append('<td>' + data[i][keys[j]] + '</td>');
+                for (let j = 0; j < keys.length; j++){
+                    var temp = data[i][keys[j]];
+                    if(temp !== null && typeof temp === 'object' && !Array.isArray(temp) && !(temp instanceof Function)){
+                        tr.append('<td>' + temp + '</td>');
+                    }else{
+                        tr.append('<td>' + temp + '</td>');   
+                    }
                 }
                 var update_modal = `
                 <div class="modal fade" id="updatemodal-`+data[i]["#label#"]+`" role="dialog">
@@ -88,21 +93,22 @@
                         <div class="modal-body">
                             <form action="" method="put" id="update-`+data[i]["#label#"]+`">
 
-#inputUpdate#
-                            
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-warning" id="update-button-`+data[i]["#label#"]+`" data-dismiss="modal">Update</button>
-                        </div>
-                        </div>
-                </div>`;
-                tr.append('<td><button id="delete-'+data[i]["#label#"]+'" class="btn btn-danger">Delete</button></td>');
+                                #inputUpdate#
+                                
+                                </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-warning" id="update-button-`+data[i]["#label#"]+`" data-dismiss="modal">Update</button>
+                                    </div>
+                                    </div>
+                                    </div>`;
+                                    tr.append('<td><button id="delete-'+data[i]["#label#"]+'" class="btn btn-danger">Delete</button></td>');
                 tr.append('<td><button data-toggle="modal" data-target="#updatemodal-'+data[i]["#label#"]+'" id="update-button'+data[i]["#label#"]+'" class="btn btn-primary">Update</button></td>');
-
+                
                 tbody.append(tr)
                 tbody.append(update_modal);
-
+                
+                #optionUpdate#
                 $('#delete-'+data[i]["#label#"]).click(function() {
                     var d = data[i]
                     $.ajax({
