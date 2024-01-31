@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CRUD District</title>
+    <title>CRUD Fokontany</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -15,19 +15,19 @@
         <div class="col"></div>
         <div class="col"></div>
         <div class="col">
-            <button data-toggle="modal" data-target="#insert-modal" class="btn btn-success">Add District</button>
+            <button data-toggle="modal" data-target="#insert-modal" class="btn btn-success">Add Fokontany</button>
         </div>
     </div>
 </div>
 <br>
-<h3>List of District</h3>
+<h3>List of Fokontany</h3>
 <br>
 <table class="table">
     <thead id="table-head">
         <tr>
-			<th> Nom District </th>
-			<th> Id Region </th>
+			<th> Nom Fokontany </th>
 			<th> Id </th>
+			<th> Id Commune </th>
 
             <th></th>
             <th></th>
@@ -44,26 +44,26 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Add District</h4>
+                <h4 class="modal-title">Add Fokontany</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <form action="" method="post" id="insert">
 					<div  class="mb-3"> 
- 						<label class="form-label">Nom District</label> 
- 						<input class="form-control" type="text" name="nomDistrict" > 
+ 						<label class="form-label">Nom Fokontany</label> 
+ 						<input class="form-control" type="text" name="nomFokontany" > 
  					</div>
 					<div  class="mb-3"> 
  						<label class="form-label">id</label> 
- 						<select class="form-control" name="region" id="select-region"> <script>
+ 						<select class="form-control" name="commune" id="select-commune"> <script>
 $.ajax({
-url: 'http://localhost:8080/region',
+url: 'http://localhost:8080/commune',
 type: 'GET',
 success: function(data) {
 var keys = Object.keys(data[0]);
-var select = $("#select-region");
+var select = $("#select-commune");
 for (let i = 0; i < data.length; i++) { 
- var option = `<option value=`+data[i]["id"]+`>`+data[i]["nomRegion"]+`</option>`;
+ var option = `<option value=`+data[i]["id"]+`>`+data[i]["nomCommune"]+`</option>`;
 select.append(option);
 }
 }
@@ -84,7 +84,7 @@ select.append(option);
 </body>
 <script>
     $.ajax({
-        url: 'http://localhost:8080/district',
+        url: 'http://localhost:8080/fokontany',
         type: 'GET',
         success: function(data) {
             //console.log(data)
@@ -100,7 +100,7 @@ select.append(option);
                 for (let j = 0; j < keys.length; j++){
                     var temp = data[i][keys[j]];
                     if(temp !== null && typeof temp === 'object' && !Array.isArray(temp) && !(temp instanceof Function)){
-                        tr.append('<td>' + temp.nomRegion + '</td>');
+                        tr.append('<td>' + temp.nomCommune + '</td>');
                     }else{
                         tr.append('<td>' + temp + '</td>');   
                     }
@@ -111,24 +111,24 @@ select.append(option);
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Update District</h4>
+                            <h4 class="modal-title">Update Fokontany</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">
                             <form action="" method="put" id="update-`+data[i]["id"]+`">
 
                                 									<div class="mb-3"> 
- 										<label class="form-label">Nom District</label> 
- 										<input class="form-control" type="text" name="nomDistrict" value="`+data[i]["nomDistrict"]+`"> 
+ 										<label class="form-label">Nom Fokontany</label> 
+ 										<input class="form-control" type="text" name="nomFokontany" value="`+data[i]["nomFokontany"]+`"> 
 									</div>
-					<div  class="mb-3"> 
- 						<label class="form-label">id</label> 
- 						<select class="form-control" name="region" id="select-region-`+data[i]["id"]+`"> </select>
- 					</div>									<div class="mb-3"> 
+									<div class="mb-3"> 
  										<label class="form-label"></label> 
  										<input class="form-control" type="hidden" name="id" value="`+data[i]["id"]+`"> 
 									</div>
-
+					<div  class="mb-3"> 
+ 						<label class="form-label">id</label> 
+ 						<select class="form-control" name="commune" id="select-commune-`+data[i]["id"]+`"> </select>
+ 					</div>
                                 
                                 </form>
                                 </div>
@@ -145,13 +145,13 @@ select.append(option);
                 
                 
 $.ajax({
-url: 'http://localhost:8080/region',
+url: 'http://localhost:8080/commune',
 type: 'GET',
-success: function(dataRegion) {
-var keys = Object.keys(dataRegion[0]);
-var select = $("#select-region-"+data[i]["id"]);
-for (let j = 0; j < dataRegion.length; j++) { 
- var option = `<option value=`+dataRegion[j]["id"]+`>`+data[j]["nomRegion"]+`</option>`;
+success: function(dataCommune) {
+var keys = Object.keys(dataCommune[0]);
+var select = $("#select-commune-"+data[i]["id"]);
+for (let j = 0; j < dataCommune.length; j++) { 
+ var option = `<option value=`+dataCommune[j]["id"]+`>`+data[j]["nomCommune"]+`</option>`;
 select.append(option);
 }
 }
@@ -160,7 +160,7 @@ select.append(option);
                 $('#delete-'+data[i]["id"]).click(function() {
                     var d = data[i]
                     $.ajax({
-                        url: 'http://localhost:8080/district',
+                        url: 'http://localhost:8080/fokontany',
                         type: 'DELETE',
                         data: JSON.stringify(d),
                         contentType: 'application/json',
@@ -180,7 +180,7 @@ select.append(option);
                         datas[element["name"]] = element["value"];  
                     });
                     $.ajax({
-                        url: 'http://localhost:8080/district',
+                        url: 'http://localhost:8080/fokontany',
                         type: 'PUT',
                         data: JSON.stringify(datas),
                         contentType: 'application/json',
@@ -209,7 +209,7 @@ select.append(option);
             data[element["name"]] = element["value"];  
         });
         $.ajax({
-            url: 'http://localhost:8080/district',
+            url: 'http://localhost:8080/fokontany',
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',

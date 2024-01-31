@@ -112,7 +112,7 @@
                         "autoIncrement":"GeneratedValue(strategy=GenerationType.IDENTITY)",
                         "column": "Column(name = \"?\")",
                         "entity": "Entity",
-                        "controller": "RestController\n@CrossOrigin(*)",
+                        "controller": "RestController\n@CrossOrigin(\"*\")",
                         "constraints": {
                             "primaryKey": "Id",
                             "foreignKey": {

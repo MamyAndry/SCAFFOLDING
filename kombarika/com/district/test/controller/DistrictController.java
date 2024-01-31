@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@CrossOrigin(*)
+@CrossOrigin("*")
 @RequestMapping(path = "district")
 public class DistrictController
  {

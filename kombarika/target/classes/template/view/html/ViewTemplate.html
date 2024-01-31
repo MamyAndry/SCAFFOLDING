@@ -76,7 +76,7 @@
                 for (let j = 0; j < keys.length; j++){
                     var temp = data[i][keys[j]];
                     if(temp !== null && typeof temp === 'object' && !Array.isArray(temp) && !(temp instanceof Function)){
-                        tr.append('<td>' + temp + '</td>');
+                        tr.append('<td>' + temp.#value# + '</td>');
                     }else{
                         tr.append('<td>' + temp + '</td>');   
                     }

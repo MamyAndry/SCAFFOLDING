@@ -33,7 +33,7 @@ public class Test {
         String view = "view";
         String url = "http://localhost:8080";
         try{
-            String[] tables = {"district","region"};
+            // String[] tables = {"district","region"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();
             // String str = dbConnection.getListConnection().get(dbConnection.getInUseConnection()).getDatabaseType().getForeignKeyQuery();
             // str = str.replace("?", "commune");
@@ -42,7 +42,7 @@ public class Test {
             // for (Map.Entry<String, String> set : foreignKeys.entrySet()) {
             //     System.out.println(set.getKey() + " " + set.getValue());
             // }
-            // String[] tables = DbService.getAllTablesArrays(codeGenerator.getDbConnection());
+            String[] tables = DbService.getAllTablesArrays(codeGenerator.getDbConnection());
             // for(String table: tables)
             //     System.out.println(table);
             codeGenerator.generateAll(path, packageName, entity, controller, repository, view, url, tables, framework);

@@ -18,7 +18,7 @@ import lombok.Setter;
 public class View {
     ViewDetails viewDetails;
 
-    public String getInputInsert(HashMap<String, String> columns, HashMap<String, String> foreignKeys, List<String> primaryKeys, String url){
+    public String getInputInsert(HashMap<String, String> columns, HashMap<String, String> foreignKeys, List<String> primaryKeys, String url, String id, String attribute) throws Exception{
         String res ="";
         String template = this.getViewDetails().getInputInsert();
         for (Map.Entry<String, String> set : columns.entrySet()) {
@@ -32,8 +32,8 @@ public class View {
                             .replace("#url#", url)
                             .replace("#path#", ObjectUtility.formatToCamelCase(temp))
                             .replace("#label#", temp)
-                            .replace("#id#", ObjectUtility.formatToCamelCase(temp))
-                            .replace("#value#", ObjectUtility.formatToCamelCase(set.getKey()))
+                            .replace("#id#", ObjectUtility.formatToCamelCase(id))
+                            .replace("#value#", ObjectUtility.formatToCamelCase(attribute))
                         );
                     continue;
                 }
@@ -46,27 +46,26 @@ public class View {
         return res;
     }
 
-    public String getOptionUpdate(HashMap<String, String> foreignKeys, String url){
+    public String getOptionUpdate(HashMap<String, String> foreignKeys, String url, String id, String attribute) throws Exception{
         String res = "";
         if (foreignKeys.isEmpty()) {
             return "";
         }
-
         for (Map.Entry<String, String> set : foreignKeys.entrySet()) {
             res += this.getViewDetails().getOptionUpdate()
                 .replace("#url#", url)
                 .replace("#path#", ObjectUtility.formatToCamelCase(set.getValue()))
                 .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getValue())))
                 .replace("#label#", ObjectUtility.formatToCamelCase(set.getValue()))
-                .replace("#id#", ObjectUtility.formatToCamelCase(set.getKey()))                
-                .replace("#value#", ObjectUtility.formatToCamelCase(set.getKey()))
+                .replace("#id#", ObjectUtility.formatToCamelCase(id))                
+                .replace("#value#", ObjectUtility.formatToCamelCase(attribute))
                 ;
             res += "\n";
         }
         return res;
     }
 
-    public String getInputUpdate(HashMap<String, String> columns, HashMap<String, String> foreignKeys, List<String> primaryKeys, String url){
+    public String getInputUpdate(HashMap<String, String> columns, HashMap<String, String> foreignKeys, List<String> primaryKeys, String url, String id) throws Exception{
         String res ="";
         String template = this.getViewDetails().getInputUpdate();
         for (Map.Entry<String, String> set : columns.entrySet()) {
@@ -75,7 +74,7 @@ public class View {
                 if(temp != null){
                     res += this.getViewDetails().getSelectUpdate()
                     .replace("#name#", ObjectUtility.formatToCamelCase(temp))
-                    .replace("#id#", ObjectUtility.formatToCamelCase(set.getKey()));
+                    .replace("#id#", ObjectUtility.formatToCamelCase(id));
                     continue;
                 }
                 res +=  template
@@ -102,6 +101,27 @@ public class View {
         return res;
     }
 
+    public HashMap<String, String> getIdAndAttribute(DbConnection dbConnection, HashMap<String, String> foreignKeys) throws Exception{
+        String attribute = "";
+        String id = "";
+        HashMap<String,String> map = new HashMap<>();
+        for (Map.Entry<String, String> set : foreignKeys.entrySet()) {
+            List<String> tempPrimaryKey = DbService.getPrimaryKey(dbConnection, set.getValue());
+            id = tempPrimaryKey.get(0);
+            HashMap<String, String> tempColumns = DbService.getDetailsColumn(dbConnection.getConnection(), set.getValue());
+            for (Map.Entry<String, String> set2 : tempColumns.entrySet()) {
+                if(set2.getValue().equals("java.lang.String")){
+                    attribute = set2.getKey();
+                    break;
+                }
+            }
+            break;
+        }
+        map.put("attribute", attribute);
+        map.put("id", id);
+        return map;
+    }
+
     public String generateView(String table, String url, DbConnection dbConnection) throws Exception{
         String res = "";        
         String tempPath = Misc.getViewTemplateLocation().concat(File.separator).concat(this.getViewDetails().getTemplate());
@@ -110,11 +130,15 @@ public class View {
         String path =  ObjectUtility.formatToCamelCase(table);
         HashMap<String, String> columns = DbService.getDetailsColumn(dbConnection.getConnection(), table);
         HashMap<String, String> foreignKeys = DbService.getForeignKeys(dbConnection, table);
+        HashMap<String, String> idAndAttribute = this.getIdAndAttribute(dbConnection, foreignKeys);
+        String id = idAndAttribute.get("id");
+        String attribute = idAndAttribute.get("attribute");
         res = template.replace("#header#", getHeaders( columns))
-        .replace("#inputInsert#", getInputInsert(columns, foreignKeys, primaryKeys, url))
-        .replace("#inputUpdate#", getInputUpdate(columns, foreignKeys, primaryKeys, url))
-        .replace("#optionUpdate#", getOptionUpdate(foreignKeys, url))
+        .replace("#inputInsert#", getInputInsert(columns, foreignKeys, primaryKeys, url, id, attribute))
+        .replace("#inputUpdate#", getInputUpdate(columns, foreignKeys, primaryKeys, url, id))
+        .replace("#optionUpdate#", getOptionUpdate(foreignKeys, url, id, attribute))
         .replace("#entity#", ObjectUtility.formatToSpacedString(table))
+        .replace("#value#", ObjectUtility.formatToCamelCase(attribute))
         .replace("#url#", url)
         .replace("#path#", path)
         .replace("#label#", ObjectUtility.formatToCamelCase(primaryKeys.get(0)));

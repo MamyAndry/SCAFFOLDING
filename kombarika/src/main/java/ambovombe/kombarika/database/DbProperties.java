@@ -4,13 +4,7 @@
  */
 package ambovombe.kombarika.database;
 
-import ambovombe.kombarika.generator.parser.FileUtility;
-import ambovombe.kombarika.generator.parser.JsonUtility;
-
 import java.sql.SQLException;
-import java.util.List;
-
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import ambovombe.kombarika.properties.DatabaseType;
