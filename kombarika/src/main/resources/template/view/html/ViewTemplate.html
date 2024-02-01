@@ -107,7 +107,6 @@
                 
                 tbody.append(tr)
                 tbody.append(update_modal);
-                
                 #optionUpdate#
                 $('#delete-'+data[i]["#label#"]).click(function() {
                     var d = data[i]
@@ -129,7 +128,13 @@
                     var datas = {};
                     console.log(d);
                     d.forEach(element => {
-                        datas[element["name"]] = element["value"];  
+                        var inputElements = $('#update-' + data[i]["#label#"] + ' [name="' + element.name + '"]');
+                        if (inputElements.is('select')) {
+                            // Handle select element differently
+                            datas[element.name] = { #label# : element.value };
+                        } else {
+                            datas[element.name] = element.value;
+                        }
                     });
                     $.ajax({
                         url: '#url#/#path#',
@@ -158,7 +163,13 @@
         var data = {};
         console.log(d);
         d.forEach(element => {
-            data[element["name"]] = element["value"];  
+            var inputElements = $('#insert [name="' + element.name + '"]');
+            if (inputElements.is('select')) {
+                // Handle select element differently
+                data[element.name] = { #label# : element.value };
+            } else {
+                data[element.name] = element.value;
+            }
         });
         $.ajax({
             url: '#url#/#path#',
