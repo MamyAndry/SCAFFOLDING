@@ -26,10 +26,7 @@ public class MyController : ControllerBase
 {
     private readonly MyDbContext _context;
 
-    public MyController(MyDbContext context)
-    {
-        _context = context;
-    }
+    public MyController(MyDbContext context) { _context = context; }
 
     // GET: api/My
     [HttpGet]
@@ -99,19 +96,3 @@ public class MyController : ControllerBase
         }
     }
 }      
-    if(temp !== null && typeof temp === 'object' && !Array.isArray(temp) && !(temp instanceof Function)){
-
-<script>
-    $.ajax({
-        url: 'http://localhost:8080/region',
-        type: 'GET',
-        success: function(data) {
-            var keys = Object.keys(data[0]); // Prend les clés du premier objet de data
-            var select = $("#select-region");
-            for (let i = 0; i < data.length; i++) {  
-                var option = `<option value=`+data[i]["id"]+`>`+data[i]["nomRegion"]+`</option>`;
-                select.append(option);
-            } 
-        }
-    })
-</script>

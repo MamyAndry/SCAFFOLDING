@@ -26,6 +26,7 @@ public class LanguageProperties {
     private String encapsulation;
     private String extension;
     private String classSyntax;
+    private String fieldSyntax;
     private String methodSyntax;
     private String endOfInstruction;
     private String constructorSyntax;

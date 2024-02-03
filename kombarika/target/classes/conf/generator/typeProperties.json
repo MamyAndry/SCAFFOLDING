@@ -52,7 +52,7 @@
                 }
             }
         },
-        "dotnet" : {
+        "csharp" : {
             "listMapping" : {
                 "Timestamp":{
                     "type":"DateTime",
@@ -67,15 +67,15 @@
                     "packageName":""
                 },
                 "Integer":{
-                    "type":"Int",
+                    "type":"int",
                     "packageName":""
                 },
                 "Double":{
-                    "type":"Double",
+                    "type":"double",
                     "packageName":""
                 },
                 "Float":{
-                    "type":"Float",
+                    "type":"float",
                     "packageName":""
                 },
                 "Boolean":{

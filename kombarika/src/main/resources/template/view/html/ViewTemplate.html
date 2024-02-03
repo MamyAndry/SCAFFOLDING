@@ -92,22 +92,21 @@
                         </div>
                         <div class="modal-body">
                             <form action="" method="put" id="update-`+data[i]["#label#"]+`">
-
-                                #inputUpdate#
-                                
-                                </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-warning" id="update-button-`+data[i]["#label#"]+`" data-dismiss="modal">Update</button>
-                                    </div>
-                                    </div>
-                                    </div>`;
-                                    tr.append('<td><button id="delete-'+data[i]["#label#"]+'" class="btn btn-danger">Delete</button></td>');
-                tr.append('<td><button data-toggle="modal" data-target="#updatemodal-'+data[i]["#label#"]+'" id="update-button'+data[i]["#label#"]+'" class="btn btn-primary">Update</button></td>');
+#inputUpdate#                                
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" id="update-button-`+data[i]["#label#"]+`" data-dismiss="modal">Update</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>`;
+                tr.append('<td><button id="delete-'+data[i]["#label#"]+'" class="btn btn-danger">Delete</button></td>');
+                tr.append('<td><button data-toggle="modal" data-target="#updatemodal-'+data[i]["#label#"]+'" id="update-button-'+data[i]["#label#"]+'" class="btn btn-primary">Update</button></td>');
                 
                 tbody.append(tr)
                 tbody.append(update_modal);
-                #optionUpdate#
+#optionUpdate#
                 $('#delete-'+data[i]["#label#"]).click(function() {
                     var d = data[i]
                     $.ajax({

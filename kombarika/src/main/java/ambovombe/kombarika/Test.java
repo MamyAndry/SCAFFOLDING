@@ -25,7 +25,7 @@ public class Test {
     public static void main(String[] args) throws Exception {
         CodeGenerator codeGenerator = new CodeGenerator();
         String path = "./";
-        String framework = "java:spring-boot";
+        String framework = "csharp:dotnet";
         String packageName = "com.district.test";
         String entity = "entity";
         String controller = "controller";

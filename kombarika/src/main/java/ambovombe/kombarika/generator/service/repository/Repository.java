@@ -25,11 +25,11 @@ public class Repository {
         for(String item : this.getFrameworkProperties().getImports().getRepository())
             res += imp+ " " + item
             .replace("packageName", packageName)
-            .replace("className", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))) 
+            .replace("className", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
             + "" + this.getLanguageProperties().getEndOfInstruction() + "\n";
         return res;
     }
-    
+
     public String getRepositoryClass(String table, List<String> primaryKeysType) throws Exception{
         String res = "";
         res += this.getFrameworkProperties().getRepositoryProperty().getClassSyntax().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)));
@@ -38,7 +38,7 @@ public class Repository {
     }
 
     public String generateRepository(
-        String table, 
+        String table,
         String packageName,
         String entityPackage,
         List<String> primaryKeysType
@@ -53,7 +53,7 @@ public class Repository {
                 .replace("#class#", getRepositoryClass(table, primaryKeysType))
                 .replace("#open-bracket#", languageProperties.getOpenBracket())
                 .replace("#close-bracket#", languageProperties.getCloseBracket())
-                .replace("#fields#", "")
+                .replace("#fields#", this.getFrameworkProperties().getRepositoryProperty().getFieldSyntax().replace("#Field#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
                 .replace("#constructors#", "")
                 .replace("#methods#", "")
                 .replace("#encapsulation#", "");

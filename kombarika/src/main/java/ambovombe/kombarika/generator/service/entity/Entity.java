@@ -84,12 +84,14 @@ public class Entity {
                 res += "\t"
                         + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getConstraints().getForeignKey().getAnnotation()
                             .replace("?", set.getKey())) + "\n";
+                if(!this.getAnnotationProperty().getConstraints().getForeignKey().getManyToOne().equals("")){
+                    res += "\t"
+                            + this.getLanguageProperties().getAnnotationSyntax().replace("?",this.getAnnotationProperty().getConstraints().getForeignKey().getManyToOne())+ "\n";
+                }
                 res += "\t"
-                        + this.getLanguageProperties().getAnnotationSyntax().replace("?",this.getAnnotationProperty().getConstraints().getForeignKey().getManyToOne())+ "\n";
-                res += "\t"
-                    + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)) + " "
-                    + ObjectUtility.formatToCamelCase(temp)
-                    + this.getLanguageProperties().getEndOfInstruction()
+                    + this.getLanguageProperties().getFieldSyntax()
+                        .replace("Type", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
+                        .replace("field", ObjectUtility.formatToCamelCase(temp))
                     + "\n";
                 continue;
             }
@@ -97,9 +99,9 @@ public class Entity {
                     + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getColumn()).replace("?", set.getKey()) + "\n";
 
             res += "\t"
-                + typeMapping.getListMapping().get(set.getValue()).getType() + " "
-                + ObjectUtility.formatToCamelCase(set.getKey())
-                + this.getLanguageProperties().getEndOfInstruction()
+                + this.getLanguageProperties().getFieldSyntax()
+                    .replace("Type", typeMapping.getListMapping().get(set.getValue()).getType())
+                    .replace("field", ObjectUtility.formatToCamelCase(set.getKey()))
                 + "\n";
         }
         return res;

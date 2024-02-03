@@ -16,4 +16,5 @@ public class ControllerProperty {
     String annotationMethodParameter;
     String annotationArgumentParameterFormData;
     String annotationArgumentParameterLink;
+    String constructor;
 }

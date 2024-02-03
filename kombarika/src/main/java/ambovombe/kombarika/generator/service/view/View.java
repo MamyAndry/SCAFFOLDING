@@ -25,16 +25,16 @@ public class View {
             if (!primaryKeys.contains(set.getKey())) {
                 String temp = foreignKeys.get(set.getKey());
                 if(temp != null){
+                    String option = this.getViewDetails().getOption()
+                        .replace("#url#", url)
+                        .replace("#path#", ObjectUtility.formatToCamelCase(temp))
+                        .replace("#label#", temp)
+                        .replace("#id#", ObjectUtility.formatToCamelCase(id))
+                        .replace("#value#", ObjectUtility.formatToCamelCase(attribute));
+                    option = Misc.tabulate(Misc.tabulate(option));
                     res += this.getViewDetails().getSelect()
                     .replace("#name#", ObjectUtility.formatToCamelCase(temp))
-                    .replace(
-                            "#option#", this.getViewDetails().getOption()
-                            .replace("#url#", url)
-                            .replace("#path#", ObjectUtility.formatToCamelCase(temp))
-                            .replace("#label#", temp)
-                            .replace("#id#", ObjectUtility.formatToCamelCase(id))
-                            .replace("#value#", ObjectUtility.formatToCamelCase(attribute))
-                        );
+                    .replace("#option#", option);
                     continue;
                 }
                 res += template
@@ -43,7 +43,7 @@ public class View {
                 .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";        
             }
         }
-        return res;
+        return Misc.tabulate(res);
     }
 
     public String getOptionUpdate(HashMap<String, String> foreignKeys, String url, String id, String attribute) throws Exception{
@@ -62,7 +62,7 @@ public class View {
                 ;
             res += "\n";
         }
-        return res;
+        return Misc.tabulate(res);
     }
 
     public String getInputUpdate(HashMap<String, String> columns, HashMap<String, String> foreignKeys, List<String> primaryKeys, String url, String id) throws Exception{
@@ -88,7 +88,7 @@ public class View {
                 .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";            
             }
         }
-        return res;
+        return Misc.tabulate(res);
     }
 
     public String getHeaders(HashMap<String, String> columns){
