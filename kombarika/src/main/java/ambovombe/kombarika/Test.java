@@ -25,15 +25,15 @@ public class Test {
     public static void main(String[] args) throws Exception {
         CodeGenerator codeGenerator = new CodeGenerator();
         String path = "./";
-        String framework = "csharp:dotnet";
-        String packageName = "com.district.test";
+        String framework = "java:ambovombe";
+        String packageName = "com.dao.test";
         String entity = "entity";
         String controller = "controller";
         String repository = "repository";
         String view = "view";
         String url = "http://localhost:8080";
         try{
-            // String[] tables = {"district","region"};
+            String[] tables = {"district","region"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();
             // String str = dbConnection.getListConnection().get(dbConnection.getInUseConnection()).getDatabaseType().getForeignKeyQuery();
             // str = str.replace("?", "commune");
@@ -42,9 +42,11 @@ public class Test {
             // for (Map.Entry<String, String> set : foreignKeys.entrySet()) {
             //     System.out.println(set.getKey() + " " + set.getValue());
             // }
-            String[] tables = DbService.getAllTablesArrays(codeGenerator.getDbConnection());
+
+            // String[] tables = DbService.getAllTablesArrays(codeGenerator.getDbConnection());
             // for(String table: tables)
             //     System.out.println(table);
+            // codeGenerator.generateEntity(path, tables, packageName, framework);
             codeGenerator.generateAll(path, packageName, entity, controller, repository, view, url, tables, framework);
             // codeGenerator.generateEntity(path, "car", packageName+".entity", framework);
         }catch(Exception e){

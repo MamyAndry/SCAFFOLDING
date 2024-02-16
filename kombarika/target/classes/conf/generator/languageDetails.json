@@ -161,6 +161,66 @@
                         "fieldSyntax": ""
                     }
 
+                },
+                "ambovombe" : {
+                    "template" : "Template.code",
+                    "repository": "",
+                    "imports" : {
+                        "controller":[
+    
+                        ],
+                        "entity":[
+                            "com.dao.annotation.*",
+                            "com.dao.annotation.conf.ForeignType",
+                            "com.dao.database.BddObject"
+                        ],
+                        "repository":[
+
+                        ]
+                    },
+                    "annotationProperty" : {
+                        "table": "Table(name = \"?\")",
+                        "autoIncrement":"GeneratedValue(autoIncrement = true)",
+                        "column": "Column(name = \"?\")",
+                        "entity": "",
+                        "controller": "",
+                        "constraints": {
+                            "primaryKey": "PrimaryKey",
+                            "foreignKey": {
+                                "annotation":"ForeignKey(mappedBy = \"?\", foreignType = ForeignType.OneToMany)",
+                                "manyToOne":"",
+                                "manyToMany":"",
+                                "oneToMany":"",
+                                "oneToOne":""
+                            }
+                        }
+                    },
+                    "crudMethod" : {
+                        "findAll": "return ResponseEntity.ok(repository.findAll());",
+                        "findById":"return ResponseEntity.ok(repository.findById(#Id#));",
+                        "delete": "return ResponseEntity.ok(repository.delete(#object#));",
+                        "update": "return ResponseEntity.ok(repository.save(#object#));",
+                        "save": "return ResponseEntity.ok(repository.save(#object#));"
+                    },
+                    "controllerProperty" : {
+                        "path": "RequestMapping(path = \"?\")",
+                        "get": "GetMapping()",
+                        "post": "PostMapping()",
+                        "put": "PutMapping()",
+                        "delete": "DeleteMapping()",
+                        "field": "private ?Repository repository;",
+                        "returnType": "ResponseEntity<?>",
+                        "annotationField": "Autowired",
+                        "annotationMethodParameter":"",
+                        "annotationArgumentParameterFormData":"RequestBody",
+                        "annotationArgumentParameterLink":"PathVariable",
+                        "constructor": ""
+                    },
+                    "repositoryProperty" : {
+                        "name":"Repository",
+                        "classSyntax": "public interface ?Repository extends CrudRepository<?, #type#>",
+                        "fieldSyntax": ""
+                    }
                 }
             }
         }
