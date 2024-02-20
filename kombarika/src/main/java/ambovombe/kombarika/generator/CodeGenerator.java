@@ -138,7 +138,7 @@ public class CodeGenerator {
         controller.setCrudMethod(frameworkProperties.getCrudMethod());
         controller.setImports(frameworkProperties.getImports());
         controller.setLanguageProperties(languageProperties);
-        return controller.generateController(template, table, packageName, repository, entity);
+        return controller.generateController(template, table, packageName, repository, entity, framework);
     }
 
     public void generateControllerFile(

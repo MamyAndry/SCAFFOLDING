@@ -24,27 +24,28 @@
                             "System.Diagnostics",
                             "Microsoft.AspNetCore.Mvc",
                             "packageName.classNameContext",
-                            "entity.className"
+                            "entity",
+                            ""
                         ],
                         "entity":[
                             "System.ComponentModel.DataAnnotations",
                             "System.ComponentModel.DataAnnotations.Schema"
                         ],
                         "repository":[
-                            "packageName.className",
-                            "using Microsoft.EntityFrameworkCore"
+                            "packageName",
+                            "Microsoft.EntityFrameworkCore"
                         ]
                     },
                     "annotationProperty" : {
-                        "table":"Table(name = \"?\")",
+                        "table":"Table(\"?\")",
                         "autoIncrement":"",
-                        "column":"Column(name = \"?\")",
+                        "column":"Column(\"?\")",
                         "entity": "",
                         "controller": "ApiController",
                         "constraints":{
-                            "primaryKey":"Id",
+                            "primaryKey":"Key",
                             "foreignKey":{
-                                "annotation":"Foreignkey(\"?\")",
+                                "annotation":"ForeignKey(\"?\")",
                                 "manyToOne":"",
                                 "manyToMany":"",
                                 "oneToMany":"",
@@ -55,18 +56,19 @@
                     "crudMethod" : {
                         "findAll": "return Ok(_context.#object#.ToList());",
                         "findById":"",
-                        "delete": "_context.MyItems.Remove(#object#);\n_context.SaveChanges();\nreturn Ok();",
+                        "delete": "_context.?.Remove(#object#);\n_context.SaveChanges();\nreturn Ok();",
                         "update": "var temp = #object#;\n_context.SaveChanges();\nreturn Ok();",
-                        "save": "_context.MyItems.Add(value);\n_context.SaveChanges();\nreturn Ok();"
+                        "save": "_context.?.Add(value);\n_context.SaveChanges();\nreturn Ok();"
                     },
                     "controllerProperty" : {
-                        "path": "Route('[?]')",
+                        "path": "Route(\"[?]\")",
                         "get": "HttpGet",
                         "post": "HttpPost",
                         "put": "HttpPut",
                         "delete": "HttpDelete",
+                        "classSyntax": "?Controller : Controller",
                         "returnType": "ActionResult<?>",
-                        "field": "private readonly Ilogger<?Controller> _logger;",
+                        "field": "private readonly ?DbContext _context;\n\tprivate readonly ILogger<?Controller> _logger;",
                         "annotationField": "",
                         "annotationMethodParameter":"",
                         "annotationArgumentParameterFormData":"FromBody",
@@ -75,7 +77,7 @@
                     },
                     "repositoryProperty" : {
                         "name":"DbContext",
-                        "classSyntax": "public class ?Controller : DbContext",
+                        "classSyntax": "public class ?DbContext : DbContext",
                         "fieldSyntax": "\tpublic DbSet<#Field#> #Field# { get; set; }"
                     }
                 }
@@ -137,7 +139,7 @@
                     "crudMethod" : {
                         "findAll": "return ResponseEntity.ok(repository.findAll());",
                         "findById":"return ResponseEntity.ok(repository.findById(#Id#));",
-                        "delete": "return ResponseEntity.ok(repository.delete(#object#));",
+                        "delete": "repository.delete(#object#);",
                         "update": "return ResponseEntity.ok(repository.save(#object#));",
                         "save": "return ResponseEntity.ok(repository.save(#object#));"
                     },
@@ -147,6 +149,7 @@
                         "post": "PostMapping()",
                         "put": "PutMapping()",
                         "delete": "DeleteMapping()",
+                        "classSyntax": "?Controller",
                         "field": "private ?Repository repository;",
                         "returnType": "ResponseEntity<?>",
                         "annotationField": "Autowired",

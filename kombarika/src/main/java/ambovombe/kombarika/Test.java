@@ -25,7 +25,7 @@ public class Test {
     public static void main(String[] args) throws Exception {
         CodeGenerator codeGenerator = new CodeGenerator();
         String path = "./";
-        String framework = "java:ambovombe";
+        String framework = "csharp:dotnet";
         String packageName = "com.dao.test";
         String entity = "entity";
         String controller = "controller";
