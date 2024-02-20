@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 
 
-[Table(name = "district")]
+[Table("district")]
 public class District {
 
 	[Column("nom_district")]

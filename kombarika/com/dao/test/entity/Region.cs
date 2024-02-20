@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 
 
-[Table(name = "region")]
+[Table("region")]
 public class Region {
 
 	[Column("nom_region")]

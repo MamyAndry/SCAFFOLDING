@@ -54,11 +54,11 @@
                         }
                     },
                     "crudMethod" : {
-                        "findAll": "return Ok(_context.#object#.ToList());",
+                        "findAll": "return Ok(_context.?.ToList());",
                         "findById":"",
-                        "delete": "_context.?.Remove(#object#);\n_context.SaveChanges();\nreturn Ok();",
+                        "delete": "_context.?.Remove(#object#);\n_context.SaveChanges();",
                         "update": "var temp = #object#;\n_context.SaveChanges();\nreturn Ok();",
-                        "save": "_context.?.Add(value);\n_context.SaveChanges();\nreturn Ok();"
+                        "save": "_context.?.Add(#object#);\n_context.SaveChanges();\nreturn Ok();"
                     },
                     "controllerProperty" : {
                         "path": "Route(\"[?]\")",

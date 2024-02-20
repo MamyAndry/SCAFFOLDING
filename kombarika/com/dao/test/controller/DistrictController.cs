@@ -18,7 +18,7 @@ public class DistrictController : Controller {
 
 	[HttpPost]
 	public ActionResult<District> save([FromBody] District district){
-	 	_context.MyItems.Add(value);
+	 	_context.District.Add(district);
 		_context.SaveChanges();
 		return Ok();
 	}
@@ -30,13 +30,12 @@ public class DistrictController : Controller {
 	}
 	[HttpDelete]
 	public void delete([FromBody] District district){
-	 	_context.MyItems.Remove(district);
+	 	_context.District.Remove(district);
 		_context.SaveChanges();
-		return Ok();
 	}
 	[HttpGet]
 	public ActionResult<IEnumerable<District>> findAll(){
-	 	return Ok(_context.district.ToList());
+	 	return Ok(_context.District.ToList());
 	}
 
 	public DistrictController(DistrictDbContext context) { _context = context; }

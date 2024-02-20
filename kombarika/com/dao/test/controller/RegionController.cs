@@ -18,7 +18,7 @@ public class RegionController : Controller {
 
 	[HttpPost]
 	public ActionResult<Region> save([FromBody] Region region){
-	 	_context.MyItems.Add(value);
+	 	_context.Region.Add(region);
 		_context.SaveChanges();
 		return Ok();
 	}
@@ -30,13 +30,12 @@ public class RegionController : Controller {
 	}
 	[HttpDelete]
 	public void delete([FromBody] Region region){
-	 	_context.MyItems.Remove(region);
+	 	_context.Region.Remove(region);
 		_context.SaveChanges();
-		return Ok();
 	}
 	[HttpGet]
 	public ActionResult<IEnumerable<Region>> findAll(){
-	 	return Ok(_context.region.ToList());
+	 	return Ok(_context.Region.ToList());
 	}
 
 	public RegionController(RegionDbContext context) { _context = context; }

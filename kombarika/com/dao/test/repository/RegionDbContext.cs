@@ -1,7 +1,7 @@
 namespace com.dao.test.repository;
 
 
-using com.dao.test.entity.Region;
+using com.dao.test.entity;
 using Microsoft.EntityFrameworkCore;
 
 
