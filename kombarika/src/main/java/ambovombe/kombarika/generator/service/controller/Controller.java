@@ -69,7 +69,7 @@ public class Controller{
             .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))));
         String function =  this.getLanguageProperties().getMethodSyntax()
                 .replace("#name#", "delete")
-                .replace("#type#", "void")
+                .replace("#type#", this.getControllerProperty().getReturnType().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
                 .replace("#arg#", args)
                 .replace("#body#", body);
         return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getDelete()) + "\n" + function);

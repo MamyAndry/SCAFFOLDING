@@ -9,7 +9,7 @@ using ;
 
 
 [ApiController]
-[Route("[region]")]
+[Route("api/[region]")]
 public class RegionController : Controller {
 
 	private readonly RegionDbContext _context;

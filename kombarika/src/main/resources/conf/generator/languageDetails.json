@@ -61,7 +61,7 @@
                         "save": "_context.?.Add(#object#);\n_context.SaveChanges();\nreturn Ok();"
                     },
                     "controllerProperty" : {
-                        "path": "Route(\"[?]\")",
+                        "path": "Route(\"api/[[?]]\")",
                         "get": "HttpGet",
                         "post": "HttpPost",
                         "put": "HttpPut",

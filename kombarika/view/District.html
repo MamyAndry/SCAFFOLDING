@@ -157,6 +157,7 @@
 	
                 $('#delete-'+data[i]["id"]).click(function() {
                     var d = data[i]
+                    console.log(d);
                     $.ajax({
                         url: 'http://localhost:8080/district',
                         type: 'DELETE',
