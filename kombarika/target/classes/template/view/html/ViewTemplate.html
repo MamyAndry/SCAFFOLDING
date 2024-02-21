@@ -72,15 +72,7 @@
             // Boucle sur les données pour le tbody
             for (let i = 0; i < data.length; i++) {
                 var tr = $('<tr></tr>');
-
-                for (let j = 0; j < keys.length; j++){
-                    var temp = data[i][keys[j]];
-                    if(temp !== null && typeof temp === 'object' && !Array.isArray(temp) && !(temp instanceof Function)){
-                        tr.append('<td>' + temp.#value# + '</td>');
-                    }else{
-                        tr.append('<td>' + temp + '</td>');   
-                    }
-                }
+#tableValue#
                 var update_modal = `
                 <div class="modal fade" id="updatemodal-`+data[i]["#label#"]+`" role="dialog">
                     <div class="modal-dialog">

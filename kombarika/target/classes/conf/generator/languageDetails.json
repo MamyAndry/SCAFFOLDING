@@ -19,6 +19,7 @@
                 "dotnet" : {
                     "template" : "Template.code",
                     "repository": "Template.code",
+                    "isOneRepository":"true",
                     "imports": {
                         "controller":[
                             "System.Diagnostics",
@@ -102,6 +103,7 @@
                 "spring-boot" : {
                     "template" : "Template.code",
                     "repository": "Template.code",
+                    "isOneRepository":"false",
                     "imports" : {
                         "controller":[
                             "packageName.classNameRepository",
@@ -168,6 +170,7 @@
                 "ambovombe" : {
                     "template" : "Template.code",
                     "repository": "",
+                    "isOneRepository":"false",
                     "imports" : {
                         "controller":[
     
