@@ -19,32 +19,34 @@
                 "dotnet" : {
                     "template" : "Template.code",
                     "repository": "Template.code",
+                    "isOneRepository":"true",
                     "imports": {
                         "controller":[
                             "System.Diagnostics",
                             "Microsoft.AspNetCore.Mvc",
                             "packageName.classNameContext",
-                            "entity.className"
+                            "entity",
+                            ""
                         ],
                         "entity":[
                             "System.ComponentModel.DataAnnotations",
                             "System.ComponentModel.DataAnnotations.Schema"
                         ],
                         "repository":[
-                            "packageName.className",
-                            "using Microsoft.EntityFrameworkCore"
+                            "packageName",
+                            "Microsoft.EntityFrameworkCore"
                         ]
                     },
                     "annotationProperty" : {
-                        "table":"Table(name = \"?\")",
+                        "table":"Table(\"?\")",
                         "autoIncrement":"",
-                        "column":"Column(name = \"?\")",
+                        "column":"Column(\"?\")",
                         "entity": "",
                         "controller": "ApiController",
                         "constraints":{
-                            "primaryKey":"Id",
+                            "primaryKey":"Key",
                             "foreignKey":{
-                                "annotation":"Foreignkey(\"?\")",
+                                "annotation":"ForeignKey(\"?\")",
                                 "manyToOne":"",
                                 "manyToMany":"",
                                 "oneToMany":"",
@@ -53,20 +55,21 @@
                         }
                     },
                     "crudMethod" : {
-                        "findAll": "return Ok(_context.#object#.ToList());",
+                        "findAll": "return Ok(_context.?.ToList());",
                         "findById":"",
-                        "delete": "_context.MyItems.Remove(#object#);\n_context.SaveChanges();\nreturn Ok();",
+                        "delete": "_context.?.Remove(#object#);\n_context.SaveChanges();",
                         "update": "var temp = #object#;\n_context.SaveChanges();\nreturn Ok();",
-                        "save": "_context.MyItems.Add(value);\n_context.SaveChanges();\nreturn Ok();"
+                        "save": "_context.?.Add(#object#);\n_context.SaveChanges();\nreturn Ok();"
                     },
                     "controllerProperty" : {
-                        "path": "Route('[?]')",
+                        "path": "Route(\"api/[[?]]\")",
                         "get": "HttpGet",
                         "post": "HttpPost",
                         "put": "HttpPut",
                         "delete": "HttpDelete",
+                        "classSyntax": "?Controller : Controller",
                         "returnType": "ActionResult<?>",
-                        "field": "private readonly Ilogger<?Controller> _logger;",
+                        "field": "private readonly ?DbContext _context;\n\tprivate readonly ILogger<?Controller> _logger;",
                         "annotationField": "",
                         "annotationMethodParameter":"",
                         "annotationArgumentParameterFormData":"FromBody",
@@ -75,7 +78,7 @@
                     },
                     "repositoryProperty" : {
                         "name":"DbContext",
-                        "classSyntax": "public class ?Controller : DbContext",
+                        "classSyntax": "public class ?DbContext : DbContext",
                         "fieldSyntax": "\tpublic DbSet<#Field#> #Field# { get; set; }"
                     }
                 }
@@ -100,6 +103,7 @@
                 "spring-boot" : {
                     "template" : "Template.code",
                     "repository": "Template.code",
+                    "isOneRepository":"false",
                     "imports" : {
                         "controller":[
                             "packageName.classNameRepository",
@@ -137,6 +141,69 @@
                     "crudMethod" : {
                         "findAll": "return ResponseEntity.ok(repository.findAll());",
                         "findById":"return ResponseEntity.ok(repository.findById(#Id#));",
+                        "delete": "repository.delete(#object#);",
+                        "update": "return ResponseEntity.ok(repository.save(#object#));",
+                        "save": "return ResponseEntity.ok(repository.save(#object#));"
+                    },
+                    "controllerProperty" : {
+                        "path": "RequestMapping(path = \"?\")",
+                        "get": "GetMapping()",
+                        "post": "PostMapping()",
+                        "put": "PutMapping()",
+                        "delete": "DeleteMapping()",
+                        "classSyntax": "?Controller",
+                        "field": "private ?Repository repository;",
+                        "returnType": "ResponseEntity<?>",
+                        "annotationField": "Autowired",
+                        "annotationMethodParameter":"",
+                        "annotationArgumentParameterFormData":"RequestBody",
+                        "annotationArgumentParameterLink":"PathVariable",
+                        "constructor": ""
+                    },
+                    "repositoryProperty" : {
+                        "name":"Repository",
+                        "classSyntax": "public interface ?Repository extends CrudRepository<?, #type#>",
+                        "fieldSyntax": ""
+                    }
+
+                },
+                "ambovombe" : {
+                    "template" : "Template.code",
+                    "repository": "",
+                    "isOneRepository":"false",
+                    "imports" : {
+                        "controller":[
+    
+                        ],
+                        "entity":[
+                            "com.dao.annotation.*",
+                            "com.dao.annotation.conf.ForeignType",
+                            "com.dao.database.BddObject"
+                        ],
+                        "repository":[
+
+                        ]
+                    },
+                    "annotationProperty" : {
+                        "table": "Table(name = \"?\")",
+                        "autoIncrement":"GeneratedValue(autoIncrement = true)",
+                        "column": "Column(name = \"?\")",
+                        "entity": "",
+                        "controller": "",
+                        "constraints": {
+                            "primaryKey": "PrimaryKey",
+                            "foreignKey": {
+                                "annotation":"ForeignKey(mappedBy = \"?\", foreignType = ForeignType.OneToMany)",
+                                "manyToOne":"",
+                                "manyToMany":"",
+                                "oneToMany":"",
+                                "oneToOne":""
+                            }
+                        }
+                    },
+                    "crudMethod" : {
+                        "findAll": "return ResponseEntity.ok(repository.findAll());",
+                        "findById":"return ResponseEntity.ok(repository.findById(#Id#));",
                         "delete": "return ResponseEntity.ok(repository.delete(#object#));",
                         "update": "return ResponseEntity.ok(repository.save(#object#));",
                         "save": "return ResponseEntity.ok(repository.save(#object#));"
@@ -160,7 +227,6 @@
                         "classSyntax": "public interface ?Repository extends CrudRepository<?, #type#>",
                         "fieldSyntax": ""
                     }
-
                 }
             }
         }

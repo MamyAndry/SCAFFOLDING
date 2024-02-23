@@ -14,6 +14,7 @@ import java.io.File;
 public class FrameworkProperties {
     String template;
     String repository;
+    boolean isOneRepository;
     Imports imports;
     AnnotationProperty annotationProperty;
     CrudMethod crudMethod;

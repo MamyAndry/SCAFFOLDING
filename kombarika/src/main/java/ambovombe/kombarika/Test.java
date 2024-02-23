@@ -4,12 +4,9 @@ package ambovombe.kombarika;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 
-import ambovombe.kombarika.database.DbConnection;
 import ambovombe.kombarika.generator.CodeGenerator;
 import ambovombe.kombarika.generator.service.DbService;
 
-import java.sql.SQLException;
-import java.util.Map;
 import java.util.HashMap;
 /**
  *
@@ -31,7 +28,8 @@ public class Test {
         String controller = "controller";
         String repository = "repository";
         String view = "view";
-        String url = "http://localhost:8080";
+        String viewType = "react";
+        String url = "http://localhost:8080/";
         try{
             // String[] tables = {"district","region"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();
@@ -45,12 +43,12 @@ public class Test {
             String[] tables = DbService.getAllTablesArrays(codeGenerator.getDbConnection());
             // for(String table: tables)
             //     System.out.println(table);
-            codeGenerator.generateAll(path, packageName, entity, controller, repository, view, url, tables, framework);
+            codeGenerator.generateAll(path, packageName, entity, controller, repository, view, viewType, url, tables, framework);
             // codeGenerator.generateEntity(path, "car", packageName+".entity", framework);
         }catch(Exception e){
             e.printStackTrace();
         }finally{
             codeGenerator.getDbConnection().close();
-        }
+        }    
     }
 }

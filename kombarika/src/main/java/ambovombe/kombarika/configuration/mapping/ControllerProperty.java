@@ -10,6 +10,7 @@ public class ControllerProperty {
     String post;
     String put;
     String delete;
+    String classSyntax;
     String field;
     String returnType;
     String annotationField;
