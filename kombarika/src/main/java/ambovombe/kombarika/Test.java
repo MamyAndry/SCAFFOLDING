@@ -20,10 +20,10 @@ public class Test {
      */
      
     public static void main(String[] args) throws Exception {
-        CodeGenerator codeGenerator = new CodeGenerator();
+        CodeGenerator codeGenerator = new CodeGenerator();  
         String path = "./";
-        String framework = "csharp:dotnet";
-        String packageName = "com.district.test";
+        String framework = "java:karana";
+        String packageName = "com.test.karana";
         String entity = "entity";
         String controller = "controller";
         String repository = "repository";

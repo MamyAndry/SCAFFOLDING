@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ambovombe.kombarika.configuration.mapping.FrameworkProperties;
 import ambovombe.kombarika.configuration.mapping.ViewProperties;
 import ambovombe.kombarika.database.DbConnection;
 import ambovombe.kombarika.generator.parser.FileUtility;
@@ -17,6 +18,7 @@ import lombok.Setter;
 @Getter @Setter
 public class View {
     ViewProperties viewProperties;
+    FrameworkProperties rameworkProperties;
 
     public String getInputInsert(HashMap<String, String> columns, HashMap<String, String> foreignKeys, List<String> primaryKeys, String url, String id, String attribute) throws Exception{
         String res ="";
@@ -200,6 +202,7 @@ public class View {
         String template = FileUtility.readOneFile(tempPath);
         List<String> primaryKeys = DbService.getPrimaryKey(dbConnection, table);
         String path =  ObjectUtility.formatToCamelCase(table);
+        path = this.getRameworkProperties().getControllerProperty().getPathSyntax().replace("?", path);
         HashMap<String, String> columns = DbService.getDetailsColumn(dbConnection.getConnection(), table);
         HashMap<String, String> foreignKeys = DbService.getForeignKeys(dbConnection, table);
         HashMap<String, String> idAndAttribute = this.getIdAndAttribute(dbConnection, foreignKeys);

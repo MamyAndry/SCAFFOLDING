@@ -15,6 +15,7 @@ public class FrameworkProperties {
     String template;
     String repository;
     boolean isOneRepository;
+    String listSyntax;
     Imports imports;
     AnnotationProperty annotationProperty;
     CrudMethod crudMethod;

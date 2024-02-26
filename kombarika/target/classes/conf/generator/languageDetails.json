@@ -8,7 +8,6 @@
             "closeBracket":"}",
             "classSyntax":"public class",
             "fieldSyntax":"Type field { get; set; }",
-            "listSyntax" : "IEnumerable<?>",
             "endOfInstruction":";",
             "annotationSyntax":"[?]",
             "constructorSyntax": "public ?(){}",
@@ -19,6 +18,7 @@
                 "dotnet" : {
                     "template" : "Template.code",
                     "repository": "Template.code",
+                    "listSyntax" : "IEnumerable<?>",
                     "isOneRepository":"true",
                     "imports": {
                         "controller":[
@@ -57,7 +57,7 @@
                     "crudMethod" : {
                         "findAll": "return Ok(_context.?.ToList());",
                         "findById":"",
-                        "delete": "_context.?.Remove(#object#);\n_context.SaveChanges();",
+                        "delete": "_context.?.Remove(#object#);\n_context.SaveChanges();\treturn Ok();",
                         "update": "var temp = #object#;\n_context.SaveChanges();\nreturn Ok();",
                         "save": "_context.?.Add(#object#);\n_context.SaveChanges();\nreturn Ok();"
                     },
@@ -67,6 +67,8 @@
                         "post": "HttpPost",
                         "put": "HttpPut",
                         "delete": "HttpDelete",
+                        "name":"Controller",
+                        "pathSyntax":"[?]",
                         "classSyntax": "?Controller : Controller",
                         "returnType": "ActionResult<?>",
                         "field": "private readonly ?DbContext _context;\n\tprivate readonly ILogger<?Controller> _logger;",
@@ -79,7 +81,8 @@
                     "repositoryProperty" : {
                         "name":"DbContext",
                         "classSyntax": "public class ?DbContext : DbContext",
-                        "fieldSyntax": "\tpublic DbSet<#Field#> #Field# { get; set; }"
+                        "fieldSyntax": "\tpublic DbSet<#Field#> #Field# { get; set; }",
+                        "constructor":""
                     }
                 }
             }
@@ -94,7 +97,6 @@
             "closeBracket":"}",
             "endOfInstruction":";",
             "annotationSyntax":"@?",
-            "listSyntax" : "Iterable<?>",
             "constructorSyntax": "public ?(){}",
             "methodSyntax": "public #type# #name#(#arg#){\n #body#\n}",
             "encapsulation":"\tpublic #type# get#Field#(){\n\t\treturn this.#field#;\n\t}\n\tpublic void set#Field#(#type# #field#){\n\t\tthis.#field# = #field#;\n\t}\n",
@@ -103,6 +105,7 @@
                 "spring-boot" : {
                     "template" : "Template.code",
                     "repository": "Template.code",
+                    "listSyntax" : "Iterable<?>",
                     "isOneRepository":"false",
                     "imports" : {
                         "controller":[
@@ -149,7 +152,9 @@
                         "path": "RequestMapping(path = \"?\")",
                         "get": "GetMapping()",
                         "post": "PostMapping()",
-                        "put": "PutMapping()",
+                        "put": "PutMapping()", 
+                        "name":"Controller",
+                        "pathSyntax":"?",
                         "delete": "DeleteMapping()",
                         "classSyntax": "?Controller",
                         "field": "private ?Repository repository;",
@@ -163,22 +168,26 @@
                     "repositoryProperty" : {
                         "name":"Repository",
                         "classSyntax": "public interface ?Repository extends CrudRepository<?, #type#>",
-                        "fieldSyntax": ""
+                        "fieldSyntax": "",
+                        "constructor":""
                     }
 
                 },
-                "ambovombe" : {
+                "karana" : {
                     "template" : "Template.code",
-                    "repository": "",
+                    "repository": "", 
+                    "listSyntax" : "List<?>",
                     "isOneRepository":"false",
                     "imports" : {
                         "controller":[
-    
+                            "entity.className",
+                            "com.karana.etu2060.framework.annotation.*",
+                            "com.karana.etu2060.framework.annotation.property.*",
+                            "com.dao.database.GenericDao"
                         ],
                         "entity":[
                             "com.dao.annotation.*",
-                            "com.dao.annotation.conf.ForeignType",
-                            "com.dao.database.BddObject"
+                            "com.dao.annotation.conf.ForeignType"
                         ],
                         "repository":[
 
@@ -202,30 +211,35 @@
                         }
                     },
                     "crudMethod" : {
-                        "findAll": "return ResponseEntity.ok(repository.findAll());",
-                        "findById":"return ResponseEntity.ok(repository.findById(#Id#));",
-                        "delete": "return ResponseEntity.ok(repository.delete(#object#));",
-                        "update": "return ResponseEntity.ok(repository.save(#object#));",
-                        "save": "return ResponseEntity.ok(repository.save(#object#));"
+                        "findAll": "try{\n\treturn GenericDao.findAll(null, entity);\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
+                        "findById":"try{\n\treturn GenericDao.findById(null, #Id#);\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
+                        "delete": "try{\n\tGenericDao.delete(null, #object#);\n\treturn \"deleted successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
+                        "update": "try{\n\tGenericDao.update(null, #object#);\n\treturn \"updated successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
+                        "save": "try{\n\tGenericDao.save(null, #object#);\n\treturn \"saved successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}"
                     },
                     "controllerProperty" : {
-                        "path": "RequestMapping(path = \"?\")",
-                        "get": "GetMapping()",
-                        "post": "PostMapping()",
-                        "put": "PutMapping()",
-                        "delete": "DeleteMapping()",
-                        "field": "private ?Repository repository;",
-                        "returnType": "ResponseEntity<?>",
-                        "annotationField": "Autowired",
+                        "path": "",
+                        "get": "Url(url = \"find-?.do\")\n@Json(method = JsonMethods.GET)",
+                        "post": "Url(url = \"save-?.do\")\n@Json(method = JsonMethods.POST)",
+                        "put": "Url(url = \"update-?.do\")\n@Json(method = JsonMethods.PUT)",
+                        "delete": "Url(url = \"delete-?.do\")\n@Json(method = JsonMethods.DELETE)",
+                        "classSyntax": "?Model",
+                        "field": "private ? entity;",
+                        "returnType": "Object",
+                        "name":"Model",
+                        "pathSyntax":"?",
+                        "annotationField": "",
                         "annotationMethodParameter":"",
-                        "annotationArgumentParameterFormData":"RequestBody",
-                        "annotationArgumentParameterLink":"PathVariable",
-                        "constructor": ""
+                        "annotationArgumentParameterFormData":"Argument",
+                        "annotationArgumentParameterLink":"",
+                        "constructor":""
                     },
                     "repositoryProperty" : {
-                        "name":"Repository",
-                        "classSyntax": "public interface ?Repository extends CrudRepository<?, #type#>",
-                        "fieldSyntax": ""
+                        "name":"",
+                        "classSyntax": "",
+                        "fieldSyntax":"",
+                        "constructor":""
+
                     }
                 }
             }

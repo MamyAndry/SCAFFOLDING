@@ -10,7 +10,6 @@ ambovombe/kombarika/configuration/mapping/TypeProperty.class
 ambovombe/kombarika/generator/service/entity/Entity.class
 ambovombe/kombarika/configuration/mapping/AnnotationProperty.class
 ambovombe/kombarika/generator/CLIReader.class
-ambovombe/kombarika/generator/CodeGenerator.class
 ambovombe/kombarika/configuration/mapping/ForeignKey.class
 ambovombe/kombarika/database/DbConnection.class
 ambovombe/kombarika/configuration/mapping/Constraint.class
