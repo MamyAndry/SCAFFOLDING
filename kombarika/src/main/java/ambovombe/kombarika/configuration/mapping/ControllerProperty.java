@@ -15,6 +15,7 @@ public class ControllerProperty {
     String pathSyntax;
     String field;
     String returnType;
+    String returnTypeDelete;
     String annotationField;
     String annotationMethodParameter;
     String annotationArgumentParameterFormData;

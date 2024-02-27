@@ -153,22 +153,6 @@ public class CodeGenerator {
         generateRepositoryFile(path, context, packageName, language, framework, repository);
     }
 
-    public void generateView(
-        String path, 
-        String table,
-        String directory, 
-        String viewType,
-        String url
-    ) throws Exception{
-        String view = buildView(table, viewType, url);
-        FileUtility.createDirectory(directory,path);
-        path = path + File.separator + directory;
-        String fileName = GeneratorService.getFileName(table, this.getViewDetails().getViews().get(viewType).getExtension());
-        String newDirectory = ObjectUtility.capitalize(table);
-        FileUtility.createDirectory(newDirectory, path);
-        FileUtility.generateFile(path + File.separator + newDirectory, fileName, view);
-    }
-
     /**
      * eg : generate -p path -t table1, table2, table3 -package name -l java:spring-boot
      * @author rakharrs
@@ -233,7 +217,23 @@ public class CodeGenerator {
     public String buildView(String table, String viewType, String url) throws Exception{
         View view = new View();
         view.setViewProperties(this.getViewDetails().getViews().get(viewType));
+        view.setFrameworkProperties(this.getFrameworkProperties());
         return view.generateView(table, url, dbConnection);
+    }
+    public void generateView(
+        String path, 
+        String table,
+        String directory, 
+        String viewType,
+        String url
+    ) throws Exception{
+        String view = buildView(table, viewType, url);
+        FileUtility.createDirectory(directory,path);
+        path = path + File.separator + directory;
+        String fileName = GeneratorService.getFileName(table, this.getViewDetails().getViews().get(viewType).getExtension());
+        String newDirectory = ObjectUtility.capitalize(table);
+        FileUtility.createDirectory(newDirectory, path);
+        FileUtility.generateFile(path + File.separator + newDirectory, fileName, view);
     }
     
     public void generateAllEntity(
@@ -292,6 +292,7 @@ public class CodeGenerator {
 
     public void generateAll(
         String path, 
+        String viewPath,
         String packageName, 
         String entity, 
         String controller, 
@@ -303,8 +304,8 @@ public class CodeGenerator {
         String framework
     ) throws Exception{
         generateAllEntity(path, tables, packageName ,entity, framework);
-        // generateAllRepository(path, tables, packageName , entity, repository, framework);
+        generateAllRepository(path, tables, packageName , entity, repository, framework);
         generateAllController(path, tables, packageName, entity, controller, repository, framework);  
-        // generateAllView(path, tables, view, viewType, url);    
+        generateAllView(viewPath, tables, view, viewType, url);    
     }
 }

@@ -77,7 +77,7 @@ public class Controller{
         .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))));
         String function =  this.getLanguageProperties().getMethodSyntax()
         .replace("#name#", "delete")
-        .replace("#type#", this.getControllerProperty().getReturnType().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
+        .replace("#type#", this.getControllerProperty().getReturnTypeDelete().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
         .replace("#arg#", args)
         .replace("#body#", body);
         return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", 
@@ -96,7 +96,6 @@ public class Controller{
                 .replace("#type#", this.getControllerProperty().getReturnType().replace("?", this.getFrameworkProperties().getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))))
                 .replace("#arg#", "")
                 .replace("#body#", body);
-        System.out.println(function);
         return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", 
         this.getControllerProperty().getGet()
             .replace("?", ObjectUtility.formatToCamelCase(table))
@@ -140,14 +139,13 @@ public class Controller{
         String res = "";
         if(!this.getAnnotationProperty().getController().equals("")){
             res += this.getLanguageProperties().getAnnotationSyntax()
-                    .replace("?", this.getAnnotationProperty().getController()) + "\n";
+                .replace("?", this.getAnnotationProperty().getController()) + "\n";
         }
         if(!this.getControllerProperty().getPath().equals("")){
             res += this.getLanguageProperties().getAnnotationSyntax()
-                .replace("?", this.getControllerProperty().getPath());
+                .replace("?", this.getControllerProperty().getPath().replace("?", ObjectUtility.formatToCamelCase(table)));
         }
-        res += res
-            .replace("?", ObjectUtility.formatToCamelCase(table)) + "\n"
+        res = res.replace("?", ObjectUtility.formatToCamelCase(table)) + "\n"
             + this.getLanguageProperties().getClassSyntax() + " "
             + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(
                 this.getLanguageProperties().getFrameworks().get(framework).getControllerProperty().getClassSyntax()).replace("?", ObjectUtility.formatToCamelCase(table))
