@@ -10,9 +10,12 @@ public class ControllerProperty {
     String post;
     String put;
     String delete;
+    String name;
     String classSyntax;
+    String pathSyntax;
     String field;
     String returnType;
+    String returnTypeDelete;
     String annotationField;
     String annotationMethodParameter;
     String annotationArgumentParameterFormData;

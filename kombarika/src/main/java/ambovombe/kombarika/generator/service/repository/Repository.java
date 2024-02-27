@@ -60,6 +60,12 @@ public class Repository {
         return res;
     }
 
+    public String getConstructor(String table)throws Exception{
+        String res = "";
+        res += this.getFrameworkProperties().getRepositoryProperty().getConstructor().replace("#name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)));
+        return res;
+    }
+
     public String generateRepository(
         String[] tables,
         String context,
@@ -83,7 +89,7 @@ public class Repository {
                 .replace("#open-bracket#", languageProperties.getOpenBracket())
                 .replace("#close-bracket#", languageProperties.getCloseBracket())
                 .replace("#fields#", field)
-                .replace("#constructors#", "")
+                .replace("#constructors#", getConstructor(context))
                 .replace("#methods#", "")
                 .replace("#encapsulation#", "");
         return res;

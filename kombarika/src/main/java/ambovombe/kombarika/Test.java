@@ -1,5 +1,5 @@
 package ambovombe.kombarika;
-/*
+/*entity
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
@@ -20,14 +20,15 @@ public class Test {
      */
      
     public static void main(String[] args) throws Exception {
-        CodeGenerator codeGenerator = new CodeGenerator();
-        String path = "./";
-        String framework = "csharp:dotnet";
+        CodeGenerator codeGenerator = new CodeGenerator();  
+        String path = "/home/mamisoa/ITU/L3/Mr_Naina/TEST/test/src/main/java";
+        String viewPath = "/home/mamisoa/ITU/L3/Mr_Naina/REACT/crud/src/components";
+        String framework = "java:spring-boot";
         String packageName = "com.district.test";
         String entity = "entity";
         String controller = "controller";
         String repository = "repository";
-        String view = "view";
+        String view = "";
         String viewType = "react";
         String url = "http://localhost:8080/";
         try{
@@ -43,8 +44,7 @@ public class Test {
             String[] tables = DbService.getAllTablesArrays(codeGenerator.getDbConnection());
             // for(String table: tables)
             //     System.out.println(table);
-            codeGenerator.generateAll(path, packageName, entity, controller, repository, view, viewType, url, tables, framework);
-            // codeGenerator.generateEntity(path, "car", packageName+".entity", framework);
+            codeGenerator.generateAll(path, viewPath, packageName, entity, controller, repository, view, viewType, url, tables, framework);
         }catch(Exception e){
             e.printStackTrace();
         }finally{
