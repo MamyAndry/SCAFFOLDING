@@ -55,7 +55,7 @@
                         }
                     },
                     "crudMethod" : {
-                        "findAll": "return Ok(_context.?.ToList());",
+                        "findAll": "return Ok(_context.?#between#.ToList());",
                         "findById":"",
                         "delete": "_context.?.Remove(#object#);\n_context.SaveChanges();\treturn Ok();",
                         "update": "var temp = #object#;\n_context.SaveChanges();\nreturn Ok();",
@@ -68,6 +68,7 @@
                         "put": "HttpPut",
                         "delete": "HttpDelete",
                         "name":"Controller",
+                        "includedTerms":".Include(l => l.#values#)",
                         "pathSyntax":"[?]",
                         "classSyntax": "?Controller : Controller",
                         "returnType": "ActionResult<?>",
@@ -83,7 +84,7 @@
                         "name":"DbContext",
                         "classSyntax": "public class ?DbContext : DbContext",
                         "fieldSyntax": "\tpublic DbSet<#Field#> #Field# { get; set; }",
-                        "constructor":""
+                        "constructor":"\tpublic #name#DbContext(){}\n\tpublic #name#DbContext(DbContextOptions<#name#DbContext> options): base(options)\n{}"
                     }
                 }
             }
@@ -155,6 +156,7 @@
                         "post": "PostMapping()",
                         "put": "PutMapping()", 
                         "name":"Controller",
+                        "includedTerms":"",
                         "pathSyntax":"?",
                         "delete": "DeleteMapping()",
                         "classSyntax": "?Controller",
@@ -226,14 +228,87 @@
                         "put": "Url(url = \"update-?.do\")\n@Json(method = JsonMethods.PUT)",
                         "delete": "Url(url = \"delete-?.do\")\n@Json(method = JsonMethods.DELETE)",
                         "classSyntax": "?Model",
+                        "name":"Model",
+                        "includedTerms":"",
                         "field": "private ? entity;",
                         "returnType": "Object",
                         "returnTypeDelete": "void",
-                        "name":"Model",
                         "pathSyntax":"?",
                         "annotationField": "",
                         "annotationMethodParameter":"",
                         "annotationArgumentParameterFormData":"Argument",
+                        "annotationArgumentParameterLink":"",
+                        "constructor":""
+                    },
+                    "repositoryProperty" : {
+                        "name":"",
+                        "classSyntax": "",
+                        "fieldSyntax":"",
+                        "constructor":""
+
+                    }
+                },
+                "merana" : {
+                    "template" : "Template.code",
+                    "repository": "", 
+                    "listSyntax" : "List<?>",
+                    "isOneRepository":"false",
+                    "imports" : {
+                        "controller":[
+                            "entity.className",
+                            "ambovombe.merana.utils.mapping.*",
+                            "ambovombe.merana.utils.mapping.method.HttpMethod.*",
+                            "com.dao.database.GenericDao"
+                        ],
+                        "entity":[
+                            "com.dao.annotation.*",
+                            "com.dao.annotation.conf.ForeignType"
+                        ],
+                        "repository":[
+
+                        ]
+                    },
+                    "annotationProperty" : {
+                        "table": "Table(name = \"?\")",
+                        "autoIncrement":"GeneratedValue(autoIncrement = true)",
+                        "column": "Column(name = \"?\")",
+                        "entity": "",
+                        "controller": "",
+                        "constraints": {
+                            "primaryKey": "PrimaryKey",
+                            "foreignKey": {
+                                "annotation":"ForeignKey(mappedBy = \"?\", foreignType = ForeignType.OneToMany)",
+                                "manyToOne":"",
+                                "manyToMany":"",
+                                "oneToMany":"",
+                                "oneToOne":""
+                            }
+                        }
+                    },
+                    "crudMethod" : {
+                        "findAll": "try{\n\treturn GenericDao.findAll(null, entity);\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
+                        "findById":"try{\n\treturn GenericDao.findById(null, #Id#);\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
+                        "delete": "try{\n\tGenericDao.delete(null, #object#);\n\treturn \"deleted successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
+                        "update": "try{\n\tGenericDao.update(null, #object#);\n\treturn \"updated successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
+                        "save": "try{\n\tGenericDao.save(null, #object#);\n\treturn \"saved successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}"
+                    },
+                    
+                    "controllerProperty" : {
+                        "path": "RequestUrl(\"/?\")",
+                        "get": "Url(method = GET)",
+                        "post": "Url(method = POST)",
+                        "put": "Url(method = PUT)",
+                        "delete": "Url(method = DELETE)",
+                        "name":"Controller",
+                        "includedTerms":"",
+                        "classSyntax": "?Controller",
+                        "field": "private ? entity;",
+                        "returnType": "Object",
+                        "returnTypeDelete": "Object",
+                        "pathSyntax":"?",
+                        "annotationField": "",
+                        "annotationMethodParameter":"",
+                        "annotationArgumentParameterFormData":"RequestBody",
                         "annotationArgumentParameterLink":"",
                         "constructor":""
                     },

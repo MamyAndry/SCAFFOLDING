@@ -196,6 +196,40 @@ public class View {
         return map;
     }
 
+    public String getImports(String[] tables){
+        String res = "";
+        for (String table : tables) {
+            String temp = ObjectUtility.formatToCamelCase(table);
+            res += this.getViewProperties().getRouteImportSyntax()
+                    .replaceAll("#path#", temp)
+                    .replace("#element#", ObjectUtility.capitalize(temp))
+                     + "\n";
+        }
+        return res;
+    }
+    public String getRoutes(String[] tables){
+        String res = "";
+        for (String table : tables) {
+            String temp = ObjectUtility.formatToCamelCase(table);
+            res += this.getViewProperties().getRouteSyntax()
+                    .replaceAll("#path#", temp)
+                    .replace("#element#", ObjectUtility.capitalize(temp))
+                     + "\n";
+        }
+        return (Misc.tabulate(res));
+    }
+
+    public String generateRoutes(String[] tables) throws Exception{
+        String res = "";
+        if(this.getViewProperties().getRouteTemplate().equals(""))
+            return res;
+        String tempPath = Misc.getViewTemplateLocation().concat(File.separator).concat(this.getViewProperties().getRouteTemplate());
+        res = FileUtility.readOneFile(tempPath);
+        res = res.replace("${IMPORTS}", this.getImports(tables))
+                .replace("${ROUTES}", this.getRoutes(tables));
+        return res;
+    }
+
     public String generateView(String table, String url, DbConnection dbConnection) throws Exception{
         String res = "";        
         String tempPath = Misc.getViewTemplateLocation().concat(File.separator).concat(this.getViewProperties().getTemplate());

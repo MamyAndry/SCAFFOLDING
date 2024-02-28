@@ -11,6 +11,7 @@ public class ControllerProperty {
     String put;
     String delete;
     String name;
+    String includedTerms;
     String classSyntax;
     String pathSyntax;
     String field;
