@@ -23,11 +23,11 @@ public class Test {
         // String path = "/home/mamisoa/ITU/L3/Mr_Naina/TEST/test/src/main/java";
         // String viewPath = "/home/mamisoa/ITU/L3/Mr_Naina/REACT/crud/src/components";
         
-        // String path = "./";
-        // String viewPath = "./";
+        String path = "./";
+        String viewPath = "./";
 
         // String path = "/home/mamisoa/ITU/L3";
-        String viewPath = "/home/mamisoa/ITU/L3";
+        // String viewPath = "/home/mamisoa/ITU/L3";
 
 
         String framework = "csharp:dotnet";
@@ -51,8 +51,8 @@ public class Test {
             String[] tables = DbService .getAllTablesArrays(codeGenerator.getDbConnection());
             // for(String table: tables)
             //     System.out.println(table);
-            // codeGenerator.generateAll(path, viewPath, packageName, entity, controller, repository, view, viewType, url, tables, framework);
-            codeGenerator.generateViewEnvironement(viewPath, viewType, "huhuhu");
+            codeGenerator.generateAll(path, viewPath, packageName, entity, controller, repository, view, viewType, url, tables, framework);
+            // codeGenerator.generateViewEnvironement(viewPath, viewType, "huhuhu");
         }catch(Exception e){
             e.printStackTrace();
         }finally{
