@@ -20,6 +20,7 @@ public abstract class Configuration {
      * @return anle configuration miantso
      * @throws Exception
      */
+    @SuppressWarnings("unchecked")
     public <T> T read() throws Exception{
         String separator = File.separator;
         String path = Misc.getGeneratorConfLocation() + separator + jsonPath;
