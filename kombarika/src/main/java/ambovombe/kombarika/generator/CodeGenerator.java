@@ -17,6 +17,7 @@ import ambovombe.kombarika.generator.service.entity.Entity;
 import ambovombe.kombarika.generator.service.repository.Repository;
 import ambovombe.kombarika.generator.service.view.View;
 import ambovombe.kombarika.generator.utils.ObjectUtility;
+import ambovombe.kombarika.utils.Command;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -86,7 +87,7 @@ public class CodeGenerator {
         String directory = packageName.replace(".", File.separator);
         FileUtility.createDirectory(directory, path);
         path = path + File.separator + directory;
-        FileUtility.generateFile(path, GeneratorService.getFileName(table+languageProperties.getFrameworks().get(framework).getRepositoryProperty().getName(), languageProperties.getExtension()), content);
+        FileUtility.generateFile(path, GeneratorService.getFileName(table + languageProperties.getFrameworks().get(framework).getRepositoryProperty().getName(), languageProperties.getExtension()), content);
     }
 
     public String buildRepository(
@@ -126,7 +127,6 @@ public class CodeGenerator {
         return repository.generateRepository(tables, context, packageName, entityPackage, primaryKeysType);
     }
     
-
     public void generateRepository(
         String path, 
         String table, 
@@ -137,7 +137,6 @@ public class CodeGenerator {
         String[] splittedLang = lang.split(":");
         String language = splittedLang[0]; String framework = splittedLang[1];
         String repository = buildRepository(table, packageName, entityPackage, language, framework);
-        System.out.println(entityPackage);
         generateRepositoryFile(path, table, packageName, language, framework, repository);
     }
 
@@ -153,20 +152,6 @@ public class CodeGenerator {
         String language = splittedLang[0]; String framework = splittedLang[1];
         String repository = buildRepository(tables, context, packageName, entityPackage, language, framework);
         generateRepositoryFile(path, context, packageName, language, framework, repository);
-    }
-
-    public void generateView(
-        String path, 
-        String table,
-        String directory, 
-        String viewType,
-        String url
-    ) throws Exception{
-        String view = buildView(table, viewType, url);
-        FileUtility.createDirectory(directory,path);
-        path = path + File.separator + directory;
-        String fileName = GeneratorService.getFileName(table, this.getViewDetails().getViews().get(viewType).getExtension());
-        FileUtility.generateFile(path, fileName, view);
     }
 
     /**
@@ -211,6 +196,8 @@ public class CodeGenerator {
         controller.setCrudMethod(frameworkProperties.getCrudMethod());
         controller.setImports(frameworkProperties.getImports());
         controller.setLanguageProperties(languageProperties);
+        controller.setFrameworkProperties(frameworkProperties);
+        controller.setDbConnection(dbConnection);
         return controller.generateController(template, table, packageName, repository, entity, framework);
     }
 
@@ -226,13 +213,44 @@ public class CodeGenerator {
         String directory = packageName.replace(".", File.separator);
         FileUtility.createDirectory(directory,path);
         path = path + File.separator + directory;
-        FileUtility.generateFile(path, GeneratorService.getFileName(table+"Controller", languageProperties.getExtension()), content);
+        FileUtility.generateFile(path, GeneratorService.getFileName(table + this.getFrameworkProperties().getControllerProperty().getName() , languageProperties.getExtension()), content);
     }
 
     public String buildView(String table, String viewType, String url) throws Exception{
         View view = new View();
         view.setViewProperties(this.getViewDetails().getViews().get(viewType));
+        view.setFrameworkProperties(this.getFrameworkProperties());
         return view.generateView(table, url, dbConnection);
+    }
+    public String buildRouter(String[] tables, String viewType) throws Exception{
+        View view = new View();
+        view.setViewProperties(this.getViewDetails().getViews().get(viewType));
+        view.setFrameworkProperties(this.getFrameworkProperties());
+        return view.generateRoutes(tables);
+    }
+
+    public void generateView(
+        String path, 
+        String table,
+        String directory, 
+        String viewType,
+        String url
+    ) throws Exception{
+        String view = buildView(table, viewType, url);
+        FileUtility.createDirectory(directory,path);
+        path = path + File.separator + directory;
+        String fileName = GeneratorService.getFileName(table, this.getViewDetails().getViews().get(viewType).getExtension());
+        String newDirectory = ObjectUtility.formatToCamelCase(table);
+        FileUtility.createDirectory(newDirectory, path);
+        FileUtility.generateFile(path + File.separator + newDirectory, fileName, view);
+    }
+
+    public void generateRouter(String path, String viewType, String[] tables) throws Exception{
+        String route = this.buildRouter(tables, viewType);
+        if(route.equals(""))
+            return;
+        String fileName = GeneratorService.getFileName(this.getViewDetails().getViews().get(viewType).getRouteFilename(), this.getViewDetails().getViews().get(viewType).getRouteFileExtension());
+        FileUtility.generateFile(path, fileName, route);
     }
     
     public void generateAllEntity(
@@ -256,7 +274,7 @@ public class CodeGenerator {
         String framework
     )  throws Exception{
         for (String table : tables) {
-            generateController(path, table, packageName + "." + controller, packageName + "." + repository, packageName + "." + "entity", framework);  
+            generateController(path, table, packageName + "." + controller, packageName + "." + repository, packageName + "." + entity, framework);  
         }
     }
     
@@ -287,10 +305,12 @@ public class CodeGenerator {
         for (String table : tables) {
             generateView(path, table, view, viewType, url); 
         }
+        generateRouter(path, viewType, tables);
     }
 
     public void generateAll(
         String path, 
+        String viewPath,
         String packageName, 
         String entity, 
         String controller, 
@@ -304,6 +324,14 @@ public class CodeGenerator {
         generateAllEntity(path, tables, packageName ,entity, framework);
         generateAllRepository(path, tables, packageName , entity, repository, framework);
         generateAllController(path, tables, packageName, entity, controller, repository, framework);  
-        generateAllView(path, tables, view, viewType, url);    
+        generateAllView(viewPath, tables, view, viewType, url);    
+    }
+
+    public void generateViewEnvironement(String path, String viewType, String projectName) throws Exception{
+        String command = this.getViewDetails().getViews().get(viewType).getCLIGenerator()
+            .replace("#path#", path)
+            .replace("#projectName#", projectName); 
+        System.out.println(command);
+        Command.executeCommand(command);
     }
 }

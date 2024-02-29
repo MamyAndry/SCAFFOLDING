@@ -15,6 +15,7 @@ import java.io.FileReader;
  */
 public class JsonUtility {
 
+    @SuppressWarnings("unchecked")
     public static <T> T parseJson(String path, Class<?> objectClass) throws Exception{
         // System.out.println(new FileReader(path));
         JsonReader reader = new JsonReader(new BufferedReader(new FileReader(path)));

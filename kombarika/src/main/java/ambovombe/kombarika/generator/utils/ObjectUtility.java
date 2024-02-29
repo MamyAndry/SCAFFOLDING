@@ -63,6 +63,8 @@ public class ObjectUtility {
         }
         return num;
     }
+    
+    @SuppressWarnings("unchecked")
     public static <T> T[] toArray(List<T> list, T obj){
         Object[] array = new Object[list.size()];
         for(int i = 0; i < list.size(); i++){

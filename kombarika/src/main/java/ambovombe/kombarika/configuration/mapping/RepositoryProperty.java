@@ -8,4 +8,5 @@ public class RepositoryProperty {
     String name;
     String classSyntax;
     String fieldSyntax;
+    String constructor;
 }

@@ -30,7 +30,6 @@ public class LanguageProperties {
     private String methodSyntax;
     private String endOfInstruction;
     private String constructorSyntax;
-    private String listSyntax;
     private HashMap<String, FrameworkProperties> frameworks;
 
     //CONSTRUCTOR

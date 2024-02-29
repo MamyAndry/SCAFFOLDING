@@ -6,10 +6,16 @@ import lombok.Getter;
 import lombok.Setter;
 @Getter @Setter
 public class ViewProperties {
+    String CLIGenerator;
     String inputInsert;
     String inputUpdate;
     String tableHeader;
     String template;
+    String routeTemplate;
+    String routeFilename;
+    String routeSyntax;
+    String routeFileExtension;
+    String routeImportSyntax;
     String select;
     String option;
     String selectUpdate;
