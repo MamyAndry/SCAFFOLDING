@@ -10,11 +10,18 @@ public class ViewProperties {
     String inputInsert;
     String inputUpdate;
     String tableHeader;
-    String template;
+    String template; 
+    String extension;
+    String serviceTemplate;
+    String serviceFileName;
+    String serviceFileExtension;
+    String componentTemplate;
+    String componentFileName;
+    String componentFileExtension;
     String routeTemplate;
     String routeFilename;
-    String routeSyntax;
     String routeFileExtension;
+    String routeSyntax;
     String routeImportSyntax;
     String select;
     String option;
@@ -25,7 +32,6 @@ public class ViewProperties {
     String values;
     String tableValue;
     String fetch;
-    String extension;
     String handleSelectItem;
     HashMap<String, String> listMapping;
 }

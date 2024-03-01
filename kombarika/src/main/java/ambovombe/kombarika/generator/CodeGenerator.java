@@ -48,6 +48,33 @@ public class CodeGenerator {
         this.viewDetails.init();
     }
 
+    public String buildEntity(String table, String packageName, String language, String framework) throws Exception {
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        TypeMapping typeMapping = getTypeProperties().getListProperties().get(language);
+        FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
+        String template = frameworkProperties.getTemplate();
+        Entity entity = new Entity();
+        entity.setAnnotationProperty(frameworkProperties.getAnnotationProperty());
+        entity.setLanguageProperties(languageProperties);
+        entity.setTypeMapping(typeMapping);
+        entity.setImports(frameworkProperties.getImports());
+        return entity.generateEntity(getDbConnection(), template, table, packageName);
+    }
+
+    public void generateEntityFile(
+        String path, 
+        String table, 
+        String packageName, 
+        String language, 
+        String framework
+    ) throws Exception{
+        String entity = buildEntity(table, packageName, language, framework);
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        String directory = packageName.replace(".", File.separator);
+        FileUtility.createDirectory(directory,path);
+        path = path + File.separator + directory;
+        FileUtility.generateFile(path, GeneratorService.getFileName(table, languageProperties.getExtension()), entity);
+    }
     public void generateEntity(
         String path, 
         String table, 
@@ -60,17 +87,48 @@ public class CodeGenerator {
         generateEntityFile(path, table, packageName, language, framework);
     }
 
+    public String buildController(String table, String packageName, String context, String repository, String entity, String language, String framework) throws Exception{
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
+        String template = frameworkProperties.getTemplate();
+        Controller controller = new Controller();
+        controller.setAnnotationProperty(frameworkProperties.getAnnotationProperty());
+        controller.setControllerProperty(frameworkProperties.getControllerProperty());
+        controller.setCrudMethod(frameworkProperties.getCrudMethod());
+        controller.setImports(frameworkProperties.getImports());
+        controller.setLanguageProperties(languageProperties);
+        controller.setFrameworkProperties(frameworkProperties);
+        controller.setDbConnection(dbConnection);
+        return controller.generateController(template, table, packageName, context, repository, entity, framework);
+    }
+
+    public void generateControllerFile(
+        String path,
+        String table,
+        String packageName,
+        String language,
+        String framework,
+        String content
+    ) throws Exception{
+        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
+        String directory = packageName.replace(".", File.separator);
+        FileUtility.createDirectory(directory,path);
+        path = path + File.separator + directory;
+        FileUtility.generateFile(path, GeneratorService.getFileName(table + this.getFrameworkProperties().getControllerProperty().getName() , languageProperties.getExtension()), content);
+    }
+
     public void generateController(
         String path, 
         String table, 
-        String packageName, 
+        String packageName,
+        String context, 
         String repository, 
         String entity, 
         String lang
     ) throws Exception{
         String[] splittedLang = lang.split(":");
         String language = splittedLang[0]; String framework = splittedLang[1];
-        String controller = buildController(table, packageName, repository, entity, language, framework);
+        String controller = buildController(table, packageName, context, repository, entity, language, framework);
         generateControllerFile(path, table, packageName, language, framework, controller);
     }
 
@@ -158,64 +216,6 @@ public class CodeGenerator {
      * eg : generate -p path -t table1, table2, table3 -package name -l java:spring-boot
      * @author rakharrs
      */
-    public String buildEntity(String table, String packageName, String language, String framework) throws Exception {
-        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
-        TypeMapping typeMapping = getTypeProperties().getListProperties().get(language);
-        FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
-        String template = frameworkProperties.getTemplate();
-        Entity entity = new Entity();
-        entity.setAnnotationProperty(frameworkProperties.getAnnotationProperty());
-        entity.setLanguageProperties(languageProperties);
-        entity.setTypeMapping(typeMapping);
-        entity.setImports(frameworkProperties.getImports());
-        return entity.generateEntity(getDbConnection(), template, table, packageName);
-    }
-
-    public void generateEntityFile(
-        String path, 
-        String table, 
-        String packageName, 
-        String language, 
-        String framework
-    ) throws Exception{
-        String entity = buildEntity(table, packageName, language, framework);
-        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
-        String directory = packageName.replace(".", File.separator);
-        FileUtility.createDirectory(directory,path);
-        path = path + File.separator + directory;
-        FileUtility.generateFile(path, GeneratorService.getFileName(table, languageProperties.getExtension()), entity);
-    }
-
-    public String buildController(String table, String packageName, String repository, String entity, String language, String framework) throws Exception{
-        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
-        FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
-        String template = frameworkProperties.getTemplate();
-        Controller controller = new Controller();
-        controller.setAnnotationProperty(frameworkProperties.getAnnotationProperty());
-        controller.setControllerProperty(frameworkProperties.getControllerProperty());
-        controller.setCrudMethod(frameworkProperties.getCrudMethod());
-        controller.setImports(frameworkProperties.getImports());
-        controller.setLanguageProperties(languageProperties);
-        controller.setFrameworkProperties(frameworkProperties);
-        controller.setDbConnection(dbConnection);
-        return controller.generateController(template, table, packageName, repository, entity, framework);
-    }
-
-    public void generateControllerFile(
-        String path,
-        String table,
-        String packageName,
-        String language,
-        String framework,
-        String content
-    ) throws Exception{
-        LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
-        String directory = packageName.replace(".", File.separator);
-        FileUtility.createDirectory(directory,path);
-        path = path + File.separator + directory;
-        FileUtility.generateFile(path, GeneratorService.getFileName(table + this.getFrameworkProperties().getControllerProperty().getName() , languageProperties.getExtension()), content);
-    }
-
     public String buildView(String table, String viewType, String url) throws Exception{
         View view = new View();
         view.setViewProperties(this.getViewDetails().getViews().get(viewType));
@@ -274,7 +274,7 @@ public class CodeGenerator {
         String framework
     )  throws Exception{
         for (String table : tables) {
-            generateController(path, table, packageName + "." + controller, packageName + "." + repository, packageName + "." + entity, framework);  
+            generateController(path, table, packageName + "." + controller, repository, packageName + "." + repository, packageName + "." + entity, framework);  
         }
     }
     

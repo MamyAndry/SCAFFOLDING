@@ -241,7 +241,6 @@ public class View {
         HashMap<String, String> foreignKeys = DbService.getForeignKeys(dbConnection, table);
         HashMap<String, String> idAndAttribute = this.getIdAndAttribute(dbConnection, foreignKeys);
         String id = idAndAttribute.get("id");
-        System.out.println(path);
         String attribute = idAndAttribute.get("attribute");
         res = template.replace("#header#", getHeaders( columns))
         .replace("#inputInsert#", getInputInsert(columns, foreignKeys, primaryKeys, url, id, attribute))

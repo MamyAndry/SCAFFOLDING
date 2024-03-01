@@ -2,8 +2,8 @@ import React, {useState, useEffect} from "react";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-function #entity#(){
-  const url = '#url#';
+function District(){
+  const url = 'http://localhost:8080/';
   
   const [loading, setLoading] = useState(true);
   
@@ -21,11 +21,15 @@ function #entity#(){
   const [selectedItem, setSelectedItem] = useState(null);
   const handleSelectItem = (itemKey) => {
     handleShow2();
-    const itemDetails = #path#.find(item => item.#id# === itemKey);
+    const itemDetails = district.find(item => item.id === itemKey);
     setSelectedItem(itemDetails);
   };
 
-#values#
+	const [district, setDistrict] = useState([]);
+	
+	const [region, setRegion] = useState([]);
+	
+	
 
 //////// SAVE
   const handleSaveSubmit = async (event) => {
@@ -43,7 +47,7 @@ function #entity#(){
       }
   
       try {
-        const response = await fetch(url + '#path#', {
+        const response = await fetch(url + 'district', {
           method: 'POST',
           body: JSON.stringify(data),
           headers: {
@@ -77,7 +81,7 @@ function #entity#(){
         }
       }
       try {
-        const response = await fetch(url + '#path#', {
+        const response = await fetch(url + 'district', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -100,7 +104,7 @@ function #entity#(){
   const handleDeleteClick = async (item) => {
     try {
       console.log(item);
-      const response = await fetch(url + '#path#', {
+      const response = await fetch(url + 'district', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -117,9 +121,55 @@ function #entity#(){
     }
   };
 
-#handleInputSelectChange#
+	const handleInputNomDistrictChange = (event) => {
+		setSelectedItem({ ...selectedItem, nomDistrict: event.target.value });
+	};
+	
+	const handleSelectRegionChange = (event) => {
+		setSelectedItem({ ...selectedItem, region: event.target.value });
+	};
+	
+	const handleInputIdChange = (event) => {
+		setSelectedItem({ ...selectedItem, id: event.target.value });
+	};
+	
+	
 
-#getValues#
+	useEffect(() => {
+		const getDistrict = async () => {
+			try {
+				const response = await fetch(url + 'district');
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					};
+				const data = await response.json();
+				setDistrict(data);
+			} catch (error) {
+				setError(error);
+			} finally {
+				setLoading(false);
+			}
+		};
+		getDistrict();
+	}, []);
+	useEffect(() => {
+		const getRegion = async () => {
+			try {
+				const response = await fetch(url + 'region');
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					};
+				const data = await response.json();
+				setRegion(data);
+			} catch (error) {
+				setError(error);
+			} finally {
+				setLoading(false);
+			}
+		};
+		getRegion();
+	}, []);
+	
 
   return (
     <>
@@ -128,17 +178,29 @@ function #entity#(){
               <div className="col" >   
                 <div className="row">
                   <Button variant="primary" onClick={handleShow}>
-                      Add #entity#
+                      Add District
                   </Button>
                 </div>    
 
                   <Modal show={show} onHide={handleClose}>
                       <Modal.Header closeButton>
-                      <Modal.Title>Add #entity#</Modal.Title>
+                      <Modal.Title>Add District</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
                           <form action="" method="" id="insert" onSubmit={handleSaveSubmit}>
-#inputInsert#
+	<div className="mb-3"> 
+	 	<label className="form-label">Nom District</label> 
+	 	<input className="form-control" type="text" name="nomDistrict" />
+	</div>
+	<div className="mb-3"> 
+	 	<label className="form-label">id</label> 
+	 	<select className="form-control" name="region" id="select-region">
+			{region.map((elt) => (
+				<option value={elt.id}>{elt.nomRegion}</option>
+			))}
+			
+		</select>
+	</div>
                               <div className="mb-3">
                                 <Button variant="primary" type= "submit" >
                                   Save Changes
@@ -156,22 +218,28 @@ function #entity#(){
               <table className="table">
                   <thead id="table-head">
                       <tr>
-#header#
+			<th> Nom District </th>
+			<th> Id Region </th>
+			<th> Id </th>
+
                           <th></th>
                           <th></th>
                       </tr>
                   </thead>    
                   <tbody id="table-body">
-                      {#path#.map((item) => (
-                              <tr key={item.#id#}>
-#tableValue#
+                      {district.map((item) => (
+                              <tr key={item.id}>
+		<td>{item.nomDistrict}</td>
+		<td>{item.region.nomRegion}</td>
+		<td>{item.id}</td>
+
                               <td>
-                                  <Button variant="danger" key={item.#id#} onClick={() => handleDeleteClick(item)}>
+                                  <Button variant="danger" key={item.id} onClick={() => handleDeleteClick(item)}>
                                       Delete
                                   </Button>
                               </td>   
                               <td>
-                                  <Button variant="warning" key={item.#id#} onClick={() => handleSelectItem(item.#id#)}>
+                                  <Button variant="warning" key={item.id} onClick={() => handleSelectItem(item.id)}>
                                       Update
                                   </Button>
                               </td>
@@ -181,11 +249,28 @@ function #entity#(){
               </table>
               <Modal show={show2} onHide={handleClose2}>
                   <Modal.Header closeButton>
-                      <Modal.Title>Update #entity#</Modal.Title>
+                      <Modal.Title>Update District</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>    
                       <form action="" method="" id="update" onSubmit={handleUpdateSubmit}>
-#inputUpdate#
+	<div className="mb-3"> 
+	 	<label className="form-label">Nom District</label> 
+	 	<input className="form-control" type="text" name="nomDistrict" onChange={handleInputNomDistrictChange} value={selectedItem ? selectedItem.nomDistrict:''} />
+	</div>
+	<div className="mb-3"> 
+	 	<label className="form-label">id</label> 
+	 	<select className="form-control" name="region">
+			{region.map((elt) => (
+		<option value={elt.id}>{elt.nomRegion}</option>
+	))}
+	
+	
+	</select>
+	</div><div className="mb-3"> 
+	 	<label className="form-label"></label> 
+	 	<input className="form-control" type="hidden" name="id" onChange={handleInputIdChange} value={selectedItem ? selectedItem.id:''} />
+	</div>
+	
                           <div className="mb-3">
                             <Button variant="warning" type= "submit" >
                               Save Changes
@@ -203,4 +288,4 @@ function #entity#(){
   )
 }
 
-export default #entity#;
+export default District;

@@ -193,23 +193,24 @@ public class Controller{
         return res;
     }
 
-    public String getConstructor(String table) throws Exception{
+    public String getConstructor(String table, String repository) throws Exception{
         String res = "";
         if(!this.getControllerProperty().getConstructor().equals("")){
             res = this.getControllerProperty().getConstructor()
-                .replace("#name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)));
+                .replace("#name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
+                .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(repository)));
         }
         return res;
     }
     
-    public String generateController(String template, String table, String packageName, String repository, String entity, String framework) throws Exception {
+    public String generateController(String template, String table, String packageName, String context, String repository, String entity, String framework) throws Exception {
         String res = template.replace("#package#", GeneratorService.getPackage(this.getLanguageProperties(), packageName))
                 .replace("#imports#", getControllerImport(repository, entity, table))
                 .replace("#class#", getControllerClass(table, framework))
                 .replace("#open-bracket#", languageProperties.getOpenBracket())
                 .replace("#close-bracket#", languageProperties.getCloseBracket())
                 .replace("#fields#", getControllerField(table))
-                .replace("#constructors#", getConstructor(table))
+                .replace("#constructors#", getConstructor(table, context))
                 .replace("#methods#", getCrudMethods(table))
                 .replace("#encapsulation#", "");
         return res;

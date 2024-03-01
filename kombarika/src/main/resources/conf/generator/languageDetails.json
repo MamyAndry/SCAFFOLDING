@@ -78,7 +78,7 @@
                         "annotationMethodParameter":"",
                         "annotationArgumentParameterFormData":"FromBody",
                         "annotationArgumentParameterLink":"",
-                        "constructor": "\tpublic #name#Controller(#name#DbContext context) { _context = context; }"
+                        "constructor": "\tpublic #name#Controller(?DbContext context) { _context = context; }"
                     },
                     "repositoryProperty" : {
                         "name":"DbContext",
@@ -128,7 +128,7 @@
                     },
                     "annotationProperty" : {
                         "table": "Table(name = \"?\")",
-                        "autoIncrement":"GeneratedValue(strategy=GenerationType.IDENTITY)",
+                        "acomponentutoIncrement":"GeneratedValue(strategy=GenerationType.IDENTITY)",
                         "column": "Column(name = \"?\")",
                         "entity": "Entity",
                         "controller": "RestController\n@CrossOrigin(\"*\")",
@@ -223,16 +223,16 @@
                     },
                     "controllerProperty" : {
                         "path": "",
-                        "get": "Url(url = \"find-?.do\")\n@Json(method = JsonMethods.GET)",
-                        "post": "Url(url = \"save-?.do\")\n@Json(method = JsonMethods.POST)",
-                        "put": "Url(url = \"update-?.do\")\n@Json(method = JsonMethods.PUT)",
-                        "delete": "Url(url = \"delete-?.do\")\n@Json(method = JsonMethods.DELETE)",
+                        "get": "Url(method = HttpMethod.GET)",
+                        "post": "Url(method = HttpMethod.POST)",
+                        "put": "Url(method = HttpMethod.PUT)",
+                        "delete": "Url(method = HttpMethod.DELETE)",
                         "classSyntax": "?Model",
                         "name":"Model",
                         "includedTerms":"",
                         "field": "private ? entity = new ?();",
                         "returnType": "Object",
-                        "returnTypeDelete": "void",
+                        "returnTypeDelete": "Object",
                         "pathSyntax":"?",
                         "annotationField": "",
                         "annotationMethodParameter":"",
