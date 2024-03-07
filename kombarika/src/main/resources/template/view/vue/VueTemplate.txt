@@ -12,8 +12,7 @@
                             Add #entity#
                         </Button>
                     </div>
-
-                    <Modal -model:visible="insertForm">
+                    <Modal id='insert' v-model:visible="insertForm">
                         <div id="body">
                             <form id="insert" @submit="e => insert(e)">
                                 #inputInsert#
@@ -65,7 +64,7 @@
                     #inputUpdate#
                     <div className="mb-3">
                         <Button variant="primary" type= "submit" >
-                          Update
+                            Update
                         </Button>
                       </div>
                 </form>
@@ -79,7 +78,7 @@
                 <form id="delete" @submit="delete" v-if="deleteForm">
                     <div className="mb-3">
                         <Button variant="primary" type= "submit" >
-                          Delete
+                            Delete
                         </Button>
                       </div>
                 </form>
