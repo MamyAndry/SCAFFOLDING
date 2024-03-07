@@ -7,7 +7,6 @@ package ambovombe.kombarika;
 import ambovombe.kombarika.database.DbConnection;
 import ambovombe.kombarika.generator.CodeGenerator;
 import ambovombe.kombarika.generator.service.DbService;
-
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.HashMap;
@@ -25,7 +24,7 @@ public class Test {
     public static void main(String[] args) throws Exception {
         CodeGenerator codeGenerator = new CodeGenerator();
         String path = "./";
-        String framework = "csharp:dotnet";
+        String framework = "java:spring-boot";
         String packageName = "com.district.test";
         String entity = "entity";
         String controller = "controller";

@@ -51,7 +51,8 @@ public class CodeGenerator {
         String lang)
     throws Exception{
         String[] splittedLang = lang.split(":");
-        String language = splittedLang[0]; String framework = splittedLang[1];
+        String language = splittedLang[0]; // quel est le language
+        String framework = splittedLang[1]; // quel framework utilisé
         generateEntityFile(path, table, packageName, language, framework);
     }
 

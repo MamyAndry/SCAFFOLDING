@@ -161,6 +161,66 @@
                         "fieldSyntax": ""
                     }
 
+                },
+                "itu-S4-framework": {
+                    "template" : "Template.code",
+                    "repository": "Template.code",
+                    "imports" : {
+                        "controller":[
+                        ],
+                        "entity":[
+                        ],
+                        "repository":[
+                        ]
+                    },
+                    "annotationProperty" : {
+                        "table": "Table(name = \"?\")",
+                        "autoIncrement":"GeneratedValue(strategy=GenerationType.IDENTITY)",
+                        "column": "Column(name = \"?\")",
+                        "entity": "Entity",
+                        "controller": "RestController\n@CrossOrigin(\"*\")",
+                        "constraints": {
+                            "primaryKey": "Id",
+                            "foreignKey": {
+                                "annotation":"JoinColumn(name = \"?\")",
+                                "manyToOne":"ManyToOne",
+                                "manyToMany":"",
+                                "oneToMany":"",
+                                "oneToOne":""
+                            }
+                        }
+                    },
+                    "crudMethod" : {
+                        "findAll": "return ResponseEntity.ok(repository.findAll());",
+                        "findById":"return ResponseEntity.ok(repository.findById(#Id#));",
+                        "delete": "return ResponseEntity.ok(repository.delete(#object#));",
+                        "update": "return ResponseEntity.ok(repository.save(#object#));",
+                        "save": "return ResponseEntity.ok(repository.save(#object#));"
+                    },
+                    "controllerProperty" : {
+                        "path": "RequestMapping(path = \"?\")",
+                        "get": "GetMapping()",
+                        "post": "PostMapping()",
+                        "put": "PutMapping()",
+                        "delete": "DeleteMapping()",
+                        "field": "private ?Repository repository;",
+                        "returnType": "ResponseEntity<?>",
+                        "annotationField": "Autowired",
+                        "annotationMethodParameter":"",
+                        "annotationArgumentParameterFormData":"RequestBody",
+                        "annotationArgumentParameterLink":"PathVariable",
+                        "constructor": ""
+                    },
+                    "repositoryProperty" : {
+                        "name":"Repository",
+                        "classSyntax": "public interface ?Repository extends CrudRepository<?, #type#>",
+                        "fieldSyntax": ""
+                    },
+                    "class-methods": {
+                        "methods": {
+
+                        }
+                    }
                 }
             }
         }
