@@ -140,8 +140,8 @@ public class DbService {
     public static List<String> getPrimaryKey(DbConnection dbConnection, String tableName) throws Exception{
         String query = dbConnection.getListConnection().get(dbConnection.getInUseConnection()).getDatabaseType().getPrimaryKeyQuery();
         ArrayList<String> listPrimaryKeys = new ArrayList<>();
-        query = query.replace("?", tableName);
         PreparedStatement stmt = dbConnection.getConnection().prepareCall(query);
+        stmt.setString(1, tableName);
         ResultSet rs = stmt.executeQuery();
         while (rs.next())
             listPrimaryKeys.add(rs.getString(1));
@@ -151,8 +151,8 @@ public class DbService {
     public static HashMap<String, String> getForeignKeys(DbConnection dbConnection, String tableName) throws Exception{
         String query = dbConnection.getListConnection().get(dbConnection.getInUseConnection()).getDatabaseType().getForeignKeyQuery();
         HashMap<String, String> listForeignKeysKeys = new HashMap<>();
-        query = query.replace("?", tableName);
         PreparedStatement stmt = dbConnection.getConnection().prepareCall(query);
+        stmt.setString(1, tableName);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()){
             listForeignKeysKeys.put(rs.getString(1), rs.getString(2));

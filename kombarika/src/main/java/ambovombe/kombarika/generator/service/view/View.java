@@ -35,6 +35,7 @@ public class View {
                         .replace("#attribute#", ObjectUtility.formatToCamelCase(attribute));
                     option = Misc.tabulate(Misc.tabulate(option));
                     res += this.getViewProperties().getSelect()
+                    .replace("#label#", ObjectUtility.capitalize(temp))
                     .replace("#name#", ObjectUtility.formatToCamelCase(temp))
                     .replace("#option#", option);
                     continue;
@@ -91,7 +92,7 @@ public class View {
                 .replace("#type#", "hidden")                
                 .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getKey())))
                 .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";          
-            }
+            }   
         }
         return Misc.tabulate(res);
     }
@@ -241,7 +242,6 @@ public class View {
         HashMap<String, String> foreignKeys = DbService.getForeignKeys(dbConnection, table);
         HashMap<String, String> idAndAttribute = this.getIdAndAttribute(dbConnection, foreignKeys);
         String id = idAndAttribute.get("id");
-        System.out.println(path);
         String attribute = idAndAttribute.get("attribute");
         res = template.replace("#header#", getHeaders( columns))
         .replace("#inputInsert#", getInputInsert(columns, foreignKeys, primaryKeys, url, id, attribute))

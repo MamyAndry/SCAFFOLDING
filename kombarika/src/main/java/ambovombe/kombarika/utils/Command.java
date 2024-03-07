@@ -10,7 +10,7 @@ public class Command {
             ProcessBuilder pb = new ProcessBuilder("sh", "-c", command);
             pb.start();
         }else if(getOS().equals("windows")){
-            ProcessBuilder pb = new ProcessBuilder("cmd.ex", "/c", command);
+            ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", command);
             pb.start();
         }
     }

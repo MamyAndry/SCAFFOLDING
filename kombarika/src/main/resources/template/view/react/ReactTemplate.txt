@@ -63,7 +63,7 @@ function #entity#(){
       }
   };
 
-//////// UPDATE
+//////// UPDATE 
   const handleUpdateSubmit = async (event) => {
       event.preventDefault();
       const form = event.target;
@@ -171,7 +171,7 @@ function #entity#(){
                                   </Button>
                               </td>   
                               <td>
-                                  <Button variant="warning" key={item.#id#} onClick={() => handleSelectItem(item.#id#)}>
+                                 <Button variant="warning" key={item.#id#} onClick={() => handleSelectItem(item.#id#)}>
                                       Update
                                   </Button>
                               </td>
