@@ -128,7 +128,7 @@
                     },
                     "annotationProperty" : {
                         "table": "Table(name = \"?\")",
-                        "acomponentutoIncrement":"GeneratedValue(strategy=GenerationType.IDENTITY)",
+                        "autoIncrement":"GeneratedValue(strategy=GenerationType.IDENTITY)",
                         "column": "Column(name = \"?\")",
                         "entity": "Entity",
                         "controller": "RestController\n@CrossOrigin(\"*\")",
@@ -222,11 +222,11 @@
                         "save": "try{\n\tGenericDao.save(null, #object#);\n\treturn \"saved successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}"
                     },
                     "controllerProperty" : {
-                        "path": "",
-                        "get": "Url(method = HttpMethod.GET)",
-                        "post": "Url(method = HttpMethod.POST)",
-                        "put": "Url(method = HttpMethod.PUT)",
-                        "delete": "Url(method = HttpMethod.DELETE)",
+                        "path": "RequestMapping(path = \"/?\")",
+                        "get": "Url(method = HttpMethod.GET)\n@Json",
+                        "post": "Url(method = HttpMethod.POST)\n@Json",
+                        "put": "Url(method = HttpMethod.PUT)\n@Json",
+                        "delete": "Url(method = HttpMethod.DELETE)\n@Json",
                         "classSyntax": "?Model",
                         "name":"Model",
                         "includedTerms":"",
@@ -236,8 +236,8 @@
                         "pathSyntax":"?",
                         "annotationField": "",
                         "annotationMethodParameter":"",
-                        "annotationArgumentParameterFormData":"Argument",
-                        "annotationArgumentParameterLink":"",
+                        "annotationArgumentParameterFormData":"RequestBody",
+                        "annotationArgumentParameterLink":"RequestParam",
                         "constructor":""
                     },
                     "repositoryProperty" : {

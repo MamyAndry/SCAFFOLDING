@@ -4,6 +4,7 @@ package ambovombe.kombarika;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 
+import ambovombe.kombarika.database.DbProperties;
 import ambovombe.kombarika.generator.CodeGenerator;
 import ambovombe.kombarika.generator.service.DbService;
 
@@ -20,21 +21,21 @@ public class Test {
      
     public static void main(String[] args) throws Exception {
         CodeGenerator codeGenerator = new CodeGenerator();  
-        // String path = "/home/mamisoa/ITU/L3/Mr_Naina/TEST/test/src/main/java";
-        // String viewPath = "/home/mamisoa/ITU/L3/Mr_Naina/REACT/crud/src/components";
+        String path = "/home/mamisoa/ITU/L3/Mr_Naina/TEST/test/src/main/java";
+        String viewPath = "/home/mamisoa/ITU/L3/Mr_Naina/REACT/crud/src/components";
         
-        String path = "/home/mamisoa/ITU/L3/Mr_Naina/FRAMEWORK/testkarana/src/main/java";
-        String viewPath = "./";
+        // String path = "/home/mamisoa/ITU/L3/Mr_Naina/FRAMEWORK/testkarana/src/main/java";
+        // String viewPath = "./";
 
         // String path = "/home/mamisoa/ITU/L3";
         // String viewPath = "/home/mamisoa/ITU/L3";
 
 
-        String framework = "java:karana";
+        String framework = "java:spring-boot";
         String packageName = "com.district.test";
         String entity = "entity";
-        String controller = "model";
-        String repository = "context";
+        String controller = "controller";
+        String repository = "repository";
         String view = "";
         String viewType = "react";
         String url = "http://localhost:8080/";
@@ -52,7 +53,9 @@ public class Test {
             // for(String table: tables)
             //     System.out.println(table);
             codeGenerator.generateAll(path, viewPath, packageName, entity, controller, repository, view, viewType, url, tables, framework);
-            // codeGenerator.generateViewEnvironement(viewPath, viewType, "huhuhu");
+            codeGenerator.generateViewEnvironement(viewPath, viewType, "huhuhu");
+            // DbProperties db = new DbProperties();
+            // db.addConnection("huhuhu");
         }catch(Exception e){
             e.printStackTrace();
         }finally{
