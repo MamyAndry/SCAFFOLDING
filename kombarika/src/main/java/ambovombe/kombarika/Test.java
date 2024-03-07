@@ -7,7 +7,6 @@ package ambovombe.kombarika;
 import ambovombe.kombarika.database.DbProperties;
 import ambovombe.kombarika.generator.CodeGenerator;
 import ambovombe.kombarika.generator.service.DbService;
-
 /**
  *
  *  @author Mamisoa
@@ -21,8 +20,8 @@ public class Test {
      
     public static void main(String[] args) throws Exception {
         CodeGenerator codeGenerator = new CodeGenerator();  
-        String path = "/home/mamisoa/ITU/L3/Mr_Naina/TEST/test/src/main/java";
-        String viewPath = "/home/mamisoa/ITU/L3/Mr_Naina/REACT/crud/src/components";
+        String path = "/home/fabien/Document/java"; // class path
+        String viewPath = "/home/fabien/Documents/vue";
         
         // String path = "/home/mamisoa/ITU/L3/Mr_Naina/FRAMEWORK/testkarana/src/main/java";
         // String viewPath = "./";
@@ -37,7 +36,7 @@ public class Test {
         String controller = "controller";
         String repository = "repository";
         String view = "";
-        String viewType = "react";
+        String viewType = "vue";
         String url = "http://localhost:8080/";
         try{
             // String[] tables = {"district","region"};
