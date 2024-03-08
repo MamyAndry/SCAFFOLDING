@@ -13,7 +13,7 @@
             <div class="row justify-content-end">
                 <div class="col">
                     <div class="row">
-                        <Button variant="primary" @click="insertForm = !insertForm">
+                        <Button variant="primary" class="btn btn-primary" @click="insertForm = !insertForm">
                             Add #entity#
                         </Button>
                     </div>
@@ -47,12 +47,12 @@
                     <tr v-for="item in #path#" :key="item.#id#">
                         #tableValue#
                         <td>
-                            <Button variant="primary" @click="targetItem = item; updateForm = !updateForm">
+                            <Button variant="primary" class="btn btn-warning" @click="targetItem = item; updateForm = !updateForm">
                                 Edit
                             </Button>
                         </td>
                         <td>
-                            <Button variant="danger" @click="targetItem = item; deleteForm = !deleteForm">
+                            <Button variant="danger" class="btn btn-danger" @click="targetItem = item; deleteForm = !deleteForm">
                                 Delete
                             </Button>
                         </td>
@@ -68,7 +68,7 @@
                 <form id="update" @submit="e => update(e)" v-if="updateForm">
                     #inputUpdate#
                     <div className="mb-3">
-                        <Button variant="primary" type= "submit" >
+                        <Button class="btn btn-primary" type= "submit" >
                             Update
                         </Button>
                       </div>
@@ -82,7 +82,7 @@
             <div id="body">
                 <form id="delete" @submit="del()" v-if="deleteForm">
                     <div className="mb-3">
-                        <Button variant="primary" type= "submit" >
+                        <Button class="btn btn-danger" type= "submit" >
                             Delete
                         </Button>
                       </div>
