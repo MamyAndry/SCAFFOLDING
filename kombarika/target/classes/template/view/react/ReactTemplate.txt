@@ -63,11 +63,7 @@ function #entity#(){
       }
   };
 
-<<<<<<< HEAD
 //////// UPDATE 
-=======
-//////// UPDATE
->>>>>>> vue-js
   const handleUpdateSubmit = async (event) => {
       event.preventDefault();
       const form = event.target;

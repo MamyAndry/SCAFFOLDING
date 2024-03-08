@@ -30,7 +30,7 @@ public class Test {
         // String viewPath = "/home/mamisoa/ITU/L3";
 
 
-        String framework = "java:spring-boot";
+        String framework = "java:karana";
         String packageName = "com.district.test";
         String entity = "entity";
         String controller = "controller";

@@ -1,4 +1,9 @@
 <template>
+    <header>
+        <title>Vue 3</title>
+        <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+    </header>
     <div class="container">
         <div v-if="loading">
             Loading ...
@@ -39,7 +44,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in items" :key="item.#id#">
+                    <tr v-for="item in #path#" :key="item.#id#">
                         #tableValue#
                         <td>
                             <Button variant="primary" @click="targetItem = item; updateForm = !updateForm">
@@ -100,9 +105,11 @@
                 insertForm: false,
                 deleteForm: false,
                 updateForm: false,
-                loading: false
+                loading: false,
+                #values#
             }
         },
+        // eslint-disable-next-line vue/multi-word-component-names
         name: '#entity#',
         components: {
             Modal
@@ -112,7 +119,7 @@
         },
         methods: {
             async getAll() {
-                try {
+                /*try {
                     this.loading = true;
                     const response = await fetch(this.url + '#path#');
                     if (!response.ok) {
@@ -124,7 +131,13 @@
                 } catch (error) {
                     if(this.loading) this.loading = false;
                     alert(error);
-                }
+                }*/
+                try{
+                    #getValues#
+                }catch (error) {
+                    if(this.loading) this.loading = false;
+                    alert(error);
+                }   
             },
             async update(event) {
                 event.preventDefault();
