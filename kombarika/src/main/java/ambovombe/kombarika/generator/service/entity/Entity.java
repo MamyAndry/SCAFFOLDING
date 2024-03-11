@@ -138,13 +138,17 @@ public class Entity {
                 .replace("#close-bracket#", this.getLanguageProperties().getCloseBracket())
                 .replace("#fields#", getEntityField(columns, foreignKeys, primaryKeyColumn))
                 .replace("#constructors#", getConstructor(table))
-                .replace("#methods#", "")
+                .replace("#methods#", "") /* obtenir les method de crud par rapport amle model view */
                 .replace("#encapsulation#", getEncapsulation(columns, foreignKeys));
         return res;
     }
 
     public String getFileName(String table){
         return ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)).concat("." + this.getLanguageProperties().getExtension());
+    }
+
+    public String getCrudMethods(){
+        return null;
     }
 
 }
