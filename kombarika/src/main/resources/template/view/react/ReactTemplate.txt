@@ -171,7 +171,11 @@ function #entity#(){
                                   </Button>
                               </td>   
                               <td>
+<<<<<<< HEAD
                                  <Button variant="warning" key={item.#id#} onClick={() => handleSelectItem(item.#id#)}>
+=======
+                                  <Button variant="warning" key={item.#id#} onClick={() => handleSelectItem(item.#id#)}>
+>>>>>>> vue-js
                                       Update
                                   </Button>
                               </td>
@@ -203,4 +207,8 @@ function #entity#(){
   )
 }
 
+<<<<<<< HEAD
 export default #entity#;
+=======
+export default #entity#;
+>>>>>>> vue-js

@@ -7,7 +7,6 @@ package ambovombe.kombarika;
 import ambovombe.kombarika.database.DbProperties;
 import ambovombe.kombarika.generator.CodeGenerator;
 import ambovombe.kombarika.generator.service.DbService;
-
 /**
  *
  *  @author Mamisoa
@@ -55,7 +54,7 @@ public class Test {
             //     System.out.println(table);
             codeGenerator.generateAll(path, viewPath, packageName, entity, controller, repository, view, viewType, url, tables, framework);
             // codeGenerator.generateViewEnvironement(viewPath, viewType, "huhuhu");
-            // DbProperties db = new DbProperties();
+                // DbProperties db = new DbProperties();
             // db.addConnection("huhuhu");
         }catch(Exception e){
             e.printStackTrace();

@@ -250,7 +250,7 @@
                 },
                 "merana" : {
                     "template" : "Template.code",
-                    "repository": "", 
+                    "repository": "",
                     "listSyntax" : "List<?>",
                     "isOneRepository":"false",
                     "imports" : {
@@ -292,7 +292,7 @@
                         "update": "try{\n\tGenericDao.update(null, #object#);\n\treturn \"updated successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
                         "save": "try{\n\tGenericDao.save(null, #object#);\n\treturn \"saved successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}"
                     },
-                    
+
                     "controllerProperty" : {
                         "path": "RequestUrl(\"/?\")",
                         "get": "Url(method = GET)",
