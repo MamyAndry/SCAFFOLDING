@@ -3,8 +3,8 @@
     "listConnection": {
         "DefaultConnection": {
             "datasource":"jdbc:postgresql://localhost:5432/district",
-            "username":"mamisoa",
-            "password":"prom15",
+            "username":"your_username",
+            "password":"your_password",
             "databaseType":"POSTGRESQL"
         },
         "OtherConnection": {
