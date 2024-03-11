@@ -22,10 +22,10 @@ public class Test {
         CodeGenerator codeGenerator = new CodeGenerator();  
         // String path = "/home/mamisoa/ITU/L3/Mr_Naina/TEST/test/src/main/java";
         String path = "./";
-        String viewPath = "/home/mamisoa/ITU/L3/Mr_Naina/REACT/crud/src/components";
+        // String viewPath = "/home/mamisoa/ITU/L3/Mr_Naina/REACT/crud/src/components";
         
         // String path = "/home/mamisoa/ITU/L3/Mr_Naina/FRAMEWORK/testkarana/src/main/java";
-        // String viewPath = "./";
+        String viewPath = "./";
 
         // String path = "/home/mamisoa/ITU/L3";
         // String viewPath = "/home/mamisoa/ITU/L3";
@@ -37,7 +37,7 @@ public class Test {
         String controller = "controller";
         String repository = "repository";
         String view = "";
-        String viewType = "react";
+        String viewType = "vue";
         String url = "http://localhost:8080/testkarana/";
         try{
             // String[] tables = {"district","region"};

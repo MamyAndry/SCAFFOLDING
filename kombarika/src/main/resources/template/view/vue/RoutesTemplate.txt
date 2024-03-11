@@ -1,6 +1,6 @@
-<template>
-</template>
+import { createRouter } from 'vue-router'
+${IMPORTS}
 
-<script setup>
-    import { createRouter } from 'vue-router'
-</script>
+const routes = {
+${ROUTES}
+}

@@ -68,7 +68,6 @@
             var tbody = $('#table-body');
             var add_form = $('#insert');
 
-
             // Boucle sur les données pour le tbody
             for (let i = 0; i < data.length; i++) {
                 var tr = $('<tr></tr>');

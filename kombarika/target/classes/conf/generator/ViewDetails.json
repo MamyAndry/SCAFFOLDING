@@ -84,6 +84,49 @@
                 "BigInt":"number",
                 "[B":"file"
             }
+        },
+        "vue": {
+            "CLIGenerator":"cd #path# && mkdir #projectName# && cd #projectName# && npx create-react-app",
+            "inputInsert":"<div className=\"mb-3\"> \n \t<label className=\"form-label\">#label#</label> \n \t<input className=\"form-control\" type=\"#type#\" name=\"#name#\" />\n</div>",
+            "inputUpdate":"<div className=\"mb-3\"> \n \t<label className=\"form-label\">#label#</label> \n \t<input className=\"form-control\" type=\"#type#\" name=\"#name#\" />\n</div>",
+            "select":"<div className=\"mb-3\"> \n \t<label className=\"form-label\">#label#</label> \n \t<select className=\"form-control\" name=\"#name#\" id=\"select-#name#\">\n#option#\n\t</select>\n</div>",
+            "selectUpdate":"<div className=\"mb-3\"> \n \t<label className=\"form-label\">#label#</label> \n \t<select className=\"form-control\" name=\"#name#\">\n\t#optionUpdate#\n</select>\n</div>",
+            "option":"<option v-for='elt in #path#' :key='elt.#id#' :value='elt.#id#'>{{elt.#attribute#}}</option>\n\n",
+            "optionUpdate":"<option v-for='elt in #path#' :key='elt.#id#' :value='elt.#id#'>{{elt.#attribute#}}</option>\n\n",
+            "tableHeader":"\t<th> #label# </th>",
+            "template":"vue/VueTemplate.txt",
+            "extension":"vue",
+            "serviceTemplate":"",
+            "serviceFileName":"",
+            "serviceFileExtension":"",
+            "componentTemplate":"",
+            "componentFileExtension":"",
+            "componentFileName":"",
+            "routeTemplate":"vue/RoutesTemplate.txt",
+            "routeFilename":"router",
+            "routeFileExtension":"js",
+            "routeSyntax":"",
+            "routeImportSyntax":"import #element# from \"./components/#path#/#element#\";",
+            "handleInputChange":"",
+            "handleSelectChange":"",
+            "values":"#entity#: null,\n",
+            "tableValue":"<td>{{item.#values#}}</td>",
+            "fetch":"fetch(this.url + '#entity#') \n .then(response => response.json()) \n.then(data => { this.#entity# = data; }) \n .catch(error => alert(error)); \n",
+            "handleSelectItem":"",
+            "listMapping" : {
+                "Timestamp":"date-time local",
+                "Time":"time",
+                "Date":"Date",
+                "Integer":"number",
+                "Double":"number",
+                "Float":"number",
+                "Boolean":"text",
+                "String":"text",
+                "Char":"text",
+                "BigDecimal":"number",
+                "BigInt":"number",
+                "[B":"file"
+            }
         }
     }
 }
