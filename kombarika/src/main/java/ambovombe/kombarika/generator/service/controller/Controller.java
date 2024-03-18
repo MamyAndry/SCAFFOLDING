@@ -117,7 +117,8 @@ public class Controller{
 
         String function =  this.getLanguageProperties().getMethodSyntax()
                 .replace("#name#", "findAll")
-                .replace("#type#", this.getControllerProperty().getReturnType().replace("?", this.getFrameworkProperties().getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))))
+                .replace("#type#", this.getControllerProperty().getFindAllAsync()
+                    .replace("?", this.getControllerProperty().getReturnType().replace("?", this.getFrameworkProperties().getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))))
                 .replace("#arg#", "")
                 .replace("#body#", body);
 
@@ -149,14 +150,22 @@ public class Controller{
         return stringBuilder.toString();
     }
 
-    public String getControllerField(String table){
+    public String getControllerField(String table, String repository){
         String res = "";
         if(!this.getControllerProperty().getField().equals("") && !this.getControllerProperty().getAnnotationField().equals("")){
             res += "\t"
                     + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getAnnotationField()) + "\n"
-                    + "\t" + this.getControllerProperty().getField().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))) + "\n";
+                    + "\t" 
+                    + this.getControllerProperty().getField()
+                        .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
+                        .replace("#name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(repository)))
+                    + "\n";
+            System.out.println(res);
         }else if (!this.getControllerProperty().getField().equals("")){
-            res += "\t" + this.getControllerProperty().getField().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))) + "\n";
+            res += "\t" + this.getControllerProperty().getField()
+                    .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
+                    .replace("#name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(repository)))
+                + "\n";
         }
         return res;
     }
@@ -209,7 +218,7 @@ public class Controller{
                 .replace("#class#", getControllerClass(table, framework))
                 .replace("#open-bracket#", languageProperties.getOpenBracket())
                 .replace("#close-bracket#", languageProperties.getCloseBracket())
-                .replace("#fields#", getControllerField(table))
+                .replace("#fields#", getControllerField(table, context))
                 .replace("#constructors#", getConstructor(table, context))
                 .replace("#methods#", getCrudMethods(table))
                 .replace("#encapsulation#", "");

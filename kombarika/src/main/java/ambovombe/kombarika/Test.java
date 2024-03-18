@@ -31,16 +31,16 @@ public class Test {
         // String viewPath = "/home/mamisoa/ITU/L3";
 
 
-        String framework = "java:karana";
-        String packageName = "com.district.test";
+        String framework = "csharp:dotnet";
+        String packageName = "com.ditrict";
         String entity = "entity";
         String controller = "controller";
         String repository = "repository";
         String view = "";
-        String viewType = "vue";
-        String url = "http://localhost:8080/testkarana/";
+        String viewType = "react";
+        String url = "http://localhost:8080";
         try{
-            // String[] tables = {"district","region"};
+            // String[] tables = {"media_publication"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();
             // String str = dbConnection.getListConnection().get(dbConnection.getInUseConnection()).getDatabaseType().getForeignKeyQuery();
             // str = str.replace("?", "commune");
