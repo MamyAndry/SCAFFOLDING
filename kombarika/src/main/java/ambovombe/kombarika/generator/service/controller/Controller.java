@@ -117,12 +117,14 @@ public class Controller{
 
     public  String getControllerClass(String table){
         String res = "";
-        res += this.getLanguageProperties().getAnnotationSyntax()
-                .replace("?", this.getAnnotationProperty().getController()) + "\n"
-                + this.getLanguageProperties().getAnnotationSyntax()
+        if(!this.getAnnotationProperty().getController().equals(""))
+            res += this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getController()) + "\n";
+        if(!this.getControllerProperty().getPath().equals("")){
+            res += this.getLanguageProperties().getAnnotationSyntax()
                 .replace("?", this.getControllerProperty().getPath())
-                .replace("?", ObjectUtility.formatToCamelCase(table)) + "\n"
-                + this.getLanguageProperties().getClassSyntax() + " "
+                .replace("?", ObjectUtility.formatToCamelCase(table)) + "\n";
+        }
+        res += this.getLanguageProperties().getClassSyntax() + " "
                 + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table).concat("Controller")) + "\n";
         return res;
     }

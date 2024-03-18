@@ -161,6 +161,57 @@
                         "fieldSyntax": ""
                     }
 
+                },
+                "java-framework" : {
+                    "template" : "Template.code",
+                    "repository": "",
+                    "imports" : {
+                        "controller":[
+                            "packageName.classNameRepository",
+                            "entity.className",
+                            "etu1748.framework.annotation.*",
+                            "etu1748.framework.*"
+                        ],
+                        "entity":[]
+                    },
+                    "annotationProperty" : {
+                        "table": "",
+                        "autoIncrement":"",
+                        "column": "",
+                        "entity": "",
+                        "controller": "",
+                        "constraints": {
+                            "primaryKey": "",
+                            "foreignKey": {
+                                "annotation":"",
+                                "manyToOne":"",
+                                "manyToMany":"",
+                                "oneToMany":"",
+                                "oneToOne":""
+                            }
+                        }
+                    },
+                    "crudMethod" : {
+                        "findAll": "try {\nList<Object> data = GenericDAO.findAll(#object#);\nreturn new ResponseAPI(data);\n} catch (Exception e) {\nreturn new ResponseAPI(e.getMessage());\n}",
+                        "findById":"try {\nList<Object> data = GenericDAO.findById(#object#, #object#.getId());\nreturn new ResponseAPI(data);\n} catch (Exception e) {\nreturn new ResponseAPI(e.getMessage());\n}",
+                        "delete": "try {\nList<Object> data = GenericDAO.delete(#object#, #object#.getId());\nreturn new ResponseAPI(data);\n} catch (Exception e) {\nreturn new ResponseAPI(e.getMessage());\n}",
+                        "update": "try {\nList<Object> data = GenericDAO.update(#object#, #object#.getId());\nreturn new ResponseAPI(data);\n} catch (Exception e) {\nreturn new ResponseAPI(e.getMessage());\n}",
+                        "save": "try {\nList<Object> data = GenericDAO.insert(#object#);\nreturn new ResponseAPI(data);\n} catch (Exception e) {\nreturn new ResponseAPI(e.getMessage());\n}"
+                    },
+                    "controllerProperty" : {
+                        "get": "Urls()\n@JSON\n@RequestMethod(\"GET\")",
+                        "post": "Urls()\n@JSON\n@RequestMethod(\"POST\")",
+                        "put": "Urls()\n@JSON\n@RequestMethod(\"PUT\")",
+                        "delete": "Urls()\n@JSON\n@RequestMethod(\"DELETE\")",
+                        "field": "",
+                        "returnType": "ResponseAPI",
+                        "annotationField": "",
+                        "annotationMethodParameter":"",
+                        "annotationArgumentParameterFormData":"Param",
+                        "annotationArgumentParameterLink":"",
+                        "constructor": ""
+                    },
+                    "repositoryProperty" : {}
                 }
             }
         }

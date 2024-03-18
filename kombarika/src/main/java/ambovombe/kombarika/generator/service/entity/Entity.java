@@ -21,9 +21,10 @@ public class Entity {
         String res = "";
         if(!this.getAnnotationProperty().getEntity().equals(""))
             res += this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getEntity())  + "\n";
-        res +=  this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getTable()).replace("?", table) + "\n"
-                + this.getLanguageProperties().getClassSyntax() + " "
-                + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table));
+        if(!this.getAnnotationProperty().getTable().equals(""))
+            res += this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getTable()).replace("?", table) + "\n";
+        res += this.getLanguageProperties().getClassSyntax() + " "
+                    + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table));
         return res;
     }
 
@@ -71,12 +72,13 @@ public class Entity {
 
         for (Map.Entry<String, String> set : columns.entrySet()) {
             if (primaryKeys.contains(set.getKey())) {
-                res += "\t"
-                        + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getConstraints().getPrimaryKey()) + "\n";
+                if(!this.getAnnotationProperty().getConstraints().getPrimaryKey().equals("")) {
+                    res += "\t"
+                            + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getConstraints().getPrimaryKey()) + "\n";
+                }
                 if(set.getValue().equals("Integer") && !this.getAnnotationProperty().getAutoIncrement().equals("")){
                     res += "\t"
                         + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getAutoIncrement()) + "\n";
-                    
                 }
             }
             String temp = foreignKeys.get(set.getKey());
@@ -95,9 +97,10 @@ public class Entity {
                     + "\n";
                 continue;
             }
-            res += "\t"
-                    + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getColumn()).replace("?", set.getKey()) + "\n";
-
+            if(!this.getAnnotationProperty().getColumn().equals("")) {
+                res += "\t"
+                        + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getColumn()).replace("?", set.getKey()) + "\n";
+            }
             res += "\t"
                 + this.getLanguageProperties().getFieldSyntax()
                     .replace("Type", typeMapping.getListMapping().get(set.getValue()).getType())

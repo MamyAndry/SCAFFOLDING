@@ -2,15 +2,15 @@
     "defaultConnection" : "DefaultConnection",
     "listConnection": {
         "DefaultConnection": {
-            "datasource":"jdbc:postgresql://localhost:5432/district",
-            "username":"mamisoa",
-            "password":"prom15",
+            "datasource":"jdbc:postgresql://localhost:5432/test",
+            "username":"test",
+            "password":"test",
             "databaseType":"POSTGRESQL"
         },
         "OtherConnection": {
             "datasource":"jdbc:postgresql://localhost:5432/postgres",
-            "username":"mamisoa",
-            "password":"prom15",
+            "username":"postgres",
+            "password":"postgres",
             "databaseType":"POSTGRESQL"
         }
     }

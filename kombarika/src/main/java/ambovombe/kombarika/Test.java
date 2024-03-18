@@ -25,11 +25,11 @@ public class Test {
     public static void main(String[] args) throws Exception {
         CodeGenerator codeGenerator = new CodeGenerator();
         String path = "./";
-        String framework = "csharp:dotnet";
-        String packageName = "com.district.test";
-        String entity = "entity";
+        String framework = "java:java-framework";
+        String packageName = "com.framework.test";
+        String entity = "model";
         String controller = "controller";
-        String repository = "repository";
+        String repository = "";
         String view = "view";
         String url = "http://localhost:8080";
         try{
