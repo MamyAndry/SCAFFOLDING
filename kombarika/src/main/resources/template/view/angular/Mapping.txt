@@ -1,0 +1,7 @@
+#imports#
+
+export class Region{
+
+#fields#
+
+}

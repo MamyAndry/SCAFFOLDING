@@ -9,6 +9,7 @@ import ambovombe.kombarika.configuration.mapping.FrameworkProperties;
 import ambovombe.kombarika.configuration.mapping.ViewProperties;
 import ambovombe.kombarika.database.DbConnection;
 import ambovombe.kombarika.generator.parser.FileUtility;
+import ambovombe.kombarika.generator.parser.JsonUtility;
 import ambovombe.kombarika.generator.service.DbService;
 import ambovombe.kombarika.generator.utils.ObjectUtility;
 import ambovombe.kombarika.utils.Misc;
@@ -42,7 +43,7 @@ public class View {
                 }
                 res += template
                 .replace("#label#", ObjectUtility.formatToSpacedString(set.getKey()))
-                .replace("#type#", this.getViewProperties().getListMapping().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
+                .replace("#type#", this.getViewProperties().getListMappingInput().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
                 .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";        
             }
         }
@@ -83,7 +84,7 @@ public class View {
                 }
                 res +=  template
                 .replace("#label#", ObjectUtility.formatToSpacedString(set.getKey()))
-                .replace("#type#", this.getViewProperties().getListMapping().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
+                .replace("#type#", this.getViewProperties().getListMappingInput().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
                 .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getKey())))
                 .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";        
             }else{

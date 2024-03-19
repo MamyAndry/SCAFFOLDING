@@ -322,9 +322,9 @@ public class CodeGenerator {
         String framework
     ) throws Exception{
         generateAllEntity(path, tables, packageName ,entity, framework);
-        generateAllRepository(path, tables, packageName , entity, repository, framework);
-        generateAllController(path, tables, packageName, entity, controller, repository, framework);  
-        // generateAllView(viewPath, tables, view, viewType, url);    
+        // generateAllRepository(path, tables, packageName , entity, repository, framework);
+        // generateAllController(path, tables, packageName, entity, controller, repository, framework);  
+        generateAllView(viewPath, tables, view, viewType, url);    
     }
 
     public void generateViewEnvironement(String path, String viewType, String projectName) throws Exception{

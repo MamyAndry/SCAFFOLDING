@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import ambovombe.kombarika.configuration.Configuration;
 import ambovombe.kombarika.configuration.mapping.ViewProperties;
+import ambovombe.kombarika.generator.parser.JsonUtility;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ public class ViewDetails extends Configuration{
     public void init() throws Exception {
         setJsonPath("ViewDetails.json");
         ViewDetails v = this.read();
+
         this.setViews(v.getViews());
     }
 }

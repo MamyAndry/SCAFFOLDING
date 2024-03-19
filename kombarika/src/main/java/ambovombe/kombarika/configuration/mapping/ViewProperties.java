@@ -15,9 +15,18 @@ public class ViewProperties {
     String serviceTemplate;
     String serviceFileName;
     String serviceFileExtension;
+    String serviceSpecTemplate;
+    String serviceSpecFileName;
+    String serviceSpecFileExtension;
     String componentTemplate;
     String componentFileName;
     String componentFileExtension;
+    String mappingTemplate;
+    String mappingFileName;
+    String mappingFileExtension;
+    String componentSpecsTemplate;
+    String componentSpecsFileName;
+    String componentSpecsFileExtension;
     String routeTemplate;
     String routeFilename;
     String routeFileExtension;
@@ -34,4 +43,5 @@ public class ViewProperties {
     String fetch;
     String handleSelectItem;
     HashMap<String, String> listMapping;
+    HashMap<String, String> listMappingInput;
 }

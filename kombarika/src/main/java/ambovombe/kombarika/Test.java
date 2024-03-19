@@ -31,14 +31,14 @@ public class Test {
         // String viewPath = "/home/mamisoa/ITU/L3";
 
 
-        String framework = "csharp:dotnet";
-        String packageName = "com.ditrict";
+        String framework = "java:karana";
+        String packageName = "com.district.test";
         String entity = "entity";
-        String controller = "controller";
+        String controller = "model";
         String repository = "repository";
         String view = "";
         String viewType = "react";
-        String url = "http://localhost:8080";
+        String url = "http://localhost:8080/testkarana";
         try{
             // String[] tables = {"media_publication"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();
