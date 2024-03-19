@@ -37,7 +37,8 @@ public class Controller{
                 .replace("#type#", this.getControllerProperty().getReturnType().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
                 .replace("#arg#", args)
                 .replace("#body#", body);
-        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getPost()) + "\n" + function);
+        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getPost())
+                .replace("?",ObjectUtility.formatToCamelCase(table))+ "\n" + function);
     }
 
     public String update(String table) throws Exception{
@@ -53,7 +54,8 @@ public class Controller{
                 .replace("#type#", this.getControllerProperty().getReturnType().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
                 .replace("#arg#", args)
                 .replace("#body#", body);
-        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getPut()) + "\n" + function);
+        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getPut())
+                .replace("?",ObjectUtility.formatToCamelCase(table))+ "\n" + function);
     }
 
     public String delete(String table) throws Exception{
@@ -68,23 +70,42 @@ public class Controller{
                 .replace("#type#", "void")
                 .replace("#arg#", args)
                 .replace("#body#", body);
-        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getDelete()) + "\n" + function);
+        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getDelete())
+                .replace("?",ObjectUtility.formatToCamelCase(table))+ "\n" + function);
     }
 
     public String findAll(String table){
         String body = "";
+        String args = "";
         body += Misc.tabulate(this.getCrudMethod().getFindAll().replace("#object#", ObjectUtility.formatToCamelCase(table)));
         String function =  this.getLanguageProperties().getMethodSyntax()
                 .replace("#name#", "findAll")
                 .replace("#type#", this.getControllerProperty().getReturnType().replace("?", this.getLanguageProperties().getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))))
-                .replace("#arg#", "")
+                .replace("#arg#", args)
                 .replace("#body#", body);
-        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getGet()) + "\n" + function);
+        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getGet())
+                .replace("?",ObjectUtility.formatToCamelCase(table))+ "\n" + function);
     }
 
     public String findById(String table) throws Exception{
-        String res = "";
-        return res;
+        String body = "";
+        String args = "";
+        args += this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getAnnotationArgumentParameterFormData()) + " "
+                + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)) + " "
+                + ObjectUtility.formatToCamelCase(table);
+        if(this.getCrudMethod().getFindById()!=null){
+            if(!this.getCrudMethod().getFindById().equals("")) {
+                body += Misc.tabulate(this.getCrudMethod().getFindById().replace("#object#", ObjectUtility.formatToCamelCase(table)));
+                String function = this.getLanguageProperties().getMethodSyntax()
+                        .replace("#name#", "findById")
+                        .replace("#type#", this.getControllerProperty().getReturnType().replace("?", this.getLanguageProperties().getListSyntax().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))))
+                        .replace("#arg#", args)
+                        .replace("#body#", body);
+                return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getGet())
+                        .replace("?", ObjectUtility.formatToCamelCase(table)) + "\n" + function);
+            }
+        }
+        return "";
     }
     public String getCrudMethods(String table) throws Exception {
         StringBuilder stringBuilder = new StringBuilder();
@@ -92,6 +113,7 @@ public class Controller{
         String findAll = findAll(table);
         String update = update(table);
         String delete = delete(table);
+        String findById = findById(table);
         stringBuilder.append(save);
         stringBuilder.append("\n");
         stringBuilder.append(update);
@@ -99,6 +121,10 @@ public class Controller{
         stringBuilder.append(delete);
         stringBuilder.append("\n");
         stringBuilder.append(findAll);
+        if(!findById.equals("")) {
+            stringBuilder.append("\n");
+            stringBuilder.append(findById);
+        }
         return stringBuilder.toString();
     }
 
@@ -109,7 +135,8 @@ public class Controller{
                     + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getAnnotationField()) + "\n"
                     + "\t" + this.getControllerProperty().getField().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))) + "\n";
         }else if (!this.getControllerProperty().getField().equals("")){
-            res += "\t" + this.getControllerProperty().getField().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))) + "\n";
+            res += "\t" + this.getControllerProperty().getField().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
+                    .replace("#object#", table)+ this.getLanguageProperties().getEndOfInstruction()+"\n";
         }
         return res;
     }

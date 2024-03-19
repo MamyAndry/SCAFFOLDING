@@ -167,7 +167,6 @@
                     "repository": "",
                     "imports" : {
                         "controller":[
-                            "packageName.classNameRepository",
                             "entity.className",
                             "etu1748.framework.annotation.*",
                             "etu1748.framework.*"
@@ -178,8 +177,8 @@
                         "table": "",
                         "autoIncrement":"",
                         "column": "",
-                        "entity": "",
-                        "controller": "",
+                        "entity": "MVCModel",
+                        "controller": "MVCController",
                         "constraints": {
                             "primaryKey": "",
                             "foreignKey": {
@@ -192,19 +191,19 @@
                         }
                     },
                     "crudMethod" : {
-                        "findAll": "try {\nList<Object> data = GenericDAO.findAll(#object#);\nreturn new ResponseAPI(data);\n} catch (Exception e) {\nreturn new ResponseAPI(e.getMessage());\n}",
-                        "findById":"try {\nList<Object> data = GenericDAO.findById(#object#, #object#.getId());\nreturn new ResponseAPI(data);\n} catch (Exception e) {\nreturn new ResponseAPI(e.getMessage());\n}",
-                        "delete": "try {\nList<Object> data = GenericDAO.delete(#object#, #object#.getId());\nreturn new ResponseAPI(data);\n} catch (Exception e) {\nreturn new ResponseAPI(e.getMessage());\n}",
-                        "update": "try {\nList<Object> data = GenericDAO.update(#object#, #object#.getId());\nreturn new ResponseAPI(data);\n} catch (Exception e) {\nreturn new ResponseAPI(e.getMessage());\n}",
-                        "save": "try {\nList<Object> data = GenericDAO.insert(#object#);\nreturn new ResponseAPI(data);\n} catch (Exception e) {\nreturn new ResponseAPI(e.getMessage());\n}"
+                        "findAll": "try {\nList<Object> data = GenericDAO.findAll(#object#);\nreturn new ResponseAPI(data, null);\n} catch (Exception e) {\nreturn new ResponseAPI(null, e.getMessage());\n}",
+                        "findById": "try {\nList<Object> data = GenericDAO.findById(#object#, #object#.getId());\nreturn new ResponseAPI(data, null);\n} catch (Exception e) {\nreturn new ResponseAPI(null, e.getMessage());\n}",
+                        "delete": "try {\nList<Object> data = GenericDAO.delete(#object#, #object#.getId());\nreturn new ResponseAPI(data, null);\n} catch (Exception e) {\nreturn new ResponseAPI(null, e.getMessage());\n}",
+                        "update": "try {\nList<Object> data = GenericDAO.update(#object#, #object#.getId());\nreturn new ResponseAPI(data, null);\n} catch (Exception e) {\nreturn new ResponseAPI(null, e.getMessage());\n}",
+                        "save": "try {\nList<Object> data = GenericDAO.insert(#object#);\nreturn new ResponseAPI(data, null);\n} catch (Exception e) {\nreturn new ResponseAPI(null, e.getMessage());\n}"
                     },
                     "controllerProperty" : {
                         "path": "",
-                        "get": "Urls()\n@JSON\n@RequestMethod(\"GET\")",
-                        "post": "Urls()\n@JSON\n@RequestMethod(\"POST\")",
-                        "put": "Urls()\n@JSON\n@RequestMethod(\"PUT\")",
-                        "delete": "Urls()\n@JSON\n@RequestMethod(\"DELETE\")",
-                        "field": "",
+                        "get": "Urls(\"?\")\n@JSON\n@RequestMethod(\"GET\")",
+                        "post": "Urls(\"?/new\")\n@JSON\n@RequestMethod(\"POST\")",
+                        "put": "Urls(\"?/update\")\n@JSON\n@RequestMethod(\"PUT\")",
+                        "delete": "Urls(\"?/delete\")\n@JSON\n@RequestMethod(\"DELETE\")",
+                        "field": "private ? #object#",
                         "returnType": "ResponseAPI",
                         "annotationField": "",
                         "annotationMethodParameter":"",

@@ -214,7 +214,7 @@ public class CodeGenerator {
         for (String table : tables) {
             generateEntity(path, table, packageName + "." + entity, framework);
             generateRepository(path, table, packageName + "." + repository, packageName + "." + entity, framework);
-            generateController(path, table, packageName + "." + controller, packageName + "." + repository, packageName + "." + "entity", framework);  
+            generateController(path, table, packageName + "." + controller, packageName + "." + repository, packageName + "." + entity, framework);
             generateView(path, table, view, url); 
         }
     }
