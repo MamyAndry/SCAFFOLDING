@@ -293,13 +293,6 @@ public class View {
         return res;
     }
 
-    public int checkStyle(){
-        int res = 0;
-        if(this.getViewProperties().getStyleTemplate().equals(""))
-            return res;
-        return 1;
-    }
-
     public String generateServiceSpec(String table) throws Exception{
         String res = "";
         if(this.getViewProperties().getServiceSpecTemplate().equals("")){
@@ -313,6 +306,28 @@ public class View {
             .replace("#Name#", ObjectUtility.capitalize(name));
         return res;
     }
+
+    public String generateComponentSpecs(String table) throws Exception{
+        String res = "";
+        if(this.getViewProperties().getComponentSpecsTemplate().equals("")){
+            return res;
+        }
+        String tempPath = Misc.getViewTemplateLocation().concat(File.separator).concat(this.getViewProperties().getComponentSpecsTemplate());
+        res = FileUtility.readOneFile(tempPath);
+        String name = ObjectUtility.formatToCamelCase(table);
+        res = res
+            .replace("#name#", name)
+            .replace("#Name#", ObjectUtility.capitalize(name));
+        return res;
+    }
+
+    public int checkStyle(){
+        int res = 0;
+        if(this.getViewProperties().getStyleTemplate().equals(""))
+            return res;
+        return 1;
+    }
+
     
     public String generateView(String table, String url, DbConnection dbConnection) throws Exception{
         String res = "";        

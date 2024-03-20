@@ -1,18 +1,5 @@
 import React from 'react';
-import { ${					<Route path="/bureauvote" element={<Bureauvote />} />
-					<Route path="/commune" element={<Commune />} />
-					<Route path="/district" element={<District />} />
-					<Route path="/fokontany" element={<Fokontany />} />
-					<Route path="/region" element={<Region />} />
-	
-}
-					<Route path="/bureauvote" element={<Bureauvote />} />
-					<Route path="/commune" element={<Commune />} />
-					<Route path="/district" element={<District />} />
-					<Route path="/fokontany" element={<Fokontany />} />
-					<Route path="/region" element={<Region />} />
-	
-owserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Bureauvote from "./components/bureauvote/Bureauvote";
 import Commune from "./components/commune/Commune";
 import District from "./components/district/District";

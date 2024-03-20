@@ -251,6 +251,14 @@ public class CodeGenerator {
         return view.generateServiceSpec(table);
     }
 
+
+    public String buildComponentSpecs(String table, String viewType) throws Exception{
+        View view = new View();
+        view.setViewProperties(this.getViewDetails().getViews().get(viewType));
+        view.setFrameworkProperties(this.getFrameworkProperties());
+        return view.generateComponentSpecs(table);
+    }
+
     public int checkStyle(String viewType) throws Exception{
         View view = new View();
         view.setViewProperties(this.getViewDetails().getViews().get(viewType));
@@ -305,6 +313,7 @@ public class CodeGenerator {
             this.getViewDetails().getViews().get(viewType).getServiceFileExtension());
         FileUtility.generateFile(path, filename, service);
     } 
+
     public void generateServiceSpec(String path, String viewType, String table) throws Exception{
         String serviceSpec = this.buildServiceSpec(table, viewType);
         if(serviceSpec.equals(""))
@@ -315,6 +324,18 @@ public class CodeGenerator {
                 .replace("#name#", ObjectUtility.formatToCamelCase(table)), 
             this.getViewDetails().getViews().get(viewType).getServiceSpecFileExtension());
         FileUtility.generateFile(path, filename, serviceSpec);
+    }
+
+    public void generateComponentSpecs(String path, String viewType, String table) throws Exception{
+        String componentSpec = this.buildComponentSpecs(table, viewType);
+        if(componentSpec.equals(""))
+            return;
+        path = path + File.separator + ObjectUtility.formatToCamelCase(table);
+        String filename = GeneratorService.getFileName(
+            this.getViewDetails().getViews().get(viewType).getComponentSpecsFilename()
+                .replace("#name#", ObjectUtility.formatToCamelCase(table)), 
+            this.getViewDetails().getViews().get(viewType).getComponentSpecsFileExtension());
+        FileUtility.generateFile(path, filename, componentSpec);
     }
 
     public void generateStyle(String path, String viewType, String table) throws Exception{
@@ -385,6 +406,7 @@ public class CodeGenerator {
             generateStyle(path, viewType, table);
             generateService(path, viewType, table, url);
             generateServiceSpec(path, viewType, table);
+            generateComponentSpecs(path, viewType, table);
         }
         generateRouter(path, viewType, tables);
     }
