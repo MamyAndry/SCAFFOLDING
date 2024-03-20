@@ -266,6 +266,13 @@ public class CodeGenerator {
         return view.generateComponent(table, this.getDbConnection());
     }
 
+    public String buildStyle(String viewType) throws Exception{
+        View view = new View();
+        view.setViewProperties(this.getViewDetails().getViews().get(viewType));
+        view.setFrameworkProperties(this.getFrameworkProperties());
+        return view.generateStyle();
+    }
+
     public int checkStyle(String viewType) throws Exception{
         View view = new View();
         view.setViewProperties(this.getViewDetails().getViews().get(viewType));
