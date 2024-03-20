@@ -365,15 +365,16 @@ public class CodeGenerator {
     }
 
     public void generateStyle(String path, String viewType, String table) throws Exception{
-        int style = this.checkStyle(viewType);
-        if(style == 0)
+        int check = this.checkStyle(viewType);
+        if(check == 0)
             return;
+        String style = this.buildStyle(viewType); 
         path = path + File.separator + ObjectUtility.formatToCamelCase(table);
         String filename = GeneratorService.getFileName(
             this.getViewDetails().getViews().get(viewType).getStyleFilename()
                 .replace("#name#", ObjectUtility.formatToCamelCase(table)), 
             this.getViewDetails().getViews().get(viewType).getStyleFileExtension());
-        FileUtility.generateFile(path, filename, "");
+        FileUtility.generateFile(path, filename, style);
     }
     
 
