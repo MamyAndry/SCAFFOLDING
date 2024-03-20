@@ -1,8 +1,5 @@
 import React from 'react';
-import { ${${ROUTES}
-}
-${ROUTES}
-owserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 ${IMPORTS}
 
 function App() {

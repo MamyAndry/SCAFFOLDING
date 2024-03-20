@@ -160,7 +160,6 @@ public class Controller{
                         .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
                         .replace("#name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(repository)))
                     + "\n";
-            System.out.println(res);
         }else if (!this.getControllerProperty().getField().equals("")){
             res += "\t" + this.getControllerProperty().getField()
                     .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))

@@ -34,11 +34,11 @@ public class Test {
         String framework = "java:merana";
         String packageName = "com.example.demo";
         String entity = "entity";
-        String controller = "controller";
+        String controller = "model";
         String repository = "repository";
         String view = "";
-        String viewType = "react";
-        String url = "http://localhost:8080";
+        String viewType = "angular";
+        String url = "http://localhost:8080/testkarana/";
         try{
             // String[] tables = {"media_publication"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();

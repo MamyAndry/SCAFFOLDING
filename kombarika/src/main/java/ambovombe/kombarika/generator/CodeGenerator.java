@@ -73,7 +73,7 @@ public class CodeGenerator {
         String directory = packageName.replace(".", File.separator);
         FileUtility.createDirectory(directory,path);
         path = path + File.separator + directory;
-        FileUtility.generateFile(path, GeneratorService.getFileName(table, languageProperties.getExtension()), entity);
+        FileUtility.generateFile(path, GeneratorService.getFileNameCapitalized(table, languageProperties.getExtension()), entity);
     }
     public void generateEntity(
         String path, 
@@ -114,7 +114,7 @@ public class CodeGenerator {
         String directory = packageName.replace(".", File.separator);
         FileUtility.createDirectory(directory,path);
         path = path + File.separator + directory;
-        FileUtility.generateFile(path, GeneratorService.getFileName(table + this.getFrameworkProperties().getControllerProperty().getName() , languageProperties.getExtension()), content);
+        FileUtility.generateFile(path, GeneratorService.getFileNameCapitalized(table + this.getFrameworkProperties().getControllerProperty().getName() , languageProperties.getExtension()), content);
     }
 
     public void generateController(
@@ -145,7 +145,7 @@ public class CodeGenerator {
         String directory = packageName.replace(".", File.separator);
         FileUtility.createDirectory(directory, path);
         path = path + File.separator + directory;
-        FileUtility.generateFile(path, GeneratorService.getFileName(table + languageProperties.getFrameworks().get(framework).getRepositoryProperty().getName(), languageProperties.getExtension()), content);
+        FileUtility.generateFile(path, GeneratorService.getFileNameCapitalized(table + languageProperties.getFrameworks().get(framework).getRepositoryProperty().getName(), languageProperties.getExtension()), content);
     }
 
     public String buildRepository(
@@ -220,13 +220,57 @@ public class CodeGenerator {
         View view = new View();
         view.setViewProperties(this.getViewDetails().getViews().get(viewType));
         view.setFrameworkProperties(this.getFrameworkProperties());
-        return view.generateView(table, url, dbConnection);
+        return view.generateView(table, url, this.getDbConnection());
     }
+
     public String buildRouter(String[] tables, String viewType) throws Exception{
         View view = new View();
         view.setViewProperties(this.getViewDetails().getViews().get(viewType));
         view.setFrameworkProperties(this.getFrameworkProperties());
         return view.generateRoutes(tables);
+    }
+
+    public String buildMapping(String table, String viewType) throws Exception{
+        View view = new View();
+        view.setViewProperties(this.getViewDetails().getViews().get(viewType));
+        view.setFrameworkProperties(this.getFrameworkProperties());
+        return view.generateMapping(table, this.getDbConnection());
+    }
+
+    public String buildService(String table, String viewType, String url) throws Exception{
+        View view = new View();
+        view.setViewProperties(this.getViewDetails().getViews().get(viewType));
+        view.setFrameworkProperties(this.getFrameworkProperties());
+        return view.generateService(table, url);
+    } 
+
+    public String buildServiceSpec(String table, String viewType) throws Exception{
+        View view = new View();
+        view.setViewProperties(this.getViewDetails().getViews().get(viewType));
+        view.setFrameworkProperties(this.getFrameworkProperties());
+        return view.generateServiceSpec(table);
+    }
+
+
+    public String buildComponentSpecs(String table, String viewType) throws Exception{
+        View view = new View();
+        view.setViewProperties(this.getViewDetails().getViews().get(viewType));
+        view.setFrameworkProperties(this.getFrameworkProperties());
+        return view.generateComponentSpecs(table);
+    }
+
+    public String buildComponent(String table, String viewType) throws Exception{
+        View view = new View();
+        view.setViewProperties(this.getViewDetails().getViews().get(viewType));
+        view.setFrameworkProperties(this.getFrameworkProperties());
+        return view.generateComponent(table, this.getDbConnection());
+    }
+
+    public int checkStyle(String viewType) throws Exception{
+        View view = new View();
+        view.setViewProperties(this.getViewDetails().getViews().get(viewType));
+        view.setFrameworkProperties(this.getFrameworkProperties());
+        return view.checkStyle();
     }
 
     public void generateView(
@@ -239,20 +283,93 @@ public class CodeGenerator {
         String view = buildView(table, viewType, url);
         FileUtility.createDirectory(directory,path);
         path = path + File.separator + directory;
-        String fileName = GeneratorService.getFileName(table, this.getViewDetails().getViews().get(viewType).getExtension());
+        String filename = GeneratorService.getFileName(table, this.getViewDetails().getViews().get(viewType).getExtension());
         String newDirectory = ObjectUtility.formatToCamelCase(table);
         FileUtility.createDirectory(newDirectory, path);
-        FileUtility.generateFile(path + File.separator + newDirectory, fileName, view);
+        FileUtility.generateFile(path + File.separator + newDirectory, filename, view);
     }
 
     public void generateRouter(String path, String viewType, String[] tables) throws Exception{
         String route = this.buildRouter(tables, viewType);
         if(route.equals(""))
             return;
-        String fileName = GeneratorService.getFileName(this.getViewDetails().getViews().get(viewType).getRouteFilename(), this.getViewDetails().getViews().get(viewType).getRouteFileExtension());
-        FileUtility.generateFile(path, fileName, route);
+        String filename = GeneratorService.getFileName(this.getViewDetails().getViews().get(viewType).getRouteFilename(), this.getViewDetails().getViews().get(viewType).getRouteFileExtension());
+        FileUtility.generateFile(path, filename, route);
+    }
+
+    public void generateMapping(String path, String viewType, String table) throws Exception{
+        String mapping = this.buildMapping(table, viewType);
+        if(mapping.equals(""))
+            return;
+        path = path + File.separator + ObjectUtility.formatToCamelCase(table);
+        String filename = GeneratorService.getFileNameCapitalized(
+            this.getViewDetails().getViews().get(viewType).getMappingFilename()
+                .replace("#name#", ObjectUtility.formatToCamelCase(table)), 
+            this.getViewDetails().getViews().get(viewType).getMappingFileExtension());
+        FileUtility.generateFile(path, filename, mapping);
     }
     
+    public void generateService(String path, String viewType, String table, String url) throws Exception{
+        String service = this.buildService(table, viewType, url);
+        if(service.equals(""))
+            return;
+        path = path + File.separator + ObjectUtility.formatToCamelCase(table);
+        String filename = GeneratorService.getFileName(
+            this.getViewDetails().getViews().get(viewType).getServiceFilename()
+                .replace("#name#", ObjectUtility.formatToCamelCase(table)), 
+            this.getViewDetails().getViews().get(viewType).getServiceFileExtension());
+        FileUtility.generateFile(path, filename, service);
+    } 
+
+    public void generateServiceSpec(String path, String viewType, String table) throws Exception{
+        String serviceSpec = this.buildServiceSpec(table, viewType);
+        if(serviceSpec.equals(""))
+            return;
+        path = path + File.separator + ObjectUtility.formatToCamelCase(table);
+        String filename = GeneratorService.getFileName(
+            this.getViewDetails().getViews().get(viewType).getServiceSpecFilename()
+                .replace("#name#", ObjectUtility.formatToCamelCase(table)), 
+            this.getViewDetails().getViews().get(viewType).getServiceSpecFileExtension());
+        FileUtility.generateFile(path, filename, serviceSpec);
+    }
+
+    public void generateComponentSpecs(String path, String viewType, String table) throws Exception{
+        String componentSpec = this.buildComponentSpecs(table, viewType);
+        if(componentSpec.equals(""))
+            return;
+        path = path + File.separator + ObjectUtility.formatToCamelCase(table);
+        String filename = GeneratorService.getFileName(
+            this.getViewDetails().getViews().get(viewType).getComponentSpecsFilename()
+                .replace("#name#", ObjectUtility.formatToCamelCase(table)), 
+            this.getViewDetails().getViews().get(viewType).getComponentSpecsFileExtension());
+        FileUtility.generateFile(path, filename, componentSpec);
+    }
+
+    public void generateComponent(String path, String viewType, String table) throws Exception{
+        String componentSpec = this.buildComponent(table, viewType);
+        if(componentSpec.equals(""))
+            return;
+        path = path + File.separator + ObjectUtility.formatToCamelCase(table);
+        String filename = GeneratorService.getFileName(
+            this.getViewDetails().getViews().get(viewType).getComponentFilename()
+                .replace("#name#", ObjectUtility.formatToCamelCase(table)), 
+            this.getViewDetails().getViews().get(viewType).getComponentFileExtension());
+        FileUtility.generateFile(path, filename, componentSpec);
+    }
+
+    public void generateStyle(String path, String viewType, String table) throws Exception{
+        int style = this.checkStyle(viewType);
+        if(style == 0)
+            return;
+        path = path + File.separator + ObjectUtility.formatToCamelCase(table);
+        String filename = GeneratorService.getFileName(
+            this.getViewDetails().getViews().get(viewType).getStyleFilename()
+                .replace("#name#", ObjectUtility.formatToCamelCase(table)), 
+            this.getViewDetails().getViews().get(viewType).getStyleFileExtension());
+        FileUtility.generateFile(path, filename, "");
+    }
+    
+
     public void generateAllEntity(
         String path, 
         String[] tables, 
@@ -304,6 +421,12 @@ public class CodeGenerator {
     )  throws Exception{
         for (String table : tables) {
             generateView(path, table, view, viewType, url); 
+            generateMapping(path, viewType, table);
+            generateStyle(path, viewType, table);
+            generateService(path, viewType, table, url);
+            generateServiceSpec(path, viewType, table);
+            generateComponentSpecs(path, viewType, table);
+            generateComponent(path, viewType, table);
         }
         generateRouter(path, viewType, tables);
     }
@@ -322,9 +445,9 @@ public class CodeGenerator {
         String framework
     ) throws Exception{
         generateAllEntity(path, tables, packageName ,entity, framework);
-        generateAllRepository(path, tables, packageName , entity, repository, framework);
-        generateAllController(path, tables, packageName, entity, controller, repository, framework);  
-        // generateAllView(viewPath, tables, view, viewType, url);    
+        // generateAllRepository(path, tables, packageName , entity, repository, framework);
+        // generateAllController(path, tables, packageName, entity, controller, repository, framework);  
+        generateAllView(viewPath, tables, view, viewType, url);    
     }
 
     public void generateViewEnvironement(String path, String viewType, String projectName) throws Exception{
