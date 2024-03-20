@@ -334,12 +334,14 @@ public class View {
         String fields = "";
         String init = "";
         String constructor = "";
+        String other = " ";
         String name = ObjectUtility.formatToCamelCase(table);
         String temp = "";
         String Temp = "";
         for (Map.Entry<String, String> set : foreignKeys.entrySet()) {
             temp = ObjectUtility.formatToCamelCase(set.getValue());
             Temp = ObjectUtility.capitalize(temp);
+            other += ", " + Temp + "Service ";
             imports += "import { " + Temp + " } from \"../" + temp + "/" + Temp + "\";\n"; 
             imports += "import { " + Temp + "Service } from \"../" + temp + "/" + temp + ".service\";"; 
             fields += "\t" + temp + "Data : any;";
@@ -351,6 +353,7 @@ public class View {
             .replace("#fields#", fields)
             .replace("#init#", init)
             .replace("#id#", id)
+            .replace("#other#",other )
             .replace("#constructor#", constructor)
             .replace("#name#", name)
             .replace("#Name#", ObjectUtility.capitalize(name));
