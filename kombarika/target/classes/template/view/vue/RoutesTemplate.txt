@@ -1,6 +1,0 @@
-import { createRouter } from 'vue-router'
-${IMPORTS}
-
-const routes = {
-${ROUTES}
-}

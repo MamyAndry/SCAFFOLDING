@@ -321,6 +321,20 @@ public class View {
         return res;
     }
 
+    public String generateComponent(String table) throws Exception{
+        String res = "";
+        if(this.getViewProperties().getComponentTemplate().equals("")){
+            return res;
+        }
+        String tempPath = Misc.getViewTemplateLocation().concat(File.separator).concat(this.getViewProperties().getComponentTemplate());
+        res = FileUtility.readOneFile(tempPath);
+        String name = ObjectUtility.formatToCamelCase(table);
+        res = res
+            .replace("#name#", name)
+            .replace("#Name#", ObjectUtility.capitalize(name));
+        return res;
+    }
+
     public int checkStyle(){
         int res = 0;
         if(this.getViewProperties().getStyleTemplate().equals(""))

@@ -259,6 +259,13 @@ public class CodeGenerator {
         return view.generateComponentSpecs(table);
     }
 
+    public String buildComponent(String table, String viewType) throws Exception{
+        View view = new View();
+        view.setViewProperties(this.getViewDetails().getViews().get(viewType));
+        view.setFrameworkProperties(this.getFrameworkProperties());
+        return view.generateComponent(table);
+    }
+
     public int checkStyle(String viewType) throws Exception{
         View view = new View();
         view.setViewProperties(this.getViewDetails().getViews().get(viewType));
@@ -338,6 +345,18 @@ public class CodeGenerator {
         FileUtility.generateFile(path, filename, componentSpec);
     }
 
+    public void generateComponent(String path, String viewType, String table) throws Exception{
+        String componentSpec = this.buildComponent(table, viewType);
+        if(componentSpec.equals(""))
+            return;
+        path = path + File.separator + ObjectUtility.formatToCamelCase(table);
+        String filename = GeneratorService.getFileName(
+            this.getViewDetails().getViews().get(viewType).getComponentFilename()
+                .replace("#name#", ObjectUtility.formatToCamelCase(table)), 
+            this.getViewDetails().getViews().get(viewType).getComponentFileExtension());
+        FileUtility.generateFile(path, filename, componentSpec);
+    }
+
     public void generateStyle(String path, String viewType, String table) throws Exception{
         int style = this.checkStyle(viewType);
         if(style == 0)
@@ -407,6 +426,7 @@ public class CodeGenerator {
             generateService(path, viewType, table, url);
             generateServiceSpec(path, viewType, table);
             generateComponentSpecs(path, viewType, table);
+            generateComponent(path, viewType, table);
         }
         generateRouter(path, viewType, tables);
     }

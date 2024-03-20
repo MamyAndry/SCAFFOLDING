@@ -1,6 +1,0 @@
-#imports#
-
-export class #class#{
-
-#fields#
-}
