@@ -4,9 +4,14 @@ package ambovombe.kombarika;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 
+import ambovombe.kombarika.configuration.mapping.ViewProperties;
 import ambovombe.kombarika.database.DbProperties;
 import ambovombe.kombarika.generator.CodeGenerator;
 import ambovombe.kombarika.generator.service.DbService;
+
+import java.sql.SQLException;
+import java.util.Map;
+
 /**
  *
  *  @author Mamisoa
@@ -49,13 +54,16 @@ public class Test {
             // for (Map.Entry<String, String> set : foreignKeys.entrySet()) {
             //     System.out.println(set.getKey() + " " + set.getValue());
             // }
-            String[] tables = DbService .getAllTablesArrays(codeGenerator.getDbConnection());
+            // String[] tables = DbService .getAllTablesArrays(codeGenerator.getDbConnection());
             // for(String table: tables)
             //     System.out.println(table);
-            codeGenerator.generateAll(path, viewPath, packageName, entity, controller, repository, view, viewType, url, tables, framework);
+            // codeGenerator.generateAll(path, viewPath, packageName, entity, controller, repository, view, viewType, url, tables, framework);
             // codeGenerator.generateViewEnvironement(viewPath, viewType, "huhuhu");
                 // DbProperties db = new DbProperties();
             // db.addConnection("huhuhu");
+            for (Map.Entry<String, ViewProperties> set:codeGenerator.getViewDetails().getViews().entrySet()){
+                System.out.println(set.getKey()+"  "+set.getValue());
+            }
         }catch(Exception e){
             e.printStackTrace();
         }finally{
