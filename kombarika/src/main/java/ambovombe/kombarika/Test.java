@@ -4,7 +4,6 @@ package ambovombe.kombarika;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 
-import ambovombe.kombarika.database.DbProperties;
 import ambovombe.kombarika.generator.CodeGenerator;
 import ambovombe.kombarika.generator.service.DbService;
 /**

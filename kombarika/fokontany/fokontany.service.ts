@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class #Name#Service {
-    url : string = "#path#";
+export class FokontanyService {
+    url : string = "http://localhost:8080/testkarana/";
 
 
     constructor(
@@ -18,7 +18,7 @@ export class #Name#Service {
         'Content-Type': 'application/json'
         });
         return this.http.get<any[]>(
-        this.url + "#name#", 
+        this.url + "fokontany", 
         {headers : headers}
         );
     }
@@ -29,7 +29,7 @@ export class #Name#Service {
         'Content-Type': 'application/json'
         });
         return this.http.post<any>(
-        this.url + "#name#",
+        this.url + "fokontany",
         JSON.stringify(item),
         {headers:headers});
     }
@@ -39,7 +39,7 @@ export class #Name#Service {
         'Content-Type': 'application/json'
         });
         return this.http.put<any>(
-        this.url + "#name#",
+        this.url + "fokontany",
         JSON.stringify(item),
         {headers:headers});
     }
@@ -49,7 +49,7 @@ export class #Name#Service {
         'Content-Type': 'application/json'
         });
         return this.http.delete<any>(
-        this.url + "#name#",
+        this.url + "fokontany",
         {headers : header, body : JSON.stringify(item)});
     }
 }
