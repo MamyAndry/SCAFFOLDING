@@ -328,6 +328,8 @@ public class View {
         String tempPath = Misc.getViewTemplateLocation().concat(File.separator).concat(this.getViewProperties().getComponentTemplate());
         res = FileUtility.readOneFile(tempPath);
         HashMap<String, String> foreignKeys = DbService.getForeignKeys(dbConnection, table);
+        List<String> ids = DbService.getPrimaryKey(dbConnection, table);
+        String id = ids.get(0);
         String imports = "";
         String fields = "";
         String init = "";
@@ -348,6 +350,7 @@ public class View {
             .replace("#imports#", imports)
             .replace("#fields#", fields)
             .replace("#init#", init)
+            .replace("#id#", id)
             .replace("#constructor#", constructor)
             .replace("#name#", name)
             .replace("#Name#", ObjectUtility.capitalize(name));

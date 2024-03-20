@@ -1,49 +1,49 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { #Name#Service } from './#name#.service';
+import { RegionService } from './region.service';
 import { FormsModule } from '@angular/forms';
-import { #Name# } from './#Name#';
-#imports#
+import { Region } from './Region';
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, FormsModule],
-  templateUrl: './#name#.component.html',
-  styleUrl: './#name#.component.scss'
+  templateUrl: './region.component.html',
+  styleUrl: './region.component.scss'
 })
-export class #Name#Component implements OnInit{
-    title = 'CRUD #Name#';
-    data : #Name# = new #Name#;
-    toUpdate : #Name# = new #Name#;
-    toDelete : #Name# = new #Name#;
-    #name#Data : any;
-#fields#
+export class RegionComponent implements OnInit{
+    title = 'CRUD Region';
+    data : Region = new Region;
+    toUpdate : Region = new Region;
+    toDelete : Region = new Region;
+    regionData : any;
+
 
     constructor(
-        private #name#: #Name#Service
-        #constructor#
+        private region: RegionService
+        
     ){}
     
     ngOnInit(): void {
-        this.#name#.get().subscribe(
+        this.region.get().subscribe(
             (data) => {
-                this.#name#Data = data;
+                this.regionData = data;
             },
             (error) => {
                 console.error('Error fetching data:', error);
             }
         )
-#init#
+
     }
 
-    setUpdate(item : #Name#): void{
+    setUpdate(item : Region): void{
         this.toUpdate = item;
-        this.data.#id# = this.toUpdate.#id#;
+        this.data.id = this.toUpdate.id;
     }
 
-    deleteItem(item : #Name#): void{
-        this.#name#.delete(item).subscribe(
+    deleteItem(item : Region): void{
+        this.region.delete(item).subscribe(
             (data) => {
                 console.log(data);
                 // location.reload();
@@ -55,7 +55,7 @@ export class #Name#Component implements OnInit{
     } 
 
     submitInsert(): any{
-        this.#name#.save(this.data).subscribe(
+        this.region.save(this.data).subscribe(
             (data) => {
                 console.log(data);
                 location.reload();
@@ -64,7 +64,7 @@ export class #Name#Component implements OnInit{
     }
 
     submitUpdate(): any{
-        this.#name#.update(this.data).subscribe(
+        this.region.update(this.data).subscribe(
             (data) => {
                 console.log(data);
                 location.reload();
