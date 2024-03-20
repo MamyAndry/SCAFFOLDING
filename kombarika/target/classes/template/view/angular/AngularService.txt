@@ -48,12 +48,8 @@ export class #Name#Service {
         const header = new HttpHeaders({
         'Content-Type': 'application/json'
         });
-        const options = {
-        headers: header,
-        params: new HttpParams().set('data', JSON.stringify(item))
-        }
         return this.http.delete<any>(
         this.url + "#name#",
-        options);
+        {headers : header, body : JSON.stringify(item)});
     }
 }

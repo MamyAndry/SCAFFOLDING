@@ -212,7 +212,7 @@
         "angular": {
             "CLIGenerator":"",
             "inputInsert":"<div class=\"mb-3\"> \n\t<label class=\"form-label\">#label#</label>\n\t<input type=\"#type#\" class=\"form-control\" name=\"#name#\" [(ngModel)]=\"this.data.#name#\" >\n</div>",
-            "inputUpdate":"<div class=\"mb-3\"> \n\t<label class=\"form-label\">#label#</label>\n\t<input type=\"#type#\" class=\"form-control\" name=\"#name#\" [(ngModel)]=\"this.data.#name#\" [(value)]={{toUpdate?.#name#}}>\n</div>",
+            "inputUpdate":"<div class=\"mb-3\"> \n\t<label class=\"form-label\">#label#</label>\n\t<input type=\"#type#\" class=\"form-control\" name=\"#name#\" [(ngModel)]=\"this.data.#name#\" [(value)]=\"toUpdate.#name#\">\n</div>",
             "select":"<div class=\"mb-3\"> \n \t<label class=\"form-label\">#label#</label> \n \t<select class=\"form-control\" name=\"#name#\" [(ngModel)]=\"this.data.#name#\" id=\"select-#name#\">\n#option#\n\t</select>\n</div>",
             "selectUpdate":"<div class=\"mb-3\"> \n \t<label class=\"form-label\">#label#</label> \n \t<select class=\"form-control\" name=\"#name#\" [(ngModel)]=\"this.data.#name#\" id=\"select-#name#\">\n#optionUpdate#\n\t</select>\n</div>",
             "option":"@for (item of #path#Data;  track $index){\n\t<option [ngValue]=\"item\">{{item.#attribute#}}</option>\n}\n",

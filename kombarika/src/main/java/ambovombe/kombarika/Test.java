@@ -24,7 +24,7 @@ public class Test {
         // String viewPath = "/home/mamisoa/ITU/L3/Mr_Naina/REACT/crud/src/components";
         
         // String path = "/home/mamisoa/ITU/L3/Mr_Naina/FRAMEWORK/testkarana/src/main/java";
-        String viewPath = "/Users/rakharrs/S5/Naina/test/view";
+        String viewPath = "/Users/rakharrs/S5/Naina/mamisoa/angulartemp/src/app";
 
         // String path = "/home/mamisoa/ITU/L3";
         // String viewPath = "/home/mamisoa/ITU/L3";
@@ -33,11 +33,11 @@ public class Test {
         String framework = "java:merana";
         String packageName = "com.example.demo";
         String entity = "entity";
-        String controller = "model";
+        String controller = "controller";
         String repository = "repository";
         String view = "";
         String viewType = "angular";
-        String url = "http://localhost:8080/testkarana/";
+        String url = "http://localhost:8080/demo_war_exploded/";
         try{
             // String[] tables = {"media_publication"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();
@@ -49,12 +49,9 @@ public class Test {
             //     System.out.println(set.getKey() + " " + set.getValue());
             // }
             String[] tables = DbService .getAllTablesArrays(codeGenerator.getDbConnection());
-            // for(String table: tables)
-            //     System.out.println(table);
+            
             codeGenerator.generateAll(path, viewPath, packageName, entity, controller, repository, view, viewType, url, tables, framework);
-            // codeGenerator.generateViewEnvironement(viewPath, viewType, "huhuhu");
-                // DbProperties db = new DbProperties();
-            // db.addConnection("huhuhu");
+
         }catch(Exception e){
             e.printStackTrace();
         }finally{
