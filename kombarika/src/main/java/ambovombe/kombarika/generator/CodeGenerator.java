@@ -302,7 +302,7 @@ public class CodeGenerator {
         if(mapping.equals(""))
             return;
         path = path + File.separator + ObjectUtility.formatToCamelCase(table);
-        String filename = GeneratorService.getFileName(
+        String filename = GeneratorService.getFileNameCapitalized(
             this.getViewDetails().getViews().get(viewType).getMappingFilename()
                 .replace("#name#", ObjectUtility.formatToCamelCase(table)), 
             this.getViewDetails().getViews().get(viewType).getMappingFileExtension());

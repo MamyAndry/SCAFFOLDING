@@ -38,7 +38,7 @@ public class Test {
         String repository = "repository";
         String view = "";
         String viewType = "angular";
-        String url = "http://localhost:8080/testkarana";
+        String url = "http://localhost:8080/testkarana/";
         try{
             // String[] tables = {"media_publication"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();

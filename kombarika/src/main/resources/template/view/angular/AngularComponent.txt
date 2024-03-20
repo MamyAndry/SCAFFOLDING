@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { RegionService } from './region.service';
+import { #Name#Service } from './#name#.service';
 import { FormsModule } from '@angular/forms';
 import { #Name# } from './#Name#';
 
@@ -36,7 +36,7 @@ export class #Name#Component implements OnInit{
     }
 
     deleteItem(item : any): void{
-        this.region.delete(item).subscribe(
+        this.#name#.delete(item).subscribe(
             (data) => {
                 console.log(data);
                 // location.reload();
@@ -48,7 +48,7 @@ export class #Name#Component implements OnInit{
     } 
 
     submitInsert(): any{
-        this.region.save(this.data).subscribe(
+        this.#name#.save(this.data).subscribe(
             (data) => {
                 console.log(data);
                 location.reload();
@@ -57,7 +57,7 @@ export class #Name#Component implements OnInit{
     }
 
     submitUpdate(): any{
-        this.region.update(this.data).subscribe(
+        this.#name#.update(this.data).subscribe(
             (data) => {
                 console.log(data);
                 location.reload();
@@ -67,4 +67,3 @@ export class #Name#Component implements OnInit{
   
 
 }
-    
