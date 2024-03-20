@@ -259,7 +259,7 @@
                         "controller":[
                             "entity.className",
                             "ambovombe.merana.utils.mapping.*",
-                            "ambovombe.merana.utils.mapping.method.HttpMethod.*",
+                            "static ambovombe.merana.utils.mapping.method.HttpMethod.*",
                             "com.dao.database.GenericDao"
                         ],
                         "entity":[

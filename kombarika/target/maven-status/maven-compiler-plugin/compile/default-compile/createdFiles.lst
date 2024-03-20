@@ -28,7 +28,8 @@ ambovombe/kombarika/configuration/mapping/ForeignKey.class
 ambovombe/kombarika/utils/Misc.class
 ambovombe/kombarika/generator/parser/JsonUtility.class
 ambovombe/kombarika/generator/service/view/View.class
-ambovombe/kombarika/configuration/mapping/CrudMethod.class
 ambovombe/kombarika/configuration/mapping/ViewProperties.class
+ambovombe/kombarika/configuration/mapping/CrudMethod.class
 ambovombe/kombarika/configuration/mapping/LanguageProperties.class
+ambovombe/kombarika/Test.class
 ambovombe/kombarika/generator/service/GeneratorService.class
