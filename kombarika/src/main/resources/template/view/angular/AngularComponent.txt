@@ -52,7 +52,7 @@ export class #Name#Component implements OnInit{
         this.#name#.delete(item).subscribe(
             (data) => {
                 console.log(data);
-                // location.reload();
+                location.reload();
             },
             (error) => {
                 console.error('Error fetching data:', error);
