@@ -10,6 +10,10 @@ public class GeneratorService {
     }
 
     public static String getFileName(String table, String extension){
+        return ObjectUtility.formatToCamelCase(table).concat("." + extension);
+    }
+
+    public static String getFileNameCapitalized(String table, String extension){
         return ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)).concat("." + extension);
     }
 

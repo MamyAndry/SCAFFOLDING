@@ -8,15 +8,20 @@ import com.dao.annotation.conf.ForeignType;
 public class Bureauvote {
 	@Column(name = "code_bureau")
 	String codeBureau;
+
 	@Column(name = "centre_vote")
 	String centreVote;
+
 	@ForeignKey(mappedBy = "id_fokontany", foreignType = ForeignType.OneToMany)
 	Fokontany fokontany;
+
 	@PrimaryKey
 	@Column(name = "id")
 	String id;
+
 	@Column(name = "bureau_vote")
 	String bureauVote;
+
 
 
 	public Bureauvote(){}

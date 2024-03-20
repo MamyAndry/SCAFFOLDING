@@ -92,7 +92,7 @@ public class Entity {
                     + this.getLanguageProperties().getFieldSyntax()
                         .replace("Type", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
                         .replace("field", ObjectUtility.formatToCamelCase(temp))
-                    + "\n";
+                    + "\n" + "\n";
                 continue;
             }
             res += "\t"
@@ -102,7 +102,7 @@ public class Entity {
                 + this.getLanguageProperties().getFieldSyntax()
                     .replace("Type", typeMapping.getListMapping().get(set.getValue()).getType())
                     .replace("field", ObjectUtility.formatToCamelCase(set.getKey()))
-                + "\n";
+                + "\n" + "\n";
         }
         return res;
     }

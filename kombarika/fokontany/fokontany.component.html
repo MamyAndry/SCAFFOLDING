@@ -1,0 +1,123 @@
+<div class="container">
+  <div class="row">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal">Ajouter</button>
+  </div>
+  <div class="row">
+    <table class="table">
+      <thead>
+        <tr>
+			<th> Nom Fokontany </th>
+			<th> Id </th>
+			<th> Id Commune </th>
+
+          <th></th>    
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of fokontanyData; track $index) {
+          <tr>
+		<td>{{item.nomFokontany}}</td>
+		<td>{{item.id}}</td>
+		<td>{{item.commune.nomCommune}}</td>
+
+            <th><button class="btn btn-warning" (click)="setUpdate(item)" data-bs-toggle="modal" data-bs-target="#updateModal">Modifier</button></th>
+            <th><button class="btn btn-danger" (click)="deleteItem(item)">Supprimer</button></th>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- INSERT MODAL -->
+<div class="modal fade" id="insertModal" aria-hidden="true"  tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <form method="post">
+	<div class="mb-3"> 
+		<label class="form-label">Nom Fokontany</label>
+		<input type="text" class="form-control" name="nomFokontany" [(ngModel)]="this.data.nomFokontany" >
+	</div>
+	<div className="mb-3"> 
+	 	<label className="form-label">Commune</label> 
+	 	<select className="form-control" name="commune" [(ngModel)]="this.data.commune" id="select-commune">
+			@for (item of java.lang.IntegerData.commune;  track $index){
+				<option value={{item.id}}>({item.nomCommune})</option>
+			}
+			
+		</select>
+	</div>
+          <div class="mb-3">
+            <button class="btn btn-primary" type= "submit" (click)="submitInsert()">
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- UPDATE MODAL -->
+<div class="modal fade" id="updateModal" aria-hidden="true"  tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Update</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <form method="post">
+	<div class="mb-3"> 
+		<label class="form-label">Nom Fokontany</label>
+		<input type="text" class="form-control" name="nomFokontany" [(ngModel)]="this.data.nomFokontany" value={{toUpdate?.nomFokontany}}>
+	</div>
+	<div class="mb-3"> 
+		<label class="form-label"></label>
+		<input type="hidden" class="form-control" name="id" [(ngModel)]="this.data.id" value={{toUpdate?.id}}>
+	</div>
+	<div className="mb-3"> 
+	 	<label className="form-label">id</label> 
+	 	<select className="form-control" name="commune">
+			@for (item of communeData.commune;  track $index){
+		<option value={{item.id}}>({item.nomCommune})</option>
+	}
+	
+	
+	</select>
+	</div>
+            <button class="btn btn-primary" type= "submit"  (click)="submitUpdate()">
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+      </div>
+      
+    </div>
+  </div>
+</div>
+

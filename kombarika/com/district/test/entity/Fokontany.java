@@ -8,12 +8,15 @@ import com.dao.annotation.conf.ForeignType;
 public class Fokontany {
 	@Column(name = "nom_fokontany")
 	String nomFokontany;
+
 	@PrimaryKey
 	@GeneratedValue(autoIncrement = true)
 	@Column(name = "id")
 	Integer id;
+
 	@ForeignKey(mappedBy = "id_commune", foreignType = ForeignType.OneToMany)
 	Commune commune;
+
 
 
 	public Fokontany(){}

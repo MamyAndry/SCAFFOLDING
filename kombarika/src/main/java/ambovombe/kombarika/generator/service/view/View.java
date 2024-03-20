@@ -31,6 +31,7 @@ public class View {
                     String option = this.getViewProperties().getOption()
                         .replace("#url#", url)
                         .replace("#path#", ObjectUtility.formatToCamelCase(temp))
+                        .replace("#name#", ObjectUtility.formatToCamelCase(set.getValue()))
                         .replace("#label#", temp)
                         .replace("#id#", ObjectUtility.formatToCamelCase(id))
                         .replace("#attribute#", ObjectUtility.formatToCamelCase(attribute));
@@ -59,6 +60,7 @@ public class View {
             res += this.getViewProperties().getOptionUpdate()
                 .replace("#url#", url)
                 .replace("#path#", ObjectUtility.formatToCamelCase(set.getValue()))
+                .replace("#name#", ObjectUtility.formatToCamelCase(set.getValue()))
                 .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getValue())))
                 .replace("#label#", ObjectUtility.formatToCamelCase(set.getValue()))
                 .replace("#id#", ObjectUtility.formatToCamelCase(id))                
@@ -230,6 +232,48 @@ public class View {
         res = res.replace("${IMPORTS}", this.getImports(tables))
                 .replace("${ROUTES}", this.getRoutes(tables));
         return res;
+    }
+
+    public String generateMapping(String table,  DbConnection dbConnection) throws Exception{
+        String res = "";
+        if(this.getViewProperties().getMappingTemplate().equals("")){
+            return res;
+        }
+        HashMap<String, String> foreignKeys = DbService.getForeignKeys(dbConnection, table);
+        HashMap<String, String> columns = DbService.getColumnNameAndType(dbConnection.getConnection(), table);
+        String tempPath = Misc.getViewTemplateLocation().concat(File.separator).concat(this.getViewProperties().getMappingTemplate());
+        res = FileUtility.readOneFile(tempPath);
+        String fields = "";
+        String imports = "";
+        String temp = "";
+        String temp2 = "";
+        for (Map.Entry<String, String> set : columns.entrySet()) {
+            if(foreignKeys.get(set.getKey()) != null){
+                temp2 = foreignKeys.get(set.getKey());
+                String path = ObjectUtility.formatToCamelCase(temp2);
+                String element = ObjectUtility.capitalize(path);
+                temp = this.getViewProperties().getMappingFieldSyntax()
+                    .replace("#type#", element + " = new " + element)
+                    .replace("#field#", path)
+                    + "\n" + "\n";
+
+                imports += this.getViewProperties().getMappingImportSyntax()
+                    .replace("#element#", element)
+                    .replace("#path#", path)
+                    + "\n" + "\n";
+                fields += temp;
+            }else{
+                temp = this.getViewProperties().getMappingFieldSyntax()
+                    .replace("#type#", this.getViewProperties().getListMapping().get(set.getValue()))
+                    .replace("#field#", ObjectUtility.formatToCamelCase(set.getKey()))
+                    + "\n" + "\n";
+                fields += temp;
+            }
+        }
+        return res
+            .replace("#class#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
+            .replace("#imports#", imports)
+            .replace("#fields#", Misc.tabulate(fields));
     }
 
     public String generateView(String table, String url, DbConnection dbConnection) throws Exception{

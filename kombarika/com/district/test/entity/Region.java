@@ -8,10 +8,12 @@ import com.dao.annotation.conf.ForeignType;
 public class Region {
 	@Column(name = "nom_region")
 	String nomRegion;
+
 	@PrimaryKey
 	@GeneratedValue(autoIncrement = true)
 	@Column(name = "id")
 	Integer id;
+
 
 
 	public Region(){}

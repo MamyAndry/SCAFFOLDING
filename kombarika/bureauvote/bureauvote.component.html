@@ -1,0 +1,142 @@
+<div class="container">
+  <div class="row">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal">Ajouter</button>
+  </div>
+  <div class="row">
+    <table class="table">
+      <thead>
+        <tr>
+			<th> Code Bureau </th>
+			<th> Centre Vote </th>
+			<th> Id Fokontany </th>
+			<th> Id </th>
+			<th> Bureau Vote </th>
+
+          <th></th>    
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of bureauvoteData; track $index) {
+          <tr>
+		<td>{{item.codeBureau}}</td>
+		<td>{{item.centreVote}}</td>
+		<td>{{item.fokontany.nomFokontany}}</td>
+		<td>{{item.id}}</td>
+		<td>{{item.bureauVote}}</td>
+            <th><button class="btn btn-warning" (click)="setUpdate(item)" data-bs-toggle="modal" data-bs-target="#updateModal">Modifier</button></th>
+            <th><button class="btn btn-danger" (click)="deleteItem(item)">Supprimer</button></th>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- INSERT MODAL -->
+<div class="modal fade" id="insertModal" aria-hidden="true"  tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <form method="post">
+	<div class="mb-3"> 
+		<label class="form-label">Code Bureau</label>
+		<input type="text" class="form-control" name="codeBureau" [(ngModel)]="this.data.codeBureau" >
+	</div>
+	<div class="mb-3"> 
+		<label class="form-label">Centre Vote</label>
+		<input type="text" class="form-control" name="centreVote" [(ngModel)]="this.data.centreVote" >
+	</div>
+	<div className="mb-3"> 
+	 	<label className="form-label">Fokontany</label> 
+	 	<select className="form-control" name="fokontany" [(ngModel)]="this.data.fokontany" id="select-fokontany">
+			@for (item of java.lang.IntegerData.fokontany;  track $index){
+				<option value={{item.id}}>({item.nomFokontany})</option>
+			}
+			
+		</select>
+	</div><div class="mb-3"> 
+		<label class="form-label">Bureau Vote</label>
+		<input type="text" class="form-control" name="bureauVote" [(ngModel)]="this.data.bureauVote" >
+	</div>
+	
+          <div class="mb-3">
+            <button class="btn btn-primary" type= "submit" (click)="submitInsert()">
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- UPDATE MODAL -->
+<div class="modal fade" id="updateModal" aria-hidden="true"  tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Update</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <form method="post">
+	<div class="mb-3"> 
+		<label class="form-label">Code Bureau</label>
+		<input type="text" class="form-control" name="codeBureau" [(ngModel)]="this.data.codeBureau" value={{toUpdate?.codeBureau}}>
+	</div>
+	<div class="mb-3"> 
+		<label class="form-label">Centre Vote</label>
+		<input type="text" class="form-control" name="centreVote" [(ngModel)]="this.data.centreVote" value={{toUpdate?.centreVote}}>
+	</div>
+	<div className="mb-3"> 
+	 	<label className="form-label">id</label> 
+	 	<select className="form-control" name="fokontany">
+			@for (item of fokontanyData.fokontany;  track $index){
+		<option value={{item.id}}>({item.nomFokontany})</option>
+	}
+	
+	
+	</select>
+	</div><div class="mb-3"> 
+		<label class="form-label"></label>
+		<input type="hidden" class="form-control" name="id" [(ngModel)]="this.data.id" value={{toUpdate?.id}}>
+	</div>
+	<div class="mb-3"> 
+		<label class="form-label">Bureau Vote</label>
+		<input type="text" class="form-control" name="bureauVote" [(ngModel)]="this.data.bureauVote" value={{toUpdate?.bureauVote}}>
+	</div>
+	
+            <button class="btn btn-primary" type= "submit"  (click)="submitUpdate()">
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+      </div>
+      
+    </div>
+  </div>
+</div>
+

@@ -24,6 +24,8 @@ public class ViewProperties {
     String mappingTemplate;
     String mappingFileName;
     String mappingFileExtension;
+    String mappingImportSyntax;
+    String mappingFieldSyntax;
     String componentSpecsTemplate;
     String componentSpecsFileName;
     String componentSpecsFileExtension;

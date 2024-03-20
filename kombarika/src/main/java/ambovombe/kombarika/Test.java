@@ -37,7 +37,7 @@ public class Test {
         String controller = "model";
         String repository = "repository";
         String view = "";
-        String viewType = "react";
+        String viewType = "angular";
         String url = "http://localhost:8080/testkarana";
         try{
             // String[] tables = {"media_publication"};

@@ -8,12 +8,15 @@ import com.dao.annotation.conf.ForeignType;
 public class District {
 	@Column(name = "nom_district")
 	String nomDistrict;
+
 	@ForeignKey(mappedBy = "id_region", foreignType = ForeignType.OneToMany)
 	Region region;
+
 	@PrimaryKey
 	@GeneratedValue(autoIncrement = true)
 	@Column(name = "id")
 	Integer id;
+
 
 
 	public District(){}
