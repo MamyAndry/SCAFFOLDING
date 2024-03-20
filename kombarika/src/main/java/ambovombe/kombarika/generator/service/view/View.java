@@ -364,6 +364,16 @@ public class View {
         return 1;
     }
 
+    public String generateStyle() throws Exception{
+        String res = "";
+        if(this.getViewProperties().getStyleTemplate().equals("")){
+            return res;
+        }           
+        String tempPath = Misc.getViewTemplateLocation().concat(File.separator).concat(this.getViewProperties().getStyleTemplate());
+        res += FileUtility.readOneFile(tempPath);
+        return res;
+    }
+
     
     public String generateView(String table, String url, DbConnection dbConnection) throws Exception{
         String res = "";        
