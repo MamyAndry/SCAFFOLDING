@@ -7,8 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="kombarika" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="kombarika" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>

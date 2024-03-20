@@ -1,4 +1,9 @@
 <template>
+    <header>
+        <title>Vue 3</title>
+        <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+    </header>
     <div class="container">
         <div v-if="loading">
             Loading ...
@@ -12,18 +17,18 @@
                             Add #entity#
                         </Button>
                     </div>
-                    <Modal id='insert' v-model:visible="insertForm">
+                    <modal id='insert' v-model:visible="insertForm">
                         <div id="body">
                             <form id="insert" @submit="e => insert(e)">
                                 #inputInsert#
                                 <div className="mb-3">
-                                    <Button variant="primary" class="btn btn-primary" type= "submit" >
+                                    <Button variant="primary" type= "submit" >
                                         Insert
                                     </Button>
                                 </div>
                             </form>
                         </div>
-                    </Modal>
+                    </modal>
                 </div>
             </div>
         </div>
@@ -89,7 +94,6 @@
 </template>
 
 <script>
-    import { Modal } from 'usemodal-vue3';
     
     export default{
         data(){
@@ -109,11 +113,26 @@
         mounted(){
             this.getAll();
         },
-        components: {
-            Modal
-        },
         methods: {
-        
+            show_insert(){
+                this.$modal.show('insert-modal');
+            },
+            hide_insert(){
+                this.$modal.hide('insert-modal');
+            },
+            show_update(){
+                this.$modal.show('update-modal');
+            },
+            hide_update(){
+                this.$modal.hide('update-modal');
+            },
+            show_delete(){
+                this.$modal.show('delete-modal')
+            },
+            hide_delete(){
+                this.$modal.hide('delete-modal')
+            }
+            
             async getAll() {
                 /*try {
                     this.loading = true;
@@ -207,9 +226,3 @@
 
     }
 </script>
-
-<style>
-    .modal-vue3-footer div {
-        margin-top: -1000px;
-    }
-</style>

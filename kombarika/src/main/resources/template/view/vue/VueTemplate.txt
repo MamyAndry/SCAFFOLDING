@@ -1,9 +1,4 @@
 <template>
-    <header>
-        <title>Vue 3</title>
-        <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
-        <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
-    </header>
     <div class="container">
         <div v-if="loading">
             Loading ...
@@ -22,7 +17,7 @@
                             <form id="insert" @submit="e => insert(e)">
                                 #inputInsert#
                                 <div className="mb-3">
-                                    <Button variant="primary" type= "submit" >
+                                    <Button variant="primary" class="btn btn-primary" type= "submit" >
                                         Insert
                                     </Button>
                                 </div>
@@ -111,13 +106,14 @@
         },
         // eslint-disable-next-line vue/multi-word-component-names
         name: '#entity#',
-        components: {
-            Modal
-        },
         mounted(){
             this.getAll();
         },
+        components: {
+            Modal
+        },
         methods: {
+        
             async getAll() {
                 /*try {
                     this.loading = true;
@@ -211,3 +207,9 @@
 
     }
 </script>
+
+<style>
+    .modal-vue3-footer div {
+        margin-top: -1000px;
+    }
+</style>
