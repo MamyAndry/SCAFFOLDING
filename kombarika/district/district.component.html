@@ -6,10 +6,10 @@
     <table class="table">
       <thead>
         <tr>
-			<th> Nom District </th>
-			<th> Id Region </th>
-			<th> Id </th>
-
+					<th> Nom District </th>
+					<th> Id Region </th>
+					<th> Id </th>
+		
           <th></th>    
           <th></th>
         </tr>
@@ -17,10 +17,10 @@
       <tbody>
         @for (item of districtData; track $index) {
           <tr>
-		<td>{{item.nomDistrict}}</td>
-		<td>{{item.region.nomRegion}}</td>
-		<td>{{item.id}}</td>
-
+			<td>{{item.nomDistrict}}</td>
+			<td>{{item.region.nomRegion}}</td>
+			<td>{{item.id}}</td>
+	
             <th><button class="btn btn-warning" (click)="setUpdate(item)" data-bs-toggle="modal" data-bs-target="#updateModal">Modifier</button></th>
             <th><button class="btn btn-danger" (click)="deleteItem(item)">Supprimer</button></th>
           </tr>
@@ -45,19 +45,20 @@
       <!-- Modal Body -->
       <div class="modal-body">
         <form method="post">
-	<div class="mb-3"> 
-		<label class="form-label">Nom District</label>
-		<input type="text" class="form-control" name="nomDistrict" [(ngModel)]="this.data.nomDistrict" >
-	</div>
-	<div className="mb-3"> 
-	 	<label className="form-label">Region</label> 
-	 	<select className="form-control" name="region" [(ngModel)]="this.data.region" id="select-region">
-			@for (item of java.lang.IntegerData.region;  track $index){
-				<option value={{item.id}}>({item.nomRegion})</option>
-			}
-			
-		</select>
-	</div>
+					<div class="mb-3"> 
+						<label class="form-label">Nom District</label>
+						<input type="text" class="form-control" name="nomDistrict" [(ngModel)]="this.data.nomDistrict" >
+					</div>
+					<div class="mb-3"> 
+					 	<label class="form-label">Region</label> 
+					 	<select class="form-control" name="region" [(ngModel)]="this.data.region" id="select-region">
+							@for (item of districtData.region;  track $index){
+								<option [ngValue]="item">({item.nomRegion})</option>
+							}
+							
+						</select>
+					</div>
+					
           <div class="mb-3">
             <button class="btn btn-primary" type= "submit" (click)="submitInsert()">
               Save Changes
@@ -88,24 +89,23 @@
       <!-- Modal Body -->
       <div class="modal-body">
         <form method="post">
-	<div class="mb-3"> 
-		<label class="form-label">Nom District</label>
-		<input type="text" class="form-control" name="nomDistrict" [(ngModel)]="this.data.nomDistrict" value={{toUpdate?.nomDistrict}}>
-	</div>
-	<div className="mb-3"> 
-	 	<label className="form-label">id</label> 
-	 	<select className="form-control" name="region">
-			@for (item of regionData.region;  track $index){
-		<option value={{item.id}}>({item.nomRegion})</option>
-	}
-	
-	
-	</select>
-	</div><div class="mb-3"> 
-		<label class="form-label"></label>
-		<input type="hidden" class="form-control" name="id" [(ngModel)]="this.data.id" value={{toUpdate?.id}}>
-	</div>
-	
+					<div class="mb-3"> 
+						<label class="form-label">Nom District</label>
+						<input type="text" class="form-control" name="nomDistrict" [(ngModel)]="this.data.nomDistrict" value={{toUpdate?.nomDistrict}}>
+					</div>
+					<div class="mb-3"> 
+					 	<label class="form-label">Region</label> 
+					 	<select class="form-control" name="region" [(ngModel)]="this.data.region" id="select-region">
+							@for (item of regionData.region;  track $index){
+								<option [ngValue]="item">({item.nomRegion})</option>
+							}
+							
+						</select>
+					</div><div class="mb-3"> 
+						<label class="form-label"></label>
+						<input type="hidden" class="form-control" name="id" [(ngModel)]="this.data.id" value={{toUpdate?.id}}>
+					</div>
+					
             <button class="btn btn-primary" type= "submit"  (click)="submitUpdate()">
               Save Changes
             </button>

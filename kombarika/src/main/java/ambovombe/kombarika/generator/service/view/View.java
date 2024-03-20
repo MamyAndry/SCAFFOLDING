@@ -21,7 +21,7 @@ public class View {
     ViewProperties viewProperties;
     FrameworkProperties frameworkProperties;
 
-    public String getInputInsert(HashMap<String, String> columns, HashMap<String, String> foreignKeys, List<String> primaryKeys, String url, String id, String attribute) throws Exception{
+    public String getInputInsert(HashMap<String, String> columns, HashMap<String, String> foreignKeys, List<String> primaryKeys, String url, String id, String attribute, String table) throws Exception{
         String res ="";
         String template = this.getViewProperties().getInputInsert();
         for (Map.Entry<String, String> set : columns.entrySet()) {
@@ -30,6 +30,7 @@ public class View {
                 if(temp != null){
                     String option = this.getViewProperties().getOption()
                         .replace("#url#", url)
+                        .replace("#table#", ObjectUtility.formatToCamelCase(table))
                         .replace("#path#", ObjectUtility.formatToCamelCase(temp))
                         .replace("#name#", ObjectUtility.formatToCamelCase(set.getValue()))
                         .replace("#label#", temp)
@@ -39,7 +40,7 @@ public class View {
                     res += this.getViewProperties().getSelect()
                     .replace("#label#", ObjectUtility.capitalize(temp))
                     .replace("#name#", ObjectUtility.formatToCamelCase(temp))
-                    .replace("#option#", option);
+                    .replace("#option#", option) + "\n";
                     continue;
                 }
                 res += template
@@ -48,10 +49,10 @@ public class View {
                 .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";        
             }
         }
-        return Misc.tabulate(res);
+        return Misc.tabulate(Misc.tabulate(Misc.tabulate(Misc.tabulate(Misc.tabulate(res)))));
     }
 
-    public String getOptionUpdate(HashMap<String, String> foreignKeys, String url, String id, String attribute) throws Exception{
+    public String getOptionUpdate(HashMap<String, String> foreignKeys, String url, String id, String attribute, String table) throws Exception{
         String res = "";
         if (foreignKeys.isEmpty()) {
             return "";
@@ -59,19 +60,18 @@ public class View {
         for (Map.Entry<String, String> set : foreignKeys.entrySet()) {
             res += this.getViewProperties().getOptionUpdate()
                 .replace("#url#", url)
+                .replace("#table#", ObjectUtility.formatToCamelCase(table))
                 .replace("#path#", ObjectUtility.formatToCamelCase(set.getValue()))
                 .replace("#name#", ObjectUtility.formatToCamelCase(set.getValue()))
                 .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getValue())))
                 .replace("#label#", ObjectUtility.formatToCamelCase(set.getValue()))
                 .replace("#id#", ObjectUtility.formatToCamelCase(id))                
-                .replace("#attribute#", ObjectUtility.formatToCamelCase(attribute))
-                ;
-            res += "\n";
+                .replace("#attribute#", ObjectUtility.formatToCamelCase(attribute));
         }
-        return Misc.tabulate(res);
+        return Misc.tabulate(Misc.tabulate(res));
     }
 
-    public String getInputUpdate(HashMap<String, String> columns, HashMap<String, String> foreignKeys, List<String> primaryKeys, String url, String id) throws Exception{
+    public String getInputUpdate(HashMap<String, String> columns, HashMap<String, String> foreignKeys, List<String> primaryKeys, String url, String id, String attribute) throws Exception{
         String res ="";
         String template = this.getViewProperties().getInputUpdate();
         for (Map.Entry<String, String> set : columns.entrySet()) {
@@ -80,15 +80,17 @@ public class View {
                 if(temp != null){
                     res += this.getViewProperties().getSelectUpdate()
                     .replace("#name#", ObjectUtility.formatToCamelCase(temp))
+                    .replace("#label#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
                     .replace("#id#", ObjectUtility.formatToCamelCase(id))
-                    .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)));
-                    continue;
-                }
-                res +=  template
-                .replace("#label#", ObjectUtility.formatToSpacedString(set.getKey()))
-                .replace("#type#", this.getViewProperties().getListMappingInput().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
-                .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getKey())))
-                .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";        
+                    .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
+                    .replace("#optionUpdate#", this.getOptionUpdate(foreignKeys, url, id, attribute, temp));
+                }else{
+                    res +=  template
+                    .replace("#label#", ObjectUtility.formatToSpacedString(set.getKey()))
+                    .replace("#type#", this.getViewProperties().getListMappingInput().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
+                    .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getKey())))
+                    .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";     
+                }   
             }else{
                 res += template
                 .replace("#label#", "")
@@ -97,7 +99,7 @@ public class View {
                 .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";          
             }   
         }
-        return Misc.tabulate(res);
+        return Misc.tabulate(Misc.tabulate(Misc.tabulate(Misc.tabulate(Misc.tabulate(res)))));
     }
 
     public String getHeaders(HashMap<String, String> columns){
@@ -107,7 +109,7 @@ public class View {
             res += "\t\t" + template
             .replace("#label#", ObjectUtility.formatToSpacedString(set.getKey())) + "\n";
         }
-        return res;
+        return Misc.tabulate(Misc.tabulate(res));
     }
 
     public String getTableValue(HashMap<String, String> columns, HashMap<String, String> foreignKeys, String attribute){
@@ -122,7 +124,7 @@ public class View {
                 .replace("#values#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";
             }
         }
-        return res;
+        return Misc.tabulate(res);
     }
 
     public String getHandleInputSelectChange(HashMap<String, String> columns, HashMap<String, String> foreignKeys, List<String> primaryKeys){
@@ -140,7 +142,7 @@ public class View {
             .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getKey())))
             .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n"; 
         }       
-        return Misc.tabulate(res);
+        return Misc.tabulate(Misc.tabulate(res));
     }
 
     public String getValues(HashMap<String, String> columns, HashMap<String, String> foreignKeys, String table){
@@ -289,9 +291,8 @@ public class View {
         String id = idAndAttribute.get("id");
         String attribute = idAndAttribute.get("attribute");
         res = template.replace("#header#", getHeaders( columns))
-        .replace("#inputInsert#", getInputInsert(columns, foreignKeys, primaryKeys, url, id, attribute))
-        .replace("#inputUpdate#", getInputUpdate(columns, foreignKeys, primaryKeys, url, id))
-        .replace("#optionUpdate#", getOptionUpdate(foreignKeys, url, id, attribute))
+        .replace("#inputInsert#", getInputInsert(columns, foreignKeys, primaryKeys, url, id, attribute, table))
+        .replace("#inputUpdate#", getInputUpdate(columns, foreignKeys, primaryKeys, url, id, attribute))
         .replace("#handleInputSelectChange#", getHandleInputSelectChange(columns, foreignKeys, primaryKeys))
         .replace("#getValues#", getFetcher(columns, foreignKeys, table))
         .replace("#values#", getValues(columns, foreignKeys, table))

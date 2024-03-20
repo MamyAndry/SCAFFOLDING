@@ -6,9 +6,9 @@
     <table class="table">
       <thead>
         <tr>
-			<th> Nom Region </th>
-			<th> Id </th>
-
+					<th> Nom Region </th>
+					<th> Id </th>
+		
           <th></th>    
           <th></th>
         </tr>
@@ -16,9 +16,9 @@
       <tbody>
         @for (item of regionData; track $index) {
           <tr>
-		<td>{{item.nomRegion}}</td>
-		<td>{{item.id}}</td>
-
+			<td>{{item.nomRegion}}</td>
+			<td>{{item.id}}</td>
+	
             <th><button class="btn btn-warning" (click)="setUpdate(item)" data-bs-toggle="modal" data-bs-target="#updateModal">Modifier</button></th>
             <th><button class="btn btn-danger" (click)="deleteItem(item)">Supprimer</button></th>
           </tr>
@@ -43,11 +43,11 @@
       <!-- Modal Body -->
       <div class="modal-body">
         <form method="post">
-	<div class="mb-3"> 
-		<label class="form-label">Nom Region</label>
-		<input type="text" class="form-control" name="nomRegion" [(ngModel)]="this.data.nomRegion" >
-	</div>
-	
+					<div class="mb-3"> 
+						<label class="form-label">Nom Region</label>
+						<input type="text" class="form-control" name="nomRegion" [(ngModel)]="this.data.nomRegion" >
+					</div>
+					
           <div class="mb-3">
             <button class="btn btn-primary" type= "submit" (click)="submitInsert()">
               Save Changes
@@ -78,15 +78,15 @@
       <!-- Modal Body -->
       <div class="modal-body">
         <form method="post">
-	<div class="mb-3"> 
-		<label class="form-label">Nom Region</label>
-		<input type="text" class="form-control" name="nomRegion" [(ngModel)]="this.data.nomRegion" value={{toUpdate?.nomRegion}}>
-	</div>
-	<div class="mb-3"> 
-		<label class="form-label"></label>
-		<input type="hidden" class="form-control" name="id" [(ngModel)]="this.data.id" value={{toUpdate?.id}}>
-	</div>
-	
+					<div class="mb-3"> 
+						<label class="form-label">Nom Region</label>
+						<input type="text" class="form-control" name="nomRegion" [(ngModel)]="this.data.nomRegion" value={{toUpdate?.nomRegion}}>
+					</div>
+					<div class="mb-3"> 
+						<label class="form-label"></label>
+						<input type="hidden" class="form-control" name="id" [(ngModel)]="this.data.id" value={{toUpdate?.id}}>
+					</div>
+					
             <button class="btn btn-primary" type= "submit"  (click)="submitUpdate()">
               Save Changes
             </button>
