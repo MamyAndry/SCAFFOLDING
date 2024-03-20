@@ -8,6 +8,7 @@ import { #Name# } from './#Name#';
 @Component({
   selector: 'app-root',
   standalone: true,
+  providers : [ #Name#Service#other#],
   imports: [RouterOutlet, FormsModule],
   templateUrl: './#name#.component.html',
   styleUrl: './#name#.component.scss'
