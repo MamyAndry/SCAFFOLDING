@@ -9,7 +9,6 @@ import ambovombe.kombarika.configuration.mapping.FrameworkProperties;
 import ambovombe.kombarika.configuration.mapping.ViewProperties;
 import ambovombe.kombarika.database.DbConnection;
 import ambovombe.kombarika.generator.parser.FileUtility;
-import ambovombe.kombarika.generator.parser.JsonUtility;
 import ambovombe.kombarika.generator.service.DbService;
 import ambovombe.kombarika.generator.utils.ObjectUtility;
 import ambovombe.kombarika.utils.Misc;
@@ -83,7 +82,7 @@ public class View {
                     .replace("#label#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
                     .replace("#id#", ObjectUtility.formatToCamelCase(id))
                     .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
-                    .replace("#optionUpdate#", this.getOptionUpdate(foreignKeys, url, id, attribute, temp));
+                    .replace("#optionUpdate#", this.getOptionUpdate(foreignKeys, url, id, attribute, temp)) + "\n";
                 }else{
                     res +=  template
                     .replace("#label#", ObjectUtility.formatToSpacedString(set.getKey()))
@@ -321,15 +320,35 @@ public class View {
         return res;
     }
 
-    public String generateComponent(String table) throws Exception{
+    public String generateComponent(String table, DbConnection dbConnection) throws Exception{
         String res = "";
         if(this.getViewProperties().getComponentTemplate().equals("")){
             return res;
         }
         String tempPath = Misc.getViewTemplateLocation().concat(File.separator).concat(this.getViewProperties().getComponentTemplate());
         res = FileUtility.readOneFile(tempPath);
+        HashMap<String, String> foreignKeys = DbService.getForeignKeys(dbConnection, table);
+        String imports = "";
+        String fields = "";
+        String init = "";
+        String constructor = "";
         String name = ObjectUtility.formatToCamelCase(table);
+        String temp = "";
+        String Temp = "";
+        for (Map.Entry<String, String> set : foreignKeys.entrySet()) {
+            temp = ObjectUtility.formatToCamelCase(set.getValue());
+            Temp = ObjectUtility.capitalize(temp);
+            imports += "import { " + Temp + " } from \"../" + temp + "/" + Temp + "\";\n"; 
+            imports += "import { " + Temp + "Service } from \"../" + temp + "/" + temp + ".service\";"; 
+            fields += "\t" + temp + "Data : any;";
+            constructor += ",private " + temp  + ":" + Temp + "Service";
+            init += Misc.tabulate(Misc.tabulate("this." + temp +".get().subscribe(\n\t(data) => {\n\t\tthis." + temp + "Data = data;\t},\n\t(error) => {\n\t\tconsole.error('Error fetching data:', error);\n\t})"));
+        }
         res = res
+            .replace("#imports#", imports)
+            .replace("#fields#", fields)
+            .replace("#init#", init)
+            .replace("#constructor#", constructor)
             .replace("#name#", name)
             .replace("#Name#", ObjectUtility.capitalize(name));
         return res;

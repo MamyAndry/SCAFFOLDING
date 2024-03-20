@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { #Name#Service } from './#name#.service';
 import { FormsModule } from '@angular/forms';
 import { #Name# } from './#Name#';
+#imports#
 
 @Component({
   selector: 'app-root',
@@ -17,8 +18,12 @@ export class #Name#Component implements OnInit{
     toUpdate : any;
     toDelete : any;
     #name#Data : any;
+#fields#
 
-    constructor(private #name#: #Name#Service){}
+    constructor(
+        private #name#: #Name#Service
+        #constructor#
+    ){}
     
     ngOnInit(): void {
         this.#name#.get().subscribe(
@@ -29,6 +34,7 @@ export class #Name#Component implements OnInit{
                 console.error('Error fetching data:', error);
             }
         )
+#init#
     }
 
     setUpdate(item : any): void{

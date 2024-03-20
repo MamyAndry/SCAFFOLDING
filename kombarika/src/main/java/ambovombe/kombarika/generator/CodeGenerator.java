@@ -263,7 +263,7 @@ public class CodeGenerator {
         View view = new View();
         view.setViewProperties(this.getViewDetails().getViews().get(viewType));
         view.setFrameworkProperties(this.getFrameworkProperties());
-        return view.generateComponent(table);
+        return view.generateComponent(table, this.getDbConnection());
     }
 
     public int checkStyle(String viewType) throws Exception{
