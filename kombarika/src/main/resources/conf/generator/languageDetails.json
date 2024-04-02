@@ -59,7 +59,7 @@
                         "findById":"",
                         "delete": "_context.?.Remove(#object#);\n_context.SaveChanges();\t\nreturn Ok();",
                         "update": "var temp = #object#;\n_context.update(temp)\n_context.SaveChanges();\nreturn Ok();",
-                        "save": "_context.?.Add(#object#);\n_context.SaveChanges();\nreturn Ok();"
+                        "save": "_context.?.Update(#object#);\n_context.SaveChanges();\nreturn Ok();"
                     },
                     "controllerProperty" : {
                         "path": "Route(\"api/[[?]]\")",

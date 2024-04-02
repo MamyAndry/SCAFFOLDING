@@ -96,11 +96,11 @@ public class Controller{
         String res = "";
         if(foreignKeys.size() > 0){
             String values = "";
-            for (Map.Entry<String,String> set: columns.entrySet()) {
-                String temp = foreignKeys.get(set.getKey());
-                if(temp != null){
-                    values += ObjectUtility.formatToCamelCase(temp) + ".";
-                }
+            for (Map.Entry<String,String> set: foreignKeys.entrySet()) {
+                // String temp = foreignKeys.get(set.getValue());
+                // if(temp != null){
+                    values += ObjectUtility.formatToCamelCase(set.getKey()) + ".";
+                // }
             }
             values = values.substring(0, values.lastIndexOf('.'));
             res += this.getControllerProperty().getIncludedTerms().replace("#values#", values);
@@ -118,7 +118,7 @@ public class Controller{
         String function =  this.getLanguageProperties().getMethodSyntax()
                 .replace("#name#", "findAll")
                 .replace("#type#", this.getControllerProperty().getFindAllAsync()
-                    .replace("?", this.getControllerProperty().getReturnType().replace("?", this.getFrameworkProperties().getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))))
+                .replace("?", this.getControllerProperty().getReturnType().replace("?", this.getFrameworkProperties().getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))))
                 .replace("#arg#", "")
                 .replace("#body#", body);
 
@@ -212,6 +212,7 @@ public class Controller{
     }
     
     public String generateController(String template, String table, String packageName, String context, String repository, String entity, String framework) throws Exception {
+        
         String res = template.replace("#package#", GeneratorService.getPackage(this.getLanguageProperties(), packageName))
                 .replace("#imports#", getControllerImport(repository, entity, table))
                 .replace("#class#", getControllerClass(table, framework))

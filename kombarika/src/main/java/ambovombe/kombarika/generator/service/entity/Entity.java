@@ -81,6 +81,7 @@ public class Entity {
             }
             String temp = foreignKeys.get(set.getKey());
             if(temp != null){
+                temp = set.getKey();
                 res += "\t"
                         + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getConstraints().getForeignKey().getAnnotation()
                             .replace("?", set.getKey())) + "\n";
@@ -90,7 +91,7 @@ public class Entity {
                 }
                 res += "\t"
                     + this.getLanguageProperties().getFieldSyntax()
-                        .replace("Type", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
+                        .replace("Type", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(foreignKeys.get(set.getKey()))))
                         .replace("field", ObjectUtility.formatToCamelCase(temp))
                     + "\n" + "\n";
                 continue;
@@ -113,8 +114,9 @@ public class Entity {
 
             String temp = foreignKeys.get(set.getKey());
             if(temp != null){
+                temp = set.getKey();
                 rep += this.getLanguageProperties().getEncapsulation()
-                .replace("#type#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
+                .replace("#type#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(foreignKeys.get(temp))))
                 .replace("#Field#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
                 .replace("#field#", ObjectUtility.formatToCamelCase(temp));
                 continue;
