@@ -110,7 +110,7 @@ public class View {
             res += "\t\t" + template
             .replace("#label#", ObjectUtility.formatToSpacedString(set.getKey())) + "\n";
         }
-        return Misc.tabulate(Misc.tabulate(res));
+        return Misc.tabulate(Misc.tabulate(Misc.tabulate(Misc.tabulate(res))));
     }
 
     public String getTableValue(HashMap<String, String> columns, HashMap<String, String> foreignKeys, String attribute){
@@ -127,7 +127,7 @@ public class View {
                 .replace("#values#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";
             }
         }
-        return Misc.tabulate(res);
+        return Misc.tabulate(Misc.tabulate(Misc.tabulate(Misc.tabulate(res))));
     }
 
     public String getHandleInputSelectChange(HashMap<String, String> columns, HashMap<String, String> foreignKeys, List<String> primaryKeys){
@@ -157,7 +157,6 @@ public class View {
         for (Map.Entry<String, String> set : columns.entrySet()) {
             String temp = foreignKeys.get(set.getKey());
             if(temp != null){
-                temp = set.getKey();
                 res += this.getViewProperties().getValues()
                 .replace("#entity#", ObjectUtility.formatToCamelCase(temp))
                 .replace("#Entity#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp))) + "\n";
@@ -172,14 +171,13 @@ public class View {
         String template = this.getViewProperties().getFetch();
         res += template
             .replace("#entity#", table)
-            .replace("#Entity#", ObjectUtility.capitalize(table));
+            .replace("#Entity#", ObjectUtility.capitalize(table)) + "\n";
         for (Map.Entry<String, String> set : columns.entrySet()) {
             String temp = foreignKeys.get(set.getKey());
             if(temp != null){
-                temp = set.getKey();
-                res += this.getViewProperties().getFetch()
+                res += this.getViewProperties().getFetchForeignKeys()
                 .replace("#entity#", ObjectUtility.formatToCamelCase(temp))
-                .replace("#Entity#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)));
+                .replace("#Entity#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp))) + "\n";
                 continue;
             }
         }
@@ -188,7 +186,7 @@ public class View {
 
     public HashMap<String, String> getIdAndAttribute(DbConnection dbConnection, HashMap<String, String> foreignKeys) throws Exception{
         String attribute = "";
-        String id = "";
+        String id       = "";
         HashMap<String,String> map = new HashMap<>();
         for (Map.Entry<String, String> set : foreignKeys.entrySet()) {
             List<String> tempPrimaryKey = DbService.getPrimaryKey(dbConnection, set.getValue());
@@ -399,7 +397,7 @@ public class View {
         HashMap<String, String> idAndAttribute = this.getIdAndAttribute(dbConnection, foreignKeys);
         String id = idAndAttribute.get("id");
         String attribute = idAndAttribute.get("attribute");
-        res = template.replace("#header#", getHeaders( columns))
+        res = template.replace("#header#", getHeaders(columns))
         .replace("#inputInsert#", getInputInsert(columns, foreignKeys, primaryKeys, url, id, attribute, table))
         .replace("#inputUpdate#", getInputUpdate(columns, foreignKeys, primaryKeys, url, id, attribute))
         .replace("#handleInputSelectChange#", getHandleInputSelectChange(columns, foreignKeys, primaryKeys))

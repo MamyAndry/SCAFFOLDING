@@ -458,11 +458,11 @@ public class CodeGenerator {
         generateAllView(viewPath, tables, view, viewType, url);    
     }
 
-    public void generateViewEnvironement(String path, String viewType, String projectName) throws Exception{
-        String command = this.getViewDetails().getViews().get(viewType).getCLIGenerator()
-            .replace("#path#", path)
-            .replace("#projectName#", projectName); 
-        System.out.println(command);
-        Command.executeCommand(command);
-    }
+    // public void generateViewEnvironement(String path, String viewType, String projectName) throws Exception{
+    //     String command = this.getViewDetails().getViews().get(viewType).getCLIGenerator()
+    //         .replace("#path#", path)
+    //         .replace("#projectName#", projectName); 
+    //     System.out.println(command);
+    //     Command.executeCommand(command);
+    // }
 }

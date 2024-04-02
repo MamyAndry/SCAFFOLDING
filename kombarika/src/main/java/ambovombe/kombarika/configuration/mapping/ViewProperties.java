@@ -46,6 +46,7 @@ public class ViewProperties {
     String values;
     String tableValue;
     String fetch;
+    String fetchForeignKeys;
     String handleSelectItem;
     HashMap<String, String> listMapping;
     HashMap<String, String> listMappingInput;

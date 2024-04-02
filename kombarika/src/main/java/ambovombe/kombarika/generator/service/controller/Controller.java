@@ -128,6 +128,27 @@ public class Controller{
             ) + "\n" + function);
     }
 
+    public String findSome(String table, HashMap<String, String> columns, HashMap<String, String> foreignKeys){
+        if(this.getCrudMethod().getFindSome().equals("")) return "";
+        String body = Misc.tabulate(this.getCrudMethod().getFindSome());
+        body = body
+            .replace("#object#", ObjectUtility.formatToCamelCase(table))
+            .replace("#between#", getIncludedTerms(columns, foreignKeys))
+            .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)));
+
+        String function =  this.getLanguageProperties().getMethodSyntax()
+                .replace("#name#", "findSome")
+                .replace("#type#", this.getControllerProperty().getFindAllAsync()
+                .replace("?", this.getControllerProperty().getReturnType().replace("?", this.getFrameworkProperties().getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))))
+                .replace("#arg#", this.getControllerProperty().getFindSomeArgument())
+                .replace("#body#", body);
+
+        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", 
+            this.getControllerProperty().getGet()
+                .replace("?", ObjectUtility.formatToCamelCase(table))
+            ) + "\n" + function);
+    }
+
     public String findById(String table) throws Exception{
         String res = "";
         return res;
@@ -138,15 +159,18 @@ public class Controller{
         HashMap<String, String> foreignKeys = DbService.getForeignKeys(this.getDbConnection(), table);
         String save = save(table);
         String findAll = findAll(table, columns, foreignKeys);
+        String findSome = findSome(table, columns, foreignKeys);
         String update = update(table);
         String delete = delete(table);
         stringBuilder.append(save);
-        stringBuilder.append("\n");
+        stringBuilder.append("\n\n");
         stringBuilder.append(update);
-        stringBuilder.append("\n");
+        stringBuilder.append("\n\n");
         stringBuilder.append(delete);
-        stringBuilder.append("\n");
+        stringBuilder.append("\n\n");
         stringBuilder.append(findAll);
+        stringBuilder.append("\n\n");
+        stringBuilder.append(findSome);
         return stringBuilder.toString();
     }
 
@@ -212,7 +236,6 @@ public class Controller{
     }
     
     public String generateController(String template, String table, String packageName, String context, String repository, String entity, String framework) throws Exception {
-        
         String res = template.replace("#package#", GeneratorService.getPackage(this.getLanguageProperties(), packageName))
                 .replace("#imports#", getControllerImport(repository, entity, table))
                 .replace("#class#", getControllerClass(table, framework))

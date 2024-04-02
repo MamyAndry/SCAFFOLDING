@@ -22,5 +22,6 @@ public class ControllerProperty {
     String annotationArgumentParameterFormData;
     String annotationArgumentParameterLink;
     String constructor;
+    String findSomeArgument;
     String findAllAsync;
 }
