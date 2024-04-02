@@ -30,8 +30,8 @@ public class Test {
         // String viewPath = "/home/mamisoa/ITU/L3";
 
 
-        String framework = "java:merana";
-        String packageName = "com.example.demo";
+        String framework = "csharp:dotnet";
+        String packageName = "com.district.test";
         String entity = "entity";
         String controller = "controller";
         String repository = "repository";

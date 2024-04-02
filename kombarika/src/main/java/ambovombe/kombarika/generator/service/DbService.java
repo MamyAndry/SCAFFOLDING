@@ -150,14 +150,14 @@ public class DbService {
 
     public static HashMap<String, String> getForeignKeys(DbConnection dbConnection, String tableName) throws Exception{
         String query = dbConnection.getListConnection().get(dbConnection.getInUseConnection()).getDatabaseType().getForeignKeyQuery();
-        HashMap<String, String> listForeignKeysKeys = new HashMap<>();
+        HashMap<String, String> listForeignKeys = new HashMap<>();
         PreparedStatement stmt = dbConnection.getConnection().prepareCall(query);
         stmt.setString(1, tableName);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()){
-            listForeignKeysKeys.put(rs.getString(1), rs.getString(2));
+            listForeignKeys.put(rs.getString(1), rs.getString(2));
         }
-        return listForeignKeysKeys;
+        return listForeignKeys;
     }
 
     public static String getType(String str){

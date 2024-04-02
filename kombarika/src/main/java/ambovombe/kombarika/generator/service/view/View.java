@@ -27,6 +27,7 @@ public class View {
             if (!primaryKeys.contains(set.getKey())) {
                 String temp = foreignKeys.get(set.getKey());
                 if(temp != null){
+                    temp = set.getKey();
                     String option = this.getViewProperties().getOption()
                         .replace("#url#", url)
                         .replace("#table#", ObjectUtility.formatToCamelCase(table))
@@ -77,6 +78,7 @@ public class View {
             if (!primaryKeys.contains(set.getKey())) {
                 String temp = foreignKeys.get(set.getKey());
                 if(temp != null){
+                    temp = set.getKey();
                     res += this.getViewProperties().getSelectUpdate()
                     .replace("#name#", ObjectUtility.formatToCamelCase(temp))
                     .replace("#label#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
@@ -115,9 +117,11 @@ public class View {
         String res ="";
         String template = this.getViewProperties().getTableValue();
         for (Map.Entry<String, String> set : columns.entrySet()) {
-            if(foreignKeys.get(set.getKey()) != null){
+            String temp = foreignKeys.get(set.getKey());
+            if(temp != null){
+                temp = set.getKey();
                 res += "\t\t" + template
-                .replace("#values#", ObjectUtility.formatToCamelCase(foreignKeys.get(set.getKey())) + "." + ObjectUtility.formatToCamelCase(attribute)) + "\n";                
+                .replace("#values#", ObjectUtility.formatToCamelCase(temp) + "." + ObjectUtility.formatToCamelCase(attribute)) + "\n";                
             }else{
                 res += "\t\t" + template
                 .replace("#values#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";
@@ -153,6 +157,7 @@ public class View {
         for (Map.Entry<String, String> set : columns.entrySet()) {
             String temp = foreignKeys.get(set.getKey());
             if(temp != null){
+                temp = set.getKey();
                 res += this.getViewProperties().getValues()
                 .replace("#entity#", ObjectUtility.formatToCamelCase(temp))
                 .replace("#Entity#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp))) + "\n";
@@ -171,6 +176,7 @@ public class View {
         for (Map.Entry<String, String> set : columns.entrySet()) {
             String temp = foreignKeys.get(set.getKey());
             if(temp != null){
+                temp = set.getKey();
                 res += this.getViewProperties().getFetch()
                 .replace("#entity#", ObjectUtility.formatToCamelCase(temp))
                 .replace("#Entity#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)));
@@ -248,14 +254,16 @@ public class View {
         String imports = "";
         String temp = "";
         String temp2 = "";
+        String temp3 = "";
         for (Map.Entry<String, String> set : columns.entrySet()) {
             if(foreignKeys.get(set.getKey()) != null){
-                temp2 = foreignKeys.get(set.getKey());
-                String path = ObjectUtility.formatToCamelCase(temp2);
+                temp2 = set.getKey();
+                temp3 = foreignKeys.get(set.getKey());
+                String path = ObjectUtility.formatToCamelCase(temp3);
                 String element = ObjectUtility.capitalize(path);
                 temp = this.getViewProperties().getMappingFieldSyntax()
                     .replace("#type#", element + " = new " + element)
-                    .replace("#field#", path)
+                    .replace("#field#", ObjectUtility.formatToCamelCase(temp2))
                     + "\n" + "\n";
 
                 imports += this.getViewProperties().getMappingImportSyntax()
@@ -339,7 +347,8 @@ public class View {
         String temp = "";
         String Temp = "";
         for (Map.Entry<String, String> set : foreignKeys.entrySet()) {
-            temp = ObjectUtility.formatToCamelCase(set.getValue());
+            // temp = ObjectUtility.formatToCamelCase(set.getValue());
+            temp = ObjectUtility.formatToCamelCase(set.getKey());
             Temp = ObjectUtility.capitalize(temp);
             other += ", " + Temp + "Service ";
             imports += "import { " + Temp + " } from \"../" + temp + "/" + Temp + "\";\n"; 

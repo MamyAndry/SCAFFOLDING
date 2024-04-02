@@ -45,7 +45,11 @@ export class #Name#Component implements OnInit{
 
     setUpdate(item : #Name#): void{
         this.toUpdate = item;
-        this.data.#id# = this.toUpdate.#id#;
+        this.data = this.toUpdate;
+    }
+
+    resetItem(): void{
+        this.data = new #Name#;
     }
 
     deleteItem(item : #Name#): void{
