@@ -34,14 +34,14 @@ public class Test {
         // String viewPath = "/home/mamisoa/ITU/L3";
 
 
-        String framework = "java:karana";
+        String framework = "java:spring-boot";
         String packageName = "com.district.test";
         String entity = "entity";
         String controller = "controller";
         String repository = "repository";
         String view = "";
         String viewType = "react";
-        String url = "http://localhost:8080/testkarana/";
+        String url = "http://localhost:8080/";
         try{
             // String[] tables = {"media_publication"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();

@@ -17,7 +17,6 @@ import ambovombe.kombarika.generator.service.entity.Entity;
 import ambovombe.kombarika.generator.service.repository.Repository;
 import ambovombe.kombarika.generator.service.view.View;
 import ambovombe.kombarika.generator.utils.ObjectUtility;
-import ambovombe.kombarika.utils.Command;
 import lombok.Getter;
 import lombok.Setter;
 

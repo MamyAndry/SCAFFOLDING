@@ -30,7 +30,7 @@ public class Entity {
     public String getConstructor(String table){
         String res = "";
         res =  "\t"
-                + this.getLanguageProperties().getConstructorSyntax().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)));
+                + this.getLanguageProperties().getConstructorSyntax().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))  + "\n";
         return res;
     }
     
@@ -118,13 +118,13 @@ public class Entity {
                 rep += this.getLanguageProperties().getEncapsulation()
                 .replace("#type#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(foreignKeys.get(temp))))
                 .replace("#Field#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
-                .replace("#field#", ObjectUtility.formatToCamelCase(temp));
+                .replace("#field#", ObjectUtility.formatToCamelCase(temp)) + "\n";
                 continue;
             }
             rep += this.getLanguageProperties().getEncapsulation()
             .replace("#type#", set.getValue())
             .replace("#Field#", ObjectUtility.formatToCamelCase(ObjectUtility.capitalize(set.getKey())))
-            .replace("#field#", ObjectUtility.formatToCamelCase(set.getKey()));
+            .replace("#field#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";
         }
         return rep;
     }
@@ -149,8 +149,5 @@ public class Entity {
         return ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)).concat("." + this.getLanguageProperties().getExtension());
     }
 
-    public String getCrudMethods(){
-        return null;
-    }
 
 }
