@@ -41,7 +41,7 @@ public class Test {
         String repository = "repository";
         String view = "";
         String viewType = "react";
-        String url = "http://localhost:8080/";
+        String url = "http://localhost:8080/testkarana/";
         try{
             // String[] tables = {"media_publication"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();

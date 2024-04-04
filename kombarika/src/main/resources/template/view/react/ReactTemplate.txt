@@ -147,6 +147,16 @@ function #entity#(){
               </div>
               
           </div>
+          { loading ? (
+            <div className="row">
+              <div className="d-flex justify-content-center">
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            </div>
+          ):(       
+          <>    
           <div className="row">
               <table className="table">
                   <thead id="table-head">
@@ -182,6 +192,8 @@ function #entity#(){
                 </ul>
                 </nav>
             </div>
+          </>
+      )}
       </div>
     {/* SAVE */}
     <Modal show={showInsertModal} onHide={handleCloseInsertModal}>
