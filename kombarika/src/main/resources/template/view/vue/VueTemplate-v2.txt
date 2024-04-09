@@ -12,7 +12,6 @@ import ambovombe.kombarika.generator.service.DbService;
 /**
  *
  *  @author Mamisoa
- */
 public class Test {
 
     /**
@@ -21,10 +20,10 @@ public class Test {
      */
      
     public static void main(String[] args) throws Exception {
-        CodeGenerator codeGenerator = new CodeGenerator();      
-        String path = "/home/fabien/Documents/GitHub/SCAFF/Voyage-S5-S3/src/main/java"; // class path
-        //path = "/home/fabien/Documents/my-app(1)/my-app/src/main/java/io/bootify/my_app/generatedrest2/";
-        String viewPath = "/home/fabien/Documents/GitHub/meteo-dashboard/src/components2";
+        CodeGenerator codeGenerator = new CodeGenerator();  
+        String path = "/home/fabien/Document/java"; // class path
+        path = "/home/fabien/Documents/my-app(1)/my-app/src/main/java/io/bootify/my_app/generatedrest2/";
+        String viewPath = "/home/fabien/Documents/GitHub/meteo-dashboard/src/components";
         
         // String path = "/home/mamisoa/ITU/L3/Mr_Naina/FRAMEWORK/testkarana/src/main/java";
         // String viewPath = "./";
@@ -33,8 +32,8 @@ public class Test {
         // String viewPath = "/home/mamisoa/ITU/L3";
 
 
-        String framework = "java:karana";
-        String packageName = "com";
+        String framework = "java:spring-boot";
+        String packageName = "io.bootify.my_app.generatedrest";
         String entity = "entity";
         String controller = "controller";
         String repository = "repository";
@@ -42,7 +41,7 @@ public class Test {
         String viewType = "vue";
         //fetch(this.url + 'http://192.168.1.11:8080/Gestion_produit/MatiereController/find-matiere.do') 
         // 
-        String url = "http://localhost:8080/";
+        String url = "http://192.168.1.11:8080/Gestion_produit";
         try{
             // String[] tables = {"district","region"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();

@@ -69,6 +69,7 @@
             "values":"const [#entity#, set#Entity#] = useState([]);\n",
             "tableValue":"<td>{item.#values#}</td>",
             "fetch":"useEffect(() => {\n\tconst get#Entity# = async () => {\n\t\ttry {\n\t\t\tconst response = await fetch(url + '#entity#');\n\t\t\t\tif (!response.ok) {\n\t\t\t\t\tthrow new Error('Network response was not ok');\n\t\t\t\t};\n\t\t\tconst data = await response.json();\n\t\t\tset#Entity#(data);\n\t\t} catch (error) {\n\t\t\tsetError(error);\n\t\t} finally {\n\t\t\tsetLoading(false);\n\t\t}\n\t};\n\tget#Entity#();\n}, []);\n",
+            "paginationMethods":"",
             "handleSelectItem":"const handleSelectItem = (itemKey) => {\n\thandleShofetchw2();\n\tconst itemDetails = district.find(item => item.id === itemKeyfetch);\n\tsetSelectedItem(itemDetails);\n};\n",
             "listMapping" : {
                 "Timestamp":"date-time local",
@@ -103,7 +104,7 @@
             "componentFileExtension":"main",
             "componentFileName":"js",
             "routeTemplate":"vue/RoutesTemplate.txt",
-            "routeFilename":"route",
+            "routeFilename":"router",
             "routeFileExtension":"js",
             "routeSyntax":"{\n\t path: '/#path#', \n\t component: #element# \n },",
             "routeImportSyntax":"import #element# from \"./components/#path#/#element#.vue\";",
@@ -112,6 +113,7 @@
             "values":"#entity#: null,\n",
             "tableValue":"<td>{{item.#values#}}</td>",
             "fetch":"fetch(this.url + '#entity#') \n .then(response => response.json()) \n.then(data => { this.#entity# = data; }) \n .catch(error => alert(error)); \n",
+            "paginationMethods": "fetch(this.url + '#entity#/' + this.pagination_start + '/' + this.pagination_end) \n .then(response => response.json()) \n.then(data => { this.#entity# = data; }) \n.catch(error => alert(error)); \n",
             "handleSelectItem":"",
             "listMapping" : {
                 "Timestamp":"date-time local",

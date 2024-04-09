@@ -160,10 +160,12 @@ public class View {
 
     public String getFetcher(HashMap<String, String> columns, HashMap<String, String> foreignKeys, String table){
         String res = "";
-        String template = this.getViewProperties().getFetch();
-        res += template
+       // String template = this.getViewProperties().getFetch();
+        String paginedMethodTemplate = this.getViewProperties().getPaginationMethods();
+       // res += 
+        res += paginedMethodTemplate
             .replace("#entity#", table)
-            .replace("#Entity#", ObjectUtility.capitalize(table));
+            .replace("#Entity#", ObjectUtility.capitalize(table)); // atao miantso pagination
         for (Map.Entry<String, String> set : columns.entrySet()) {
             String temp = foreignKeys.get(set.getKey());
             if(temp != null){

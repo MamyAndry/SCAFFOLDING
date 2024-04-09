@@ -32,6 +32,7 @@ public class ViewProperties {
     String values;
     String tableValue;
     String fetch;
+    String paginationMethods;
     String handleSelectItem;
     HashMap<String, String> listMapping;
 }

@@ -1,23 +1,18 @@
 <template>
     <div class="container">
-        <div v-if="loading">
-            Loading ...
-        </div>
+        <Button @click="insertForm = !insertForm" class="add-button">
+            <img src="https://www.svgrepo.com/show/521942/add-ellipse.svg" height="25" width="350">
+        </Button>
         <!-- Insert start -->
         <div class="row">
             <div class="row justify-content-end">
                 <div class="col">
-                    <div class="row">
-                        <Button variant="primary" class="btn btn-primary" @click="insertForm = !insertForm">
-                            Add #entity#
-                        </Button>
-                    </div>
                     <Modal id='insert' v-model:visible="insertForm">
                         <div id="body">
                             <form id="insert" @submit="e => insert(e)">
                                 #inputInsert#
                                 <div className="mb-3">
-                                    <Button variant="primary" class="btn btn-primary" type= "submit" >
+                                    <Button variant="primary" class="btn btn-primary insert-button" type= "submit" >
                                         Insert
                                     </Button>
                                 </div>
@@ -28,56 +23,74 @@
             </div>
         </div>
         <!-- Insert end -->
+
+        <!-- Pagination area -->
+       
+        <!-- Pagination area end -->      
+
         <!-- List start -->
         <div class="row">
             <table class="table">
                 <thead>
                     <tr>
                         #header#
-                        <th></th>
-                        <th></th>
+                        <th style="display: flex;">
+                            <div class="button-group-1">
+                                <Button v-if="page > 0" height="25" width="25" type="submit" @click="this.previousValues()">
+                                    <img src="data:image/png;base64,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"
+                                    height="25" width="25" style="transform: rotate(180deg); border-radius: 50%; border: 1px solid white;"/>
+                                </Button>
+                                
+                                <Button height="25" width="25" type="submit" @click="this.nextValues()">
+                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAMAAABC4vDmAAAAZlBMVEUAAAD////u7u7t7e34+Pjx8fH8/Pz09PRBQUEuLi6ioqLIyMgeHh58fHy+vr4VFRWKiorm5ube3t5xcXFra2s0NDTT09NhYWGzs7NLS0ubm5uDg4Otra2Tk5M7OztZWVkMDAwnJyf3ZgtbAAAJFUlEQVR4nMVc2bqjIAwGCWi1tdXT2n2Z93/JYdGKihUQ21w5XznyTyR7CMKSaCQI5HNM+COJ1Q9E/qAtImoREAoApKzy9H49PtbbLULb7SrZb3bpKSujepH4C/UmFmlvijpvardjajvkCQrj4nTdn9cvZKL1eX/NC74h/RIoxv+2vG2MYHr0dyspo3RxUBRweX+ubCAJWj13FQ4HippAAZSXsy2ghpJL4QmKCGpACWo4Jah+FYuz4z9XSIIOx4ypLSKmQGnbgbYdk88EUUlMUiyfQT6D/gN/iFlxevggqtl1I3xP+aYP28XqBxQ1p/f94UDnZM1uCuRy8Ick6JHC+8M1n6f9cKCfmVFQoIMCkq7nQRK0SqMOKF2iQP7gAorlMz6cTkkuNVcIUNUzDCRB54qZP58bKHrfhsOE0OsexSZOdc4USIolweAfDGczz/eQVhkebtfZelRPKdBgZU4c6XWlcg82qqdqUGaNXgY8TTo9K65xPG1fvgwkQSfwtH275TAhtGORu+0D+rckJoT2BR49UyOCwIizN+BKZ4pHZBApbEznkVSYydKYuDWs4M0j0ER+THkWAUzdNK1LIPYaPfsKJo4qA2tQhZcr54WqjE2ghmeKVV/ik0RV6TLYgBKHnsbApARQ/gzkC2e8pQfFQtihxqGkb6Cn6FcxcVQFnbZ9C+vMIe3ZpJlZ1LaYaQfkM6gFbfA4ndhHUOUvMCFUxeOgGCzkP03Rk3ayIB09hZfwM63oikdtX/YrTAhl8YiZocFjBHs6jNm+++8wIXRnRlBV0PjOlV4V7YESGRr2I8lr6AwtqEYlwE/Upk55qxJqUJQEyWEczufE1/FJor7yhDQApH3OgyBSXTxhpT1QMZnv2L1ydRAolEevF6wAd0Cxy2xM27wxWCT2jBnTLqhivt68aFaUxl6oHkTZYJWIZafZmP5186p+qG5YS8TG80XvjiPSWlEaxT7GPWGt8oQAljjDummnhHq5QZkGyk9aPoESb/Xg1fENipYBgs8hKB9eHWQqRjh5MF8fCCMRae6iqnl48ErKMBLJ1hBZnz8sA1omAloe0TIVYTrzKsFUJWLDRAt1DoxqMggROGsG4cGgYM7dpj1Nb1CEOvNqxySoUI7U3QDKXbc/FadK6zrnBN0MoJxlcFVSAeoWCJPiFdVkUOZ3IkfrfAOCIGSwd8NgIidecTFGBIfDJI6ppqeacqajHeR6ihYhQXGXSDvu4CWDBVee872WDl0MoNxkMOegrmFBKV71QEWU7q1fcOWg7Fc7oKK9EjmJYut99twghy938KhkWN0Ha1TnCJUL5KcvoNcX614XGlmeq3WJqld4UE0Q0W1Vora8ytAy0frFACqikR2qE7KLjLerR+JCh5sBlK0MpsjKb7lmJaFKS3OlI0i5mWTw3Cwib1Ck7Z8idl9whyzU1FO2GgkxEk4lq0VKOpgqTpPPqnkGx51FbVdN/WzDqz80Hcg8Qbnf0aBSWZctGlb0fXTDIu7sTm+4R5NhaELrXp4GVNTVi02qi/WjmW4vSA2Kn/bpHdGkmhJHNiAoMp10WqGpROeahQXFXzPFh+0kqDPugxp0fplA9ReRNygyGdFNJ4Q3smlN7l03rcnNa7MWaT/UpZSRRfF7UQBX9w9/gFPvNIRmhqMW4WktNMWrRGTXsPZN2kDlrReJ9nX70YyuPCP1punPN3nQKTX3Dmun6SOoYZvu9EGfDPp4yBMW1GRIt0KTZeyE67uQoKYL5w80bYvOddlyGGe+z5RmhYaLGlByEWbTZuaILOTzWGBoLW5tiplminHd4Po2xRhGml2xTUhwRVbVdeG69HwT/R/DH0hBjMrTKky5Wzp5r5WTj5cc0th0/OzSVSkKHIvWdGEmmbBMoeVokbpxCiZBtU3rVYuEWKnRE7TFxEOsKHwweoHY0GRuH4wShIOH7Rcw2T77lOwekIXNdsZk0OgOKYsrBxU4Gr1jk5lhDj7UiYMKmzS7gcn2WdiWlgoqknkB6W40kC58QgiLRGzA1jJjIpY58Yn734AIhEtZ7yAyBKOOZaObKK3RYMn9lJlCLDc+oVUp6300UBlkxyIDKNfy2pNJUCxMb+BGl7s3KOeiq6haCE5VQUAVsV7YroNRN7kTVGLZEUtxiHbTjUoCxXopkrkXp8+Y1R2xQcq1MPTR3fnEjVTTERugfwNldBDNOMqdoH+l+HvVVhKiBWAAyoNP6CilRYEK0SwR90B58Im/RQPF5reVtEU1Bcq9pM3poXIoSIVj803NlunXG5lfyeekbkqqBpwQzW8p04J3Lz7V/Rvvlko8v/vtlbdmxq9RiQdmXVAw3ypvTwBUcor4SfO6udL7bj4N0Sh4zAvK4uru+R9Mod8RGwW52nA4P71bKh+EDjpif998CoOO2AgWvxH2mYQj1euI5UHHIuVIa9pW2HSdgP229RsbQUVRKGfdgw50BFT8y+sE2ABKumbB8wrWtME1KHXt6a0ShHUIFdi40hPqUkpPeUpQcZgYwpnKj5cOAzQRe1D++SYkgV9cEMNT1zNZ8MzeFP3hASj92lMsOwoCDWywpbPKsHeuPdVXkyltAklMv4oqIaKuoi5mMlABreEaOf7uRVamV5VqPaWbmfpue7xEbn0EU2E9BQC+dznafjQBge/wal1gl9EEcfWF055Urdx1z9TIdI4vyGBC2NhgkL6eessgWViL/lGdRzajCYSKDZR2HKGd57CZ0M2yOuUY+43lISzkQB6dniX+CGrsTElBiOkivugGNJE3namJCTk4Cx5NHDKsiZ1hFlA7mqD9cN1BazHdvUJC2t5pgOlvlFUBY+enVJizQfHQC/JAgx0eeT1ozRNUdyRdlAY4Wuu0UcyWoAZnqj8nD9KZdudw4e5cZ04eGwU1MR3uPUKO47vNgPU4FXIT/a2j243qKaU4mv9ZXXbNjl61iX/HJsteX23D2nZOtq8zJ0+SWFRcnM/8+VICaH2eIQatdUFxqnYuAyHvpRqgaQA1b05eBxQ/F7S8WeWkN7eSdTtUl+KUqFRQvqbIxZBRI5iXGDJ6qjP1gzbdJTil9w5HZXZKd5t9slLjWNeP4/We5lVJuAWjI73D06D+A3l7ekGaEVWSAAAAAElFTkSuQmCC"
+                                    height="25" width="25" style="transform: rotate(0deg); border-radius: 50%; border: 1px solid white;"/>
+                                </Button>
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in #path#" :key="item.#id#">
                         #tableValue#
-                        <td>
-                            <Button variant="primary" class="btn btn-warning" @click="targetItem = item; updateForm = !updateForm">
-                                Edit
-                            </Button>
-                        </td>
-                        <td>
-                            <Button variant="danger" class="btn btn-danger" @click="targetItem = item; deleteForm = !deleteForm">
-                                Delete
-                            </Button>
+                        <td style="display: flex; gap: 00px;">
+                            <div class="button-group-1">
+                                <button style="background-color: #91915a"  @click="targetItem = item; updateForm = !updateForm">
+                                    <img src="https://www.svgrepo.com/show/522527/edit-3.svg" height="25" width="25"  alt="Update"  />
+                                </button>
+                                <button style="background-color: #ca7575"  @click="targetItem = item; deleteForm = !deleteForm">
+                                    <img src="https://www.svgrepo.com/show/502608/delete-2.svg" height="25" width="25" alt="Delete" />
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <!-- List end -->
+
         <!-- Update start -->
-        <Modal id="update" v-model:visible="updateForm">
+        <Modal id="update" v-model:visible="updateForm" title="Delete">
             <h2>Update #entity#</h2>
             <div id="body">
                 <form id="update" @submit="e => update(e)" v-if="updateForm">
                     #inputUpdate#
                     <div className="mb-3">
-                        <Button class="btn btn-primary" type= "submit" >
+                        <Button class="btn btn-primary update-button" type= "submit" >
                             Update
                         </Button>
-                      </div>
+                    </div>
                 </form>
             </div>
         </Modal>
         <!-- Update end -->
+
         <!-- Delete start -->
         <Modal id="delete" v-model:visible="deleteForm">
             <h2>Delete #entity#</h2>
             <div id="body">
-                <form id="delete" @submit="del()" v-if="deleteForm">
+                <form id="delete" @submit="e => del(e)" v-if="deleteForm">
                     <div className="mb-3">
-                        <Button class="btn btn-danger" type= "submit" >
+                        <Button class="btn btn-danger delete-button" type= "submit" >
                             Delete
                         </Button>
                       </div>
@@ -94,6 +107,7 @@
     export default{
         data(){
             return {
+                page: 1,
                 url: '#url#',
                 items: null,
                 targetItem: null,
@@ -101,6 +115,11 @@
                 deleteForm: false,
                 updateForm: false,
                 loading: false,
+                pagination_start: 0,
+                pagination_end: 10,
+                candSendRequest: true,
+                message: null,
+                pagin_range: 10,
                 #values#
             }
         },
@@ -108,12 +127,57 @@
         name: '#entity#',
         mounted(){
             this.getAll();
+            this.getPaginedData();
         },
         components: {
             Modal
         },
         methods: {
-        
+            setEndValue(value){
+                if(value < 0 || value < (this.pagination_start ?? 0)){
+                    this.candSendRequest = false;
+                    this.message = "Enter a valid value for end";
+                }else{
+                    this.candSendRequest = true;
+                    this.message = "";
+                }
+                this.pagination_end = value ;
+            },
+            setStartValue(value){
+                if(value < 0 || value > (this.pagination_end ?? 0)){
+                    this.candSendRequest = false;
+                    this.message = "Enter a valid value for start";
+                }else{
+                    this.candSendRequest = true;
+                    this.message = "";
+                }
+                this.pagination_start = value;
+            },
+            getPaginedData(){
+                const urlType = this.url + '#path#/' + this.pagination_start + "/" + this.pagination_end;
+                console.log(urlType);
+                try{
+                    fetch(urlType) 
+                    .then(response => response.json()) 
+                    .then(data => { this.#path# = data; }) 
+                    .catch(error => alert(error));
+                }catch (error) {
+                    alert(error);
+                }
+            },
+            nextValues(){
+                this.pagination_end += this.pagin_range;
+                this.pagination_start += this.pagin_range;
+                this.page += 1;
+                this.getPaginedData();
+            },
+            previousValues(){
+                this.pagination_end -= this.pagin_range;
+                this.pagination_start -= this.pagin_range;
+                this.page -= 1;
+                this.getPaginedData();
+            }
+            ,
             async getAll() {
                 /*try {
                     this.loading = true;
@@ -138,13 +202,14 @@
             async update(event) {
                 event.preventDefault();
                 const updateData = this.fetchFormData(event.target);
+                const dataToSend = this.mergeData(this.targetItem, updateData);
                 try {
-                    const response = await fetch(this.url + '#path#', {
+                    const response = await fetch(this.url + 'region', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(updateData)
+                        body: JSON.stringify(dataToSend)
                     });
                     if (!response.ok) {
                         throw new Error('Erreur réseau');
@@ -155,7 +220,8 @@
                     alert(error);
                 }
             },
-            async del() {
+            async del(event) {
+                event.preventDefault();
                 try {
                     const response = await fetch(this.url + '#path#', {
                         method: 'DELETE',
@@ -195,13 +261,25 @@
                 }
             },
             fetchFormData(dataForm) {
-                var data = {};
-                for (var i = 0; i < dataForm.length; i++) {
-                    if (dataForm[i].type !== "submit") {
-                        data[dataForm[i].name] = dataForm[i].value;
-                    }
+              const formData = new FormData(dataForm);
+              var data = {};
+              for (let [key, value] of formData.entries()) {
+                if (dataForm.elements[key].tagName === 'SELECT') {
+                  data[key] = { id: value };
+                } else {
+                  data[key] = value;
                 }
-                return data;
+              }
+              console.log("data to send ", data); 
+              return data;
+            },
+            mergeData(data, data2){
+              for(let index in data){
+                if(data2[index] != "" & data[index] != data2[index]){
+                  data[index] = data2[index];
+                }
+              }
+              return data;
             }
         }
 
@@ -209,7 +287,226 @@
 </script>
 
 <style>
+
+    
+    .Pagination {
+        width: 20%;
+
+        display: flex;
+    }
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
     .modal-vue3-footer div {
         margin-top: -1000px;
     }
+
+    .add-button{
+        background-color: white;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    *, *:before, *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+    body {
+    background: #105469;
+    font-family: 'Open Sans', sans-serif;
+    }
+    .table-container{
+        margin-top: 2%;
+        height: 90vh; /* Set the maximum height of the container */
+        overflow-y: auto; /* Make the container scrollable vertically */
+        width: 100%; 
+    }
+    table {
+        width: 80%;
+        overflow-y: scroll;
+        border-radius: 1.25em;
+        background: #012B39;
+        margin: auto;
+        table-layout: fixed;
+    }
+    th {
+        
+    border-bottom: 1px solid #364043;
+        color: #E2B842;
+        font-size: 0.85em;
+        font-weight: 600;
+        padding: 0.5em 1em;
+        text-align: left;
+        height: 25%;
+    }
+    td {
+        color: #fff;
+        font-weight: 400;
+        padding: 0.65em 1em;
+    }
+    .disabled td {
+        color: #4F5F64;
+    }
+    tbody tr {
+        transition: background 0.25s ease;
+    }
+    tbody tr:hover {
+        background: #014055;
+    }
+    .loader {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    }
+
+    .jimu-primary-loading:before,
+    .jimu-primary-loading:after {
+    position: absolute;
+    top: 0;
+    content: '';
+    }
+
+    .jimu-primary-loading:before {
+    left: -19.992px;
+    }
+
+    .jimu-primary-loading:after {
+    left: 19.992px;
+    -webkit-animation-delay: 0.32s !important;
+    animation-delay: 0.32s !important;
+    }
+
+    .jimu-primary-loading:before,
+    .jimu-primary-loading:after,
+    .jimu-primary-loading {
+  background: #076fe5;
+  -webkit-animation: loading-keys-app-loading 0.8s infinite ease-in-out;
+  animation: loading-keys-app-loading 0.8s infinite ease-in-out;
+  width: 13.6px;
+  height: 32px;
+}
+
+.jimu-primary-loading {
+  text-indent: -9999em;
+  margin: auto;
+  position: absolute;
+  right: calc(50% - 6.8px);
+  top: calc(50% - 16px);
+  -webkit-animation-delay: 0.16s !important;
+  animation-delay: 0.16s !important;
+}
+
+@-webkit-keyframes loading-keys-app-loading {
+
+  0%,
+  80%,
+  100% {
+    opacity: .75;
+    box-shadow: 0 0 #076fe5;
+    height: 32px;
+  }
+
+  40% {
+    opacity: 1;
+    box-shadow: 0 -8px #076fe5;
+    height: 40px;
+  }
+}
+
+@keyframes loading-keys-app-loading {
+
+  0%,
+  80%,
+  100% {
+    opacity: .75;
+    box-shadow: 0 0 #076fe5;
+    height: 32px;
+  }
+
+  40% {
+    opacity: 1;
+    box-shadow: 0 -8px #076fe5;
+    height: 40px;
+  }
+}
+
+
+button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    border: 2px solid transparent;
+    background-color: rgba(100,77,237,0.08);
+    border-radius: 1.25em;
+}
+
+button:hover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    border: 2px solid white;
+    background-color: rgba(100,77,237,0.08);
+    border-radius: 1.25em;
+}
+
+
+/**
+inputs
+*/
+
+
+input{
+    width: 100%;
+    min-height: 40px;
+    border: 1px solid aliceblue;
+    font-size: 20px;
+    margin-bottom: 3%;
+}
+
+.input {
+  padding: 10px;
+  height: 40px;
+  width: clamp(100px, 100%, 200px);
+  border: 2px solid #012B39;
+  font-size: 16px;
+  background: transparent;
+  outline: none;
+  /*box-shadow: 7px 7px 0px 0px #0B2447;
+  transition: all 0.5s;*/
+}
+/*
+.input:hover  {
+
+    transform: rotate( 700000deg);
+  box-shadow: 7px 7px 0px 0px #0B2447;
+  transition: all 10s;
+}
+*/  
+
+.button-group-1 {
+    display: flex;
+  gap: 100px;
+  margin-left: 100px;
+}
+ 
+.insert-button{
+    background-color: #91afd5;
+}
+
+.delete-button{
+    background-color: #c27979;
+}
+
+.update-button{
+    background-color: #d3d36c;
+}
+/**
+ */
 </style>
