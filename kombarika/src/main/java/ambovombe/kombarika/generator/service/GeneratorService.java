@@ -4,7 +4,6 @@ import ambovombe.kombarika.configuration.mapping.LanguageProperties;
 import ambovombe.kombarika.generator.utils.ObjectUtility;
 
 public class GeneratorService {
- 
     public static String getPackage(LanguageProperties languageProperties, String packageName){
         return languageProperties.getPackageSyntax() + " " + packageName + ";\n";
     }

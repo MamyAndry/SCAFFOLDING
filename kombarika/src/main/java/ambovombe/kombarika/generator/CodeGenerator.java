@@ -292,7 +292,7 @@ public class CodeGenerator {
         String filename = GeneratorService.getFileName(table, this.getViewDetails().getViews().get(viewType).getExtension());
         String newDirectory = ObjectUtility.formatToCamelCase(table);
         FileUtility.createDirectory(newDirectory, path);
-        FileUtility.generateFile(path + File.separator + newDirectory, filename, view);
+        FileUtility.generateFile(path + File.separator + newDirectory, ObjectUtility.capitalize(filename), view);
     }
 
     public void generateRouter(String path, String viewType, String[] tables) throws Exception{

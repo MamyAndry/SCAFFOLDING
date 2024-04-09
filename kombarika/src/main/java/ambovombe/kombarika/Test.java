@@ -35,13 +35,13 @@ public class Test {
 
 
         String framework = "java:spring-boot";
-        String packageName = "com.district.test";
+        String packageName = "mscorp.datastore";
         String entity = "entity";
         String controller = "controller";
         String repository = "repository";
         String view = "";
         String viewType = "react";
-        String url = "http://localhost:8080/testkarana/";
+        String url = "http://localhost:8080/";
         try{
             // String[] tables = {"media_publication"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();

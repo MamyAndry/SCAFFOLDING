@@ -151,15 +151,16 @@ public class View {
     public String getValues(HashMap<String, String> columns, HashMap<String, String> foreignKeys, String table){
         String res = "";
         String template = this.getViewProperties().getValues();
+        String temp = ObjectUtility.formatToCamelCase(table);
         res += template
-            .replace("#entity#", table)
-            .replace("#Entity#", ObjectUtility.capitalize(table)) + "\n";
+            .replace("#entity#", temp)
+            .replace("#Entity#", ObjectUtility.capitalize(temp)) + "\n";
         for (Map.Entry<String, String> set : columns.entrySet()) {
-            String temp = foreignKeys.get(set.getKey());
+            temp = foreignKeys.get(set.getKey());
             if(temp != null){
                 res += this.getViewProperties().getValues()
-                .replace("#entity#", ObjectUtility.formatToCamelCase(temp))
-                .replace("#Entity#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp))) + "\n";
+                .replace("#entity#", ObjectUtility.formatToCamelCase(set.getKey()))
+                .replace("#Entity#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getKey()))) + "\n";
                 continue;
             }
         }
@@ -169,15 +170,16 @@ public class View {
     public String getFetcher(HashMap<String, String> columns, HashMap<String, String> foreignKeys, String table){
         String res = "";
         String template = this.getViewProperties().getFetch();
+        String temp = ObjectUtility.formatToCamelCase(table);
         res += template
-            .replace("#entity#", table)
+            .replace("#entity#", temp)
             .replace("#Entity#", ObjectUtility.capitalize(table)) + "\n";
         for (Map.Entry<String, String> set : columns.entrySet()) {
-            String temp = foreignKeys.get(set.getKey());
+            temp = foreignKeys.get(set.getKey());
             if(temp != null){
                 res += this.getViewProperties().getFetchForeignKeys()
-                .replace("#entity#", ObjectUtility.formatToCamelCase(temp))
-                .replace("#Entity#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp))) + "\n";
+                .replace("#entity#", ObjectUtility.formatToCamelCase(set.getKey()))
+                .replace("#Entity#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getKey()))) + "\n";
                 continue;
             }
         }
@@ -212,7 +214,7 @@ public class View {
             res += this.getViewProperties().getRouteImportSyntax()
                     .replaceAll("#path#", temp)
                     .replace("#element#", ObjectUtility.capitalize(temp))
-                     + "\n";
+                    + "\n";
         }
         return res;
     }
@@ -223,7 +225,7 @@ public class View {
             res += this.getViewProperties().getRouteSyntax()
                     .replaceAll("#path#", temp)
                     .replace("#element#", ObjectUtility.capitalize(temp))
-                     + "\n";
+                    + "\n";
         }
         return (Misc.tabulate(res));
     }
@@ -403,7 +405,7 @@ public class View {
         .replace("#handleInputSelectChange#", getHandleInputSelectChange(columns, foreignKeys, primaryKeys))
         .replace("#getValues#", getFetcher(columns, foreignKeys, table))
         .replace("#values#", getValues(columns, foreignKeys, table))
-        .replace("#entity#", ObjectUtility.formatToSpacedString(table))
+        .replace("#entity#", ObjectUtility.formatToCamelCase(ObjectUtility.capitalize(table)))
         .replace("#tableValue#", getTableValue(columns, foreignKeys, attribute))
         .replace("#url#", url)
         .replace("#id#", ObjectUtility.formatToCamelCase(primaryKeys.get(0)))

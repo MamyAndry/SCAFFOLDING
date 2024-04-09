@@ -2,7 +2,7 @@
     "defaultConnection" : "DefaultConnection",
     "listConnection": {
         "DefaultConnection": {
-            "datasource":"jdbc:postgresql://localhost:5432/district",
+            "datasource":"jdbc:postgresql://localhost:5432/data_store",
             "username":"mamisoa",
             "password":"prom15",
             "databaseType":"POSTGRESQL"
