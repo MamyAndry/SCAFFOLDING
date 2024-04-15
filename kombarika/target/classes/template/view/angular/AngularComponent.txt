@@ -1,0 +1,86 @@
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { #Name#Service } from './#name#.service';
+import { FormsModule } from '@angular/forms';
+import { #Name# } from './#Name#';
+import DataTable from 'datatables.net-bs5';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+#imports#
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, FormsModule, HttpClientModule, CommonModule],
+  providers : [ #Name#Service#other#],
+  templateUrl: './#name#.component.html',
+  styleUrl: './#name#.component.scss'
+})
+export class #Name#Component implements OnInit{
+    @ViewChild('list') list!: ElementRef;
+    title = 'CRUD #Name#';
+    data : #Name# = new #Name#;
+    toUpdate : #Name# = new #Name#;
+    toDelete : #Name# = new #Name#;
+    #name#Data : any;
+#fields#
+
+    constructor(
+        private #name#: #Name#Service
+        #constructor#
+    ){}
+    
+    ngOnInit(): void {
+        this.#name#.get().subscribe(
+            (data) => {
+                this.#name#Data = data;
+                setTimeout(()=>{let dataTable = new DataTable(this.list.nativeElement,{info : false, lengthMenu : [5,10,25]});},0)
+            },
+            (error) => {
+                console.error('Error fetching data:', error);
+            }
+        )
+#init#
+    }
+
+    setUpdate(item : #Name#): void{
+        this.toUpdate = item;
+        this.data = this.toUpdate;
+    }
+
+    resetItem(): void{
+        this.data = new #Name#;
+    }
+
+    deleteItem(item : #Name#): void{
+        this.#name#.delete(item).subscribe(
+            (data) => {
+                console.log(data);
+                location.reload();
+            },
+            (error) => {
+                console.error('Error fetching data:', error);
+            }
+        );
+    } 
+
+    submitInsert(): any{
+        this.#name#.save(this.data).subscribe(
+            (data) => {
+                console.log(data);
+                location.reload();
+            }
+        )
+    }
+
+    submitUpdate(): any{
+        this.#name#.update(this.data).subscribe(
+            (data) => {
+                console.log(data);
+                location.reload();
+            }
+        )
+    }
+  
+
+}
