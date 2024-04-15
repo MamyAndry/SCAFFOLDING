@@ -58,10 +58,11 @@ public class View {
             return "";
         }
         for (Map.Entry<String, String> set : foreignKeys.entrySet()) {
+            String temp = foreignKeys.get(set.getKey());
             res += this.getViewProperties().getOptionUpdate()
                 .replace("#url#", url)
                 .replace("#table#", ObjectUtility.formatToCamelCase(table))
-                .replace("#path#", ObjectUtility.formatToCamelCase(set.getValue()))
+                .replace("#path#", ObjectUtility.formatToCamelCase(set.getKey()))
                 .replace("#name#", ObjectUtility.formatToCamelCase(set.getValue()))
                 .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getValue())))
                 .replace("#label#", ObjectUtility.formatToCamelCase(set.getValue()))

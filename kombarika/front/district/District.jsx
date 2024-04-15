@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 
 function District(){
   const url = 'http://localhost:8080/demo_war_exploded/';
-  
+
+
   const [loading, setLoading] = useState(true);
 
   const [count, setCount] = useState(1);
@@ -268,8 +269,8 @@ function District(){
 					<div className="mb-3"> 
 					 	<label className="form-label">Id_region</label> 
 					 	<select className="form-control" name="idRegion" id="select-idRegion">
-							{idRegion.map((elt) => (
-								<option value={elt.id}>{elt.nomRegion}</option>
+							{idRegion.map((eldt) => (
+								<option value={eldt.id}>{eldt.nomRegion}</option>
 							))}
 							
 						</select>
@@ -301,8 +302,8 @@ function District(){
 					<div className="mb-3"> 
 					 	<label className="form-label">IdRegion</label> 
 					 	<select className="form-control" name="idRegion">
-								{region.map((elt) => (
-								<option value={elt.id}>{elt.nomRegion}</option>
+								{idRegion.map((eliot) => (
+								<option value={eliot.id}>{eliot.nomRegion}</option>
 							))}
 							
 					</select>

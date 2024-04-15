@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 
 function Region(){
   const url = 'http://localhost:8080/demo_war_exploded/';
-  
+
+
   const [loading, setLoading] = useState(true);
 
   const [count, setCount] = useState(1);

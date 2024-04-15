@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 
 function Commune(){
   const url = 'http://localhost:8080/demo_war_exploded/';
-  
+
+
   const [loading, setLoading] = useState(true);
 
   const [count, setCount] = useState(1);
@@ -268,8 +269,8 @@ function Commune(){
 					<div className="mb-3"> 
 					 	<label className="form-label">Id_district</label> 
 					 	<select className="form-control" name="idDistrict" id="select-idDistrict">
-							{idDistrict.map((elt) => (
-								<option value={elt.id}>{elt.nomDistrict}</option>
+							{idDistrict.map((eldt) => (
+								<option value={eldt.id}>{eldt.nomDistrict}</option>
 							))}
 							
 						</select>
@@ -301,8 +302,8 @@ function Commune(){
 					<div className="mb-3"> 
 					 	<label className="form-label">IdDistrict</label> 
 					 	<select className="form-control" name="idDistrict">
-								{district.map((elt) => (
-								<option value={elt.id}>{elt.nomDistrict}</option>
+								{idDistrict.map((eliot) => (
+								<option value={eliot.id}>{eliot.nomDistrict}</option>
 							))}
 							
 					</select>

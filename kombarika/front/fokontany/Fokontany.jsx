@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 
 function Fokontany(){
   const url = 'http://localhost:8080/demo_war_exploded/';
-  
+
+
   const [loading, setLoading] = useState(true);
 
   const [count, setCount] = useState(1);
@@ -268,8 +269,8 @@ function Fokontany(){
 					<div className="mb-3"> 
 					 	<label className="form-label">Id_commune</label> 
 					 	<select className="form-control" name="idCommune" id="select-idCommune">
-							{idCommune.map((elt) => (
-								<option value={elt.id}>{elt.nomCommune}</option>
+							{idCommune.map((eldt) => (
+								<option value={eldt.id}>{eldt.nomCommune}</option>
 							))}
 							
 						</select>
@@ -305,8 +306,8 @@ function Fokontany(){
 					<div className="mb-3"> 
 					 	<label className="form-label">IdCommune</label> 
 					 	<select className="form-control" name="idCommune">
-								{commune.map((elt) => (
-								<option value={elt.id}>{elt.nomCommune}</option>
+								{idCommune.map((eliot) => (
+								<option value={eliot.id}>{eliot.nomCommune}</option>
 							))}
 							
 					</select>

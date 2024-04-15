@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 
 function #entity#(){
   const url = '#url#';
-  
+
+
   const [loading, setLoading] = useState(true);
 
   const [count, setCount] = useState(1);

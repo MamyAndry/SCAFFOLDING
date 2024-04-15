@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 
 function Bureauvote(){
   const url = 'http://localhost:8080/demo_war_exploded/';
-  
+
+
   const [loading, setLoading] = useState(true);
 
   const [count, setCount] = useState(1);
@@ -284,8 +285,8 @@ function Bureauvote(){
 					<div className="mb-3"> 
 					 	<label className="form-label">Id_fokontany</label> 
 					 	<select className="form-control" name="idFokontany" id="select-idFokontany">
-							{idFokontany.map((elt) => (
-								<option value={elt.id}>{elt.nomFokontany}</option>
+							{idFokontany.map((eldt) => (
+								<option value={eldt.id}>{eldt.nomFokontany}</option>
 							))}
 							
 						</select>
@@ -325,8 +326,8 @@ function Bureauvote(){
 					<div className="mb-3"> 
 					 	<label className="form-label">IdFokontany</label> 
 					 	<select className="form-control" name="idFokontany">
-								{fokontany.map((elt) => (
-								<option value={elt.id}>{elt.nomFokontany}</option>
+								{idFokontany.map((eliot) => (
+								<option value={eliot.id}>{eliot.nomFokontany}</option>
 							))}
 							
 					</select>
