@@ -23,8 +23,8 @@ public class Test {
         // String path = "/Users/rakharrs/S5/Naina/testMerana/demo/src/main/java";
         // String viewPath = "/home/mamisoa/ITU/L3/Mr_Naina/REACT/crud/src/components";
         
-        String path = "./";
-        String viewPath = "./";
+        String path = "./back";
+        String viewPath = "./front";
 
 
         // String path = "/home/mamisoa/ITU/L3/Mr_Naina/FRAMEWORK/testkarana/src/main/java";
@@ -34,14 +34,14 @@ public class Test {
         // String viewPath = "/home/mamisoa/ITU/L3";
 
 
-        String framework = "java:spring-boot";
-        String packageName = "mscorp.datastore";
+        String framework = "java:merana";
+        String packageName = "com.example.demo";
         String entity = "entity";
         String controller = "controller";
         String repository = "repository";
         String view = "";
         String viewType = "react";
-        String url = "http://localhost:8080/";
+        String url = "http://localhost:8080/demo_war_exploded/";
         try{
             // String[] tables = {"media_publication"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();
