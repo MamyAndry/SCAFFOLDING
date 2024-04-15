@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
 function Region(){
-  const url = 'http://localhost:8080/demo_war_exploded/';
+  const url = 'http://localhost:8080/testkarana/';
 
 
   const [loading, setLoading] = useState(true);
@@ -48,7 +48,7 @@ function Region(){
 	useEffect(() => {
 		const getRegion = async () => {
 			try {
-				const response = await fetch(url + 'region' + '?start=' + currentPage + '&length=' + tableSize);
+				const response = await fetch(url + 'region/pagination' + '?start=' + currentPage + '&length=' + tableSize);
 					if (!response.ok) {
 						throw new Error('Network response was not ok');
 					};
@@ -260,11 +260,11 @@ function Region(){
         </Modal.Header>
         <Modal.Body>    
             <form action="" method="" id="update" onSubmit={handleUpdateSubmit}>
-    					<div className="mb-3"> 
+    					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
 					 	<label className="form-label">Nom Region</label> 
-					 	<input className="form-control" type="text" name="nomRegion" onChange={handleInputNomRegionChange} value={selectedItem ? selectedItem.nomRegion:''} />
+					 	<input className="form-control" type="#type#" name="nomRegion" onChange={handleInputNomRegionChange} value={selectedItem ? selectedItem.nomRegion:''} />
 					</div>
-					<div className="mb-3"> 
+					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
 					 	<label className="form-label"></label> 
 					 	<input className="form-control" type="hidden" name="id" onChange={handleInputIdChange} value={selectedItem ? selectedItem.id:''} />
 					</div>

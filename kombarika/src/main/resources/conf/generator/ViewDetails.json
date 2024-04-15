@@ -74,11 +74,11 @@
         "react":{
             "CLIGenerator":"",
             "inputInsert":"<div className=\"mb-3\"> \n \t<label className=\"form-label\">#label#</label> \n \t<input className=\"form-control\" type=\"#type#\" name=\"#name#\" />\n</div>",
-            "inputUpdate":"<div className=\"mb-3\"> \n \t<label className=\"form-label\">#label#</label> \n \t<input className=\"form-control\" type=\"#type#\" name=\"#name#\" onChange={handleInput#Name#Change} value={selectedItem ? selectedItem.#name#:''} />\n</div>",
+            "inputUpdate":"<div className=\"mb-3\"> front/bureauvote front/district front/commune front/fokontany front/region\n \t<label className=\"form-label\">#label#</label> \n \t<input className=\"form-control\" type=\"#type#\" name=\"#name#\" onChange={handleInput#Name#Change} value={selectedItem ? selectedItem.#name#:''} />\n</div>",
             "select":"<div className=\"mb-3\"> \n \t<label className=\"form-label\">#label#</label> \n \t<select className=\"form-control\" name=\"#name#\" id=\"select-#name#\">\n#option#\n\t</select>\n</div>",
             "selectUpdate":"<div className=\"mb-3\"> \n \t<label className=\"form-label\">#label#</label> \n \t<select className=\"form-control\" name=\"#name#\">\n\t#optionUpdate#\n</select>\n</div>",
-            "option":"{#path#.map((eldt) => (\n\t<option value={eldt.#id#}>{eldt.#attribute#}</option>\n))}\n",
-            "optionUpdate":"{#path#.map((eliot) => (\n\t<option value={eliot.#id#}>{eliot.#attribute#}</option>\n))}\n",
+            "option":"{#path#.map((elt) => (\n\t<option value={elt.#id#}>{elt.#attribute#}</option>\n))}\n",
+            "optionUpdate":"{#path#.map((elt) => (\n\t<option value={elt.#id#}>{elt.#attribute#}</option>\n))}\n",
             "tableHeader":"\t<th> #label# </th>",
             "template":"react/ReactTemplate.txt",
             "extension":"jsx",
@@ -110,7 +110,7 @@
             "handleSelectChange":"const handleSelect#Name#Change = (event) => {\n\tsetSelectedItem({ ...selectedItem, #name#: event.target.value });\n};\n",
             "values":"const [#entity#, set#Entity#] = useState([]);\n",
             "tableValue":"<td>{item.#values#}</td>",
-            "fetch":"useEffect(() => {\n\tconst get#Entity# = async () => {\n\t\ttry {\n\t\t\tconst response = await fetch(url + '#entity#' + '?start=' + currentPage + '&length=' + tableSize);\n\t\t\t\tif (!response.ok) {\n\t\t\t\t\tthrow new Error('Network response was not ok');\n\t\t\t\t};\n\t\t\tconst datas = await response.json();\n\t\t\tsetCount(datas.count)\n\t\t\tset#Entity#(datas.data);\n\t\t} catch (error) {\n\t\t\tsetError(error);\n\t\t} finally {\n\t\t\tsetLoading(false);\n\t\t}\n\t};\n\tget#Entity#();\n}, [currentPage]);\n",
+            "fetch":"useEffect(() => {\n\tconst get#Entity# = async () => {\n\t\ttry {\n\t\t\tconst response = await fetch(url + '#entity#/pagination' + '?start=' + currentPage + '&length=' + tableSize);\n\t\t\t\tif (!response.ok) {\n\t\t\t\t\tthrow new Error('Network response was not ok');\n\t\t\t\t};\n\t\t\tconst datas = await response.json();\n\t\t\tsetCount(datas.count)\n\t\t\tset#Entity#(datas.data);\n\t\t} catch (error) {\n\t\t\tsetError(error);\n\t\t} finally {\n\t\t\tsetLoading(false);\n\t\t}\n\t};\n\tget#Entity#();\n}, [currentPage]);\n",
             "fetchForeignKeys":"useEffect(() => {\n\tconst get#Entity# = async () => {\n\t\ttry {\n\t\t\tconst response = await fetch(url + '#entity#');\n\t\t\t\tif (!response.ok) {\n\t\t\t\t\tthrow new Error('Network response was not ok');\n\t\t\t\t};\n\t\t\tconst datas = await response.json();\n\t\t\tset#Entity#(datas);\n\t\t} catch (error) {\n\t\t\tsetError(error);\n\t\t} finally {\n\t\t\tsetLoading(false);\n\t\t}\n\t};\n\tget#Entity#();\n}, []);\n",            
             "handleSelectItem":"const handleSelectItem = (itemKey) => {\n\thandleShofetchw2();\n\tconst itemDetails = district.find(item => item.id === itemKeyfetch);\n\tsetSelectedItem(itemDetails);\n};\n",
             "listMappingInput" : {

@@ -128,25 +128,22 @@ public class Controller{
             ) + "\n" + function);
     }
 
-    public String findSome(String table, HashMap<String, String> columns, HashMap<String, String> foreignKeys){
-        if(this.getCrudMethod().getFindSome().equals("")) return "";
-        String body = Misc.tabulate(this.getCrudMethod().getFindSome());
+    public String pagination(String table, HashMap<String, String> columns, HashMap<String, String> foreignKeys){
+        if(this.getCrudMethod().getPagination().equals("")) return "";
+        String body = Misc.tabulate(this.getCrudMethod().getPagination());
         body = body
             .replace("#object#", ObjectUtility.formatToCamelCase(table))
             .replace("#between#", getIncludedTerms(columns, foreignKeys))
             .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)));
 
         String function =  this.getLanguageProperties().getMethodSyntax()
-                .replace("#name#", "findSome")
+                .replace("#name#", "pagination")
                 .replace("#type#", this.getControllerProperty().getFindAllAsync()
                 .replace("?", this.getControllerProperty().getReturnType().replace("?", this.getFrameworkProperties().getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))))
-                .replace("#arg#", this.getControllerProperty().getFindSomeArgument())
+                .replace("#arg#", this.getControllerProperty().getPaginationArgument())
                 .replace("#body#", body);
 
-        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", 
-            this.getControllerProperty().getGet()
-                .replace("?", ObjectUtility.formatToCamelCase(table))
-            ) + "\n" + function);
+        return Misc.tabulate(this.getControllerProperty().getPaginationAnnotation() + "\n" + function);
     }
 
     public String findById(String table) throws Exception{
@@ -159,7 +156,7 @@ public class Controller{
         HashMap<String, String> foreignKeys = DbService.getForeignKeys(this.getDbConnection(), table);
         String save = save(table);
         String findAll = findAll(table, columns, foreignKeys);
-        String findSome = findSome(table, columns, foreignKeys);
+        String pagination = pagination(table, columns, foreignKeys);
         String update = update(table);
         String delete = delete(table);
         stringBuilder.append(save);
@@ -170,7 +167,7 @@ public class Controller{
         stringBuilder.append("\n\n");
         stringBuilder.append(findAll);
         stringBuilder.append("\n\n");
-        stringBuilder.append(findSome);
+        stringBuilder.append(pagination);
         return stringBuilder.toString();
     }
 

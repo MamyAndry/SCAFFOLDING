@@ -25,8 +25,7 @@
                             "System.Diagnostics",
                             "Microsoft.AspNetCore.Mvc",
                             "packageName.classNameContext",
-                            "entity",
-                            ""
+                            "entity"
                         ],
                         "entity":[
                             "System.ComponentModel.DataAnnotations",
@@ -60,7 +59,7 @@
                         "delete": "_context.?.Remove(#object#);\n_context.SaveChanges();\t\nreturn Ok();",
                         "update": "var temp = #object#;\n_context.update(temp)\n_context.SaveChanges();\nreturn Ok();",
                         "save": "_context.?.Update(#object#);\n_context.SaveChanges();\nreturn Ok();",
-                        "findSome": ""
+                        "pagination": ""
                     },
                     "controllerProperty" : {
                         "path": "Route(\"api/[[?]]\")",
@@ -70,7 +69,7 @@
                         "delete": "HttpDelete",
                         "name":"Controller",
                         "includedTerms":".Include(l => l.#values#)",
-                        "pathSyntax":"[?]",
+                        "pathSyntax":"?",
                         "classSyntax": "?Controller : Controller",
                         "returnType": "ActionResult<?>",
                         "returnTypeDelete": "void",
@@ -80,7 +79,7 @@
                         "annotationArgumentParameterFormData":"FromBody",
                         "annotationArgumentParameterLink":"",
                         "constructor": "\tpublic #name#Controller(?DbContext context) { _context = context; }",
-                        "findSomeArgument": "",
+                        "paginationArgument": "",
                         "findAllAsync": "async Task<?>"
                     },
                     "repositoryProperty" : {
@@ -151,7 +150,7 @@
                         "delete": "repository.delete(#object#);",
                         "update": "return ResponseEntity.ok(repository.save(#object#));",
                         "save": "return ResponseEntity.ok(repository.save(#object#));",
-                        "findSome": ""
+                        "pagination": ""
                     },
                     "controllerProperty" : {
                         "path": "RequestMapping(path = \"?\")",
@@ -171,7 +170,7 @@
                         "annotationArgumentParameterFormData":"RequestBody",
                         "annotationArgumentParameterLink":"PathVariable",
                         "constructor": "",
-                        "findSomeArgument": "",
+                        "paginationArgument": "",
                         "findAllAsync": "?"
                     },
                     "repositoryProperty" : {
@@ -192,7 +191,10 @@
                             "entity.className",
                             "com.karana.etu2060.framework.annotation.*",
                             "com.karana.etu2060.framework.annotation.property.*",
-                            "com.dao.database.GenericDao"
+                            "java.util.HashMap",
+                            "com.dao.database.DbConnection",
+                            "com.dao.database.GenericDao",
+                            "com.dao.database.Pageable"
                         ],
                         "entity":[
                             "com.dao.annotation.*",
@@ -225,7 +227,7 @@
                         "delete": "try{\n\tGenericDao.delete(null, #object#);\n\treturn \"deleted successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}",
                         "update": "try{\n\tGenericDao.update(null, #object#);\n\treturn \"updated successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}",
                         "save": "try{\n\tGenericDao.save(null, #object#);\n\treturn \"saved successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}",
-                        "findSome": "DbConnection connection = new DbConnection();\ntry{\n\tconnection.init();\n\tPageable pageable = new Pageable(length, start);\n\tHashMap<String, Object> res = new HashMap<>();\n\tres.put(\"count\",GenericDao.getLineCount(connection, entity));\n\tres.put(\"data\", GenericDao.findAll(connection, entity, pageable));\n\treturn res;\n}catch(Exception e){\n\treturn e.getMessage();\n} finally{\n\ttry {\n\t\tconnection.close();\n\t} catch (Exception ex) {\n\t\treturn ex.getMessage();\n\t}\n}"
+                        "pagination": "DbConnection connection = new DbConnection();\ntry{\n\tconnection.init();\n\tPageable pageable = new Pageable(length, start);\n\tHashMap<String, Object> res = new HashMap<>();\n\tres.put(\"count\",GenericDao.getLineCount(connection, entity));\n\tres.put(\"data\", GenericDao.findAll(connection, entity, pageable));\n\treturn res;\n}catch(Exception e){\n\treturn e.getMessage();\n} finally{\n\ttry {\n\t\tconnection.close();\n\t} catch (Exception ex) {\n\t\treturn ex.getMessage();\n\t}\n}"
                     },
                     "controllerProperty" : {
                         "path": "RequestMapping(path = \"/?\")\n@Cors(allowedOrigin = \"*\")",
@@ -245,7 +247,8 @@
                         "annotationArgumentParameterFormData":"RequestBody",
                         "annotationArgumentParameterLink":"RequestParam",
                         "constructor":"",
-                        "findSomeArgument": "@RequestParam(parameterName = \"start\") int start, @RequestParam(parameterName = \"length\") int length",
+                        "paginationAnnotation":"@Url(url = \"/pagination\" ,method = HttpMethod.GET)\n@Json",
+                        "paginationArgument": "@RequestParam(parameterName = \"start\") int start, @RequestParam(parameterName = \"length\") int length",
                         "findAllAsync": "?"
                     },
                     "repositoryProperty" : {
@@ -299,7 +302,7 @@
                         "delete": "try{\n\tGenericDao.delete(null, #object#);\n\treturn \"deleted successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}",
                         "update": "try{\n\tGenericDao.update(null, #object#);\n\treturn \"updated successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}",
                         "save": "try{\n\tGenericDao.save(null, #object#);\n\treturn \"saved successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}",
-                        "findSome": ""
+                        "pagination": ""
                     },
 
                     "controllerProperty" : {
@@ -320,7 +323,8 @@
                         "annotationArgumentParameterFormData":"RequestBody",
                         "annotationArgumentParameterLink":"",
                         "constructor":"",
-                        "findSomeArgument": "",
+                        "paginationAnnotation":"@Url(url = \"/pagination\" ,method = HttpMethod.GET)\n\t@Json",
+                        "paginationArgument": "",
                         "findAllAsync": "?"
                     },
                     "repositoryProperty" : {

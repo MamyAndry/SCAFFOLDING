@@ -29,24 +29,26 @@ public class View {
                 if(temp != null){
                     temp = set.getKey();
                     String option = this.getViewProperties().getOption()
-                        .replace("#url#", url)
-                        .replace("#table#", ObjectUtility.formatToCamelCase(table))
-                        .replace("#path#", ObjectUtility.formatToCamelCase(temp))
-                        .replace("#name#", ObjectUtility.formatToCamelCase(set.getValue()))
-                        .replace("#label#", temp)
-                        .replace("#id#", ObjectUtility.formatToCamelCase(id))
-                        .replace("#attribute#", ObjectUtility.formatToCamelCase(attribute));
+                    .replace("#url#", url)
+                    .replace("#table#", ObjectUtility.formatToCamelCase(table))
+                    .replace("#path#", ObjectUtility.formatToCamelCase(temp))
+                    .replace("#name#", ObjectUtility.formatToCamelCase(set.getValue()))
+                    .replace("#label#", temp)
+                    .replace("#id#", ObjectUtility.formatToCamelCase(id))
+                    .replace("#attribute#", ObjectUtility.formatToCamelCase(attribute));
+                    System.out.println(temp);
                     option = Misc.tabulate(Misc.tabulate(option));
                     res += this.getViewProperties().getSelect()
-                    .replace("#label#", ObjectUtility.capitalize(temp))
+                    .replace("#label#",ObjectUtility.capitalize(ObjectUtility.formatToSpacedString(temp)))
                     .replace("#name#", ObjectUtility.formatToCamelCase(temp))
                     .replace("#option#", option) + "\n";
+                    System.out.println(res);       
                     continue;
                 }
                 res += template
                 .replace("#label#", ObjectUtility.formatToSpacedString(set.getKey()))
                 .replace("#type#", this.getViewProperties().getListMappingInput().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
-                .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";        
+                .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n"; 
             }
         }
         return Misc.tabulate(Misc.tabulate(Misc.tabulate(Misc.tabulate(Misc.tabulate(res)))));
@@ -65,7 +67,7 @@ public class View {
                 .replace("#path#", ObjectUtility.formatToCamelCase(set.getKey()))
                 .replace("#name#", ObjectUtility.formatToCamelCase(set.getValue()))
                 .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getValue())))
-                .replace("#label#", ObjectUtility.formatToCamelCase(set.getValue()))
+                .replace("#label#", ObjectUtility.formatToCamelCase(temp))
                 .replace("#id#", ObjectUtility.formatToCamelCase(id))                
                 .replace("#attribute#", ObjectUtility.formatToCamelCase(attribute));
         }
@@ -82,14 +84,15 @@ public class View {
                     temp = set.getKey();
                     res += this.getViewProperties().getSelectUpdate()
                     .replace("#name#", ObjectUtility.formatToCamelCase(temp))
-                    .replace("#label#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
+                    .replace("#label#", ObjectUtility.formatToSpacedString(ObjectUtility.formatToCamelCase(temp)))
                     .replace("#id#", ObjectUtility.formatToCamelCase(id))
                     .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
                     .replace("#optionUpdate#", this.getOptionUpdate(foreignKeys, url, id, attribute, temp)) + "\n";
                 }else{
                     res +=  template
                     .replace("#label#", ObjectUtility.formatToSpacedString(set.getKey()))
-                    .replace("#type#", this.getViewProperties().getListMappingInput().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
+                    .replace("#type#\n" + //
+                                                "            System.out.println(res);", this.getViewProperties().getListMappingInput().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
                     .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getKey())))
                     .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";     
                 }   
@@ -179,7 +182,7 @@ public class View {
             temp = foreignKeys.get(set.getKey());
             if(temp != null){
                 res += this.getViewProperties().getFetchForeignKeys()
-                .replace("#entity#", ObjectUtility.formatToCamelCase(set.getKey()))
+                .replace("#entity#", ObjectUtility.formatToCamelCase(temp))
                 .replace("#Entity#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getKey()))) + "\n";
                 continue;
             }

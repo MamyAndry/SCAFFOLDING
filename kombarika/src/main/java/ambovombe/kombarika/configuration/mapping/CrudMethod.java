@@ -10,5 +10,5 @@ public class CrudMethod {
     String delete;
     String update;
     String save;
-    String findSome;
+    String pagination;
 }

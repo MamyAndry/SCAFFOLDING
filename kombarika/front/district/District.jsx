@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
 function District(){
-  const url = 'http://localhost:8080/demo_war_exploded/';
+  const url = 'http://localhost:8080/testkarana/';
 
 
   const [loading, setLoading] = useState(true);
@@ -54,7 +54,7 @@ function District(){
 	useEffect(() => {
 		const getDistrict = async () => {
 			try {
-				const response = await fetch(url + 'district' + '?start=' + currentPage + '&length=' + tableSize);
+				const response = await fetch(url + 'district/pagination' + '?start=' + currentPage + '&length=' + tableSize);
 					if (!response.ok) {
 						throw new Error('Network response was not ok');
 					};
@@ -73,7 +73,7 @@ function District(){
 	useEffect(() => {
 		const getIdRegion = async () => {
 			try {
-				const response = await fetch(url + 'idRegion');
+				const response = await fetch(url + 'region');
 					if (!response.ok) {
 						throw new Error('Network response was not ok');
 					};
@@ -267,10 +267,10 @@ function District(){
 					 	<input className="form-control" type="text" name="nomDistrict" />
 					</div>
 					<div className="mb-3"> 
-					 	<label className="form-label">Id_region</label> 
+					 	<label className="form-label">Id Region</label> 
 					 	<select className="form-control" name="idRegion" id="select-idRegion">
-							{idRegion.map((eldt) => (
-								<option value={eldt.id}>{eldt.nomRegion}</option>
+							{idRegion.map((elt) => (
+								<option value={elt.id}>{elt.nomRegion}</option>
 							))}
 							
 						</select>
@@ -295,20 +295,20 @@ function District(){
         </Modal.Header>
         <Modal.Body>    
             <form action="" method="" id="update" onSubmit={handleUpdateSubmit}>
-    					<div className="mb-3"> 
+    					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
 					 	<label className="form-label">Nom District</label> 
-					 	<input className="form-control" type="text" name="nomDistrict" onChange={handleInputNomDistrictChange} value={selectedItem ? selectedItem.nomDistrict:''} />
+					 	<input className="form-control" type="#type#" name="nomDistrict" onChange={handleInputNomDistrictChange} value={selectedItem ? selectedItem.nomDistrict:''} />
 					</div>
 					<div className="mb-3"> 
-					 	<label className="form-label">IdRegion</label> 
+					 	<label className="form-label">Id Region</label> 
 					 	<select className="form-control" name="idRegion">
-								{idRegion.map((eliot) => (
-								<option value={eliot.id}>{eliot.nomRegion}</option>
+								{idRegion.map((elt) => (
+								<option value={elt.id}>{elt.nomRegion}</option>
 							))}
 							
 					</select>
 					</div>
-					<div className="mb-3"> 
+					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
 					 	<label className="form-label"></label> 
 					 	<input className="form-control" type="hidden" name="id" onChange={handleInputIdChange} value={selectedItem ? selectedItem.id:''} />
 					</div>

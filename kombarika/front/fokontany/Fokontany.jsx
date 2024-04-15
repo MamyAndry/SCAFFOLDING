@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
 function Fokontany(){
-  const url = 'http://localhost:8080/demo_war_exploded/';
+  const url = 'http://localhost:8080/testkarana/';
 
 
   const [loading, setLoading] = useState(true);
@@ -54,7 +54,7 @@ function Fokontany(){
 	useEffect(() => {
 		const getFokontany = async () => {
 			try {
-				const response = await fetch(url + 'fokontany' + '?start=' + currentPage + '&length=' + tableSize);
+				const response = await fetch(url + 'fokontany/pagination' + '?start=' + currentPage + '&length=' + tableSize);
 					if (!response.ok) {
 						throw new Error('Network response was not ok');
 					};
@@ -73,7 +73,7 @@ function Fokontany(){
 	useEffect(() => {
 		const getIdCommune = async () => {
 			try {
-				const response = await fetch(url + 'idCommune');
+				const response = await fetch(url + 'commune');
 					if (!response.ok) {
 						throw new Error('Network response was not ok');
 					};
@@ -267,10 +267,10 @@ function Fokontany(){
 					 	<input className="form-control" type="text" name="nomFokontany" />
 					</div>
 					<div className="mb-3"> 
-					 	<label className="form-label">Id_commune</label> 
+					 	<label className="form-label">Id Commune</label> 
 					 	<select className="form-control" name="idCommune" id="select-idCommune">
-							{idCommune.map((eldt) => (
-								<option value={eldt.id}>{eldt.nomCommune}</option>
+							{idCommune.map((elt) => (
+								<option value={elt.id}>{elt.nomCommune}</option>
 							))}
 							
 						</select>
@@ -295,19 +295,19 @@ function Fokontany(){
         </Modal.Header>
         <Modal.Body>    
             <form action="" method="" id="update" onSubmit={handleUpdateSubmit}>
-    					<div className="mb-3"> 
+    					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
 					 	<label className="form-label">Nom Fokontany</label> 
-					 	<input className="form-control" type="text" name="nomFokontany" onChange={handleInputNomFokontanyChange} value={selectedItem ? selectedItem.nomFokontany:''} />
+					 	<input className="form-control" type="#type#" name="nomFokontany" onChange={handleInputNomFokontanyChange} value={selectedItem ? selectedItem.nomFokontany:''} />
 					</div>
-					<div className="mb-3"> 
+					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
 					 	<label className="form-label"></label> 
 					 	<input className="form-control" type="hidden" name="id" onChange={handleInputIdChange} value={selectedItem ? selectedItem.id:''} />
 					</div>
 					<div className="mb-3"> 
-					 	<label className="form-label">IdCommune</label> 
+					 	<label className="form-label">Id Commune</label> 
 					 	<select className="form-control" name="idCommune">
-								{idCommune.map((eliot) => (
-								<option value={eliot.id}>{eliot.nomCommune}</option>
+								{idCommune.map((elt) => (
+								<option value={elt.id}>{elt.nomCommune}</option>
 							))}
 							
 					</select>

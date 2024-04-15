@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
 function Bureauvote(){
-  const url = 'http://localhost:8080/demo_war_exploded/';
+  const url = 'http://localhost:8080/testkarana/';
 
 
   const [loading, setLoading] = useState(true);
@@ -62,7 +62,7 @@ function Bureauvote(){
 	useEffect(() => {
 		const getBureauvote = async () => {
 			try {
-				const response = await fetch(url + 'bureauvote' + '?start=' + currentPage + '&length=' + tableSize);
+				const response = await fetch(url + 'bureauvote/pagination' + '?start=' + currentPage + '&length=' + tableSize);
 					if (!response.ok) {
 						throw new Error('Network response was not ok');
 					};
@@ -81,7 +81,7 @@ function Bureauvote(){
 	useEffect(() => {
 		const getIdFokontany = async () => {
 			try {
-				const response = await fetch(url + 'idFokontany');
+				const response = await fetch(url + 'fokontany');
 					if (!response.ok) {
 						throw new Error('Network response was not ok');
 					};
@@ -283,10 +283,10 @@ function Bureauvote(){
 					 	<input className="form-control" type="text" name="centreVote" />
 					</div>
 					<div className="mb-3"> 
-					 	<label className="form-label">Id_fokontany</label> 
+					 	<label className="form-label">Id Fokontany</label> 
 					 	<select className="form-control" name="idFokontany" id="select-idFokontany">
-							{idFokontany.map((eldt) => (
-								<option value={eldt.id}>{eldt.nomFokontany}</option>
+							{idFokontany.map((elt) => (
+								<option value={elt.id}>{elt.nomFokontany}</option>
 							))}
 							
 						</select>
@@ -315,30 +315,30 @@ function Bureauvote(){
         </Modal.Header>
         <Modal.Body>    
             <form action="" method="" id="update" onSubmit={handleUpdateSubmit}>
-    					<div className="mb-3"> 
+    					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
 					 	<label className="form-label">Code Bureau</label> 
-					 	<input className="form-control" type="text" name="codeBureau" onChange={handleInputCodeBureauChange} value={selectedItem ? selectedItem.codeBureau:''} />
+					 	<input className="form-control" type="#type#" name="codeBureau" onChange={handleInputCodeBureauChange} value={selectedItem ? selectedItem.codeBureau:''} />
 					</div>
-					<div className="mb-3"> 
+					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
 					 	<label className="form-label">Centre Vote</label> 
-					 	<input className="form-control" type="text" name="centreVote" onChange={handleInputCentreVoteChange} value={selectedItem ? selectedItem.centreVote:''} />
+					 	<input className="form-control" type="#type#" name="centreVote" onChange={handleInputCentreVoteChange} value={selectedItem ? selectedItem.centreVote:''} />
 					</div>
 					<div className="mb-3"> 
-					 	<label className="form-label">IdFokontany</label> 
+					 	<label className="form-label">Id Fokontany</label> 
 					 	<select className="form-control" name="idFokontany">
-								{idFokontany.map((eliot) => (
-								<option value={eliot.id}>{eliot.nomFokontany}</option>
+								{idFokontany.map((elt) => (
+								<option value={elt.id}>{elt.nomFokontany}</option>
 							))}
 							
 					</select>
 					</div>
-					<div className="mb-3"> 
+					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
 					 	<label className="form-label"></label> 
 					 	<input className="form-control" type="hidden" name="id" onChange={handleInputIdChange} value={selectedItem ? selectedItem.id:''} />
 					</div>
-					<div className="mb-3"> 
+					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
 					 	<label className="form-label">Bureau Vote</label> 
-					 	<input className="form-control" type="text" name="bureauVote" onChange={handleInputBureauVoteChange} value={selectedItem ? selectedItem.bureauVote:''} />
+					 	<input className="form-control" type="#type#" name="bureauVote" onChange={handleInputBureauVoteChange} value={selectedItem ? selectedItem.bureauVote:''} />
 					</div>
 					
             <div className="mb-3">
