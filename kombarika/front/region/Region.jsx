@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
 function Region(){
-  const url = 'http://localhost:8080/testkarana/';
+  const url = 'http://localhost:8080/demo_war_exploded/';
 
 
   const [loading, setLoading] = useState(true);

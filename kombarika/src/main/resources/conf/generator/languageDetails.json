@@ -269,7 +269,10 @@
                             "entity.className",
                             "ambovombe.merana.utils.mapping.*",
                             "static ambovombe.merana.utils.mapping.method.HttpMethod.*",
-                            "com.dao.database.GenericDao"
+                            "com.dao.database.GenericDao",
+                            "java.util.HashMap",
+                            "com.dao.database.DbConnection",
+                            "com.dao.database.Pageable"
                         ],
                         "entity":[
                             "com.dao.annotation.*",
@@ -302,7 +305,7 @@
                         "delete": "try{\n\tGenericDao.delete(null, #object#);\n\treturn \"deleted successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}",
                         "update": "try{\n\tGenericDao.update(null, #object#);\n\treturn \"updated successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}",
                         "save": "try{\n\tGenericDao.save(null, #object#);\n\treturn \"saved successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}",
-                        "pagination": ""
+                        "pagination": "DbConnection connection = new DbConnection();\ntry{\n\tconnection.init();\n\tPageable pageable = new Pageable(length, start);\n\tHashMap<String, Object> res = new HashMap<>();\n\tres.put(\"count\",GenericDao.getLineCount(connection, entity));\n\tres.put(\"data\", GenericDao.findAll(connection, entity, pageable));\n\treturn res;\n}catch(Exception e){\n\treturn e.getMessage();\n} finally{\n\ttry {\n\t\tconnection.close();\n\t} catch (Exception ex) {\n\t\treturn ex.getMessage();\n\t}\n}"
                     },
 
                     "controllerProperty" : {
@@ -323,8 +326,8 @@
                         "annotationArgumentParameterFormData":"RequestBody",
                         "annotationArgumentParameterLink":"",
                         "constructor":"",
-                        "paginationAnnotation":"@Url(url = \"/pagination\" ,method = HttpMethod.GET)\n\t@Json",
-                        "paginationArgument": "",
+                        "paginationAnnotation":"@Url(value = \"pagination\" ,method = GET)\n",
+                        "paginationArgument": "@Param(\"start\") int start, @Param(\"length\") int length",
                         "findAllAsync": "?"
                     },
                     "repositoryProperty" : {
