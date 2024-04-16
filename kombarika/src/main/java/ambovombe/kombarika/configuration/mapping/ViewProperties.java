@@ -36,6 +36,7 @@ public class ViewProperties {
     String styleFilename;
     String styleFileExtension;
     String routeSyntax;
+    String navSyntax;
     String routeImportSyntax;
     String select;
     String option;

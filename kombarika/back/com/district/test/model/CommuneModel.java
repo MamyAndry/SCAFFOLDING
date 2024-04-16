@@ -56,7 +56,7 @@ public class CommuneModel {
 		}
 	}
 
-	@Url(url = "/pagination" ,method = HttpMethod.GET)
+	@Url(url = "pagination" ,method = HttpMethod.GET)
 	@Json
 	public Object pagination(@RequestParam(parameterName = "start") int start, @RequestParam(parameterName = "length") int length){
 	 	DbConnection connection = new DbConnection();

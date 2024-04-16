@@ -36,13 +36,11 @@ public class View {
                     .replace("#label#", temp)
                     .replace("#id#", ObjectUtility.formatToCamelCase(id))
                     .replace("#attribute#", ObjectUtility.formatToCamelCase(attribute));
-                    System.out.println(temp);
                     option = Misc.tabulate(Misc.tabulate(option));
                     res += this.getViewProperties().getSelect()
                     .replace("#label#",ObjectUtility.capitalize(ObjectUtility.formatToSpacedString(temp)))
                     .replace("#name#", ObjectUtility.formatToCamelCase(temp))
                     .replace("#option#", option) + "\n";
-                    System.out.println(res);       
                     continue;
                 }
                 res += template
@@ -234,6 +232,19 @@ public class View {
         return (Misc.tabulate(res));
     }
 
+    public String getNav(String[] tables){
+        String res = "";
+        if(this.getViewProperties().getNavSyntax().equals("")) return res;
+        for (String table : tables) {
+            String temp = ObjectUtility.formatToCamelCase(table);
+            res += this.getViewProperties().getNavSyntax()
+                    .replaceAll("#path#", temp)
+                    .replace("#element#", ObjectUtility.capitalize(temp))
+                    + "\n";
+        }
+        return (Misc.tabulate(res));
+    }
+
     public String generateRoutes(String[] tables) throws Exception{
         String res = "";
         if(this.getViewProperties().getRouteTemplate().equals(""))
@@ -241,7 +252,8 @@ public class View {
         String tempPath = Misc.getViewTemplateLocation().concat(File.separator).concat(this.getViewProperties().getRouteTemplate());
         res = FileUtility.readOneFile(tempPath);
         res = res.replace("${IMPORTS}", this.getImports(tables))
-                .replace("${ROUTES}", this.getRoutes(tables));
+                .replace("${ROUTES}", this.getRoutes(tables))
+                .replace("${NAV}", this.getNav(tables));
         return res;
     }
 
