@@ -24,6 +24,7 @@ public class CommuneController {
 	}
 
 	@Url(method = PUT)
+	@Auth(user = "admin")
 	public Object update(@RequestBody Commune commune){
 	 	try{
 			GenericDao.update(null, commune);
@@ -34,6 +35,7 @@ public class CommuneController {
 	}
 
 	@Url(method = DELETE)
+	@Auth(user = "admin")
 	public Object delete(@RequestBody Commune commune){
 	 	try{
 			GenericDao.delete(null, commune);
@@ -44,7 +46,6 @@ public class CommuneController {
 	}
 
 	@Url(method = GET)
-	@Auth(user = "admin")
 	public Object findAll(){
 	 	try{
 			return GenericDao.findAll(null, entity);

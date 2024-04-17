@@ -24,6 +24,7 @@ public class FokontanyController {
 	}
 
 	@Url(method = PUT)
+	@Auth(user = "admin")
 	public Object update(@RequestBody Fokontany fokontany){
 	 	try{
 			GenericDao.update(null, fokontany);
@@ -34,6 +35,7 @@ public class FokontanyController {
 	}
 
 	@Url(method = DELETE)
+	@Auth(user = "admin")
 	public Object delete(@RequestBody Fokontany fokontany){
 	 	try{
 			GenericDao.delete(null, fokontany);
@@ -44,7 +46,6 @@ public class FokontanyController {
 	}
 
 	@Url(method = GET)
-	@Auth(user = "admin")
 	public Object findAll(){
 	 	try{
 			return GenericDao.findAll(null, entity);

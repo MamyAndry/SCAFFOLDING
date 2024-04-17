@@ -116,6 +116,7 @@ function Fokontany(){
         });
   
         if (!response.ok) {
+          alert("Response was not ok, you may not be authenticated")
           throw new Error('Network response was not ok');
         }
   
@@ -151,6 +152,7 @@ function Fokontany(){
         });
   
         if (!response.ok) {
+          alert("Response was not ok, you may not be authenticated")
           throw new Error('Network response was not ok');
         }
         handleCloseUpdateModal();
@@ -174,6 +176,7 @@ function Fokontany(){
         body: JSON.stringify(item)
       });
       if (!response.ok) {
+        alert("Response was not ok, you may not be authenticated")
         throw new Error('Network response was not ok');
       }
       // If you want to reload the page after success

@@ -24,6 +24,7 @@ public class RegionController {
 	}
 
 	@Url(method = PUT)
+	@Auth(user = "admin")
 	public Object update(@RequestBody Region region){
 	 	try{
 			GenericDao.update(null, region);
@@ -34,6 +35,7 @@ public class RegionController {
 	}
 
 	@Url(method = DELETE)
+	@Auth(user = "admin")
 	public Object delete(@RequestBody Region region){
 	 	try{
 			GenericDao.delete(null, region);
@@ -44,7 +46,6 @@ public class RegionController {
 	}
 
 	@Url(method = GET)
-	@Auth(user = "admin")
 	public Object findAll(){
 	 	try{
 			return GenericDao.findAll(null, entity);

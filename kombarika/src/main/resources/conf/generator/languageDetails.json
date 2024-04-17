@@ -310,10 +310,10 @@
 
                     "controllerProperty" : {
                         "path": "RequestUrl(\"/?\")",
-                        "get": "Url(method = GET)\n@Auth(user = \"admin\")",
+                        "get": "Url(method = GET)",
                         "post": "Url(method = POST)\n@Auth(user = \"admin\")",
-                        "put": "Url(method = PUT)",
-                        "delete": "Url(method = DELETE)",
+                        "put": "Url(method = PUT)\n@Auth(user = \"admin\")",
+                        "delete": "Url(method = DELETE)\n@Auth(user = \"admin\")",
                         "name":"Controller",
                         "includedTerms":"",
                         "classSyntax": "?Controller",

@@ -10,6 +10,30 @@ import Fokontany from "./components/fokontany/Fokontany";
 import Region from "./components/region/Region";
 
 
+
+const url = 'http://localhost:8080/demo_war_exploded/';
+
+async function login(){
+    try {
+        const response = await fetch(url + 'test/t', {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+  
+        if (!response.ok) {
+          alert("Response was not ok, you may not be authenticated")
+          throw new Error('Network response was not ok');
+        }
+        alert("successfully loged in")
+        // If you want to reload the page after success
+      } catch (error) {
+        console.log('Error:', error);
+      }
+}
+
 function App() {
     return (
         <Router>
@@ -60,6 +84,9 @@ function App() {
 	</li>
 	
 	
+    <li className="nav-item">
+		<a className="nav-link" onClick={() => login()}>Login</a>
+	</li>
                         </ul>
                     </div>
                     <div className='col-1'></div>

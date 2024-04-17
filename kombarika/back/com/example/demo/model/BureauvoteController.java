@@ -24,6 +24,7 @@ public class BureauvoteController {
 	}
 
 	@Url(method = PUT)
+	@Auth(user = "admin")
 	public Object update(@RequestBody Bureauvote bureauvote){
 	 	try{
 			GenericDao.update(null, bureauvote);
@@ -34,6 +35,7 @@ public class BureauvoteController {
 	}
 
 	@Url(method = DELETE)
+	@Auth(user = "admin")
 	public Object delete(@RequestBody Bureauvote bureauvote){
 	 	try{
 			GenericDao.delete(null, bureauvote);
@@ -44,7 +46,6 @@ public class BureauvoteController {
 	}
 
 	@Url(method = GET)
-	@Auth(user = "admin")
 	public Object findAll(){
 	 	try{
 			return GenericDao.findAll(null, entity);

@@ -24,6 +24,7 @@ public class DistrictController {
 	}
 
 	@Url(method = PUT)
+	@Auth(user = "admin")
 	public Object update(@RequestBody District district){
 	 	try{
 			GenericDao.update(null, district);
@@ -34,6 +35,7 @@ public class DistrictController {
 	}
 
 	@Url(method = DELETE)
+	@Auth(user = "admin")
 	public Object delete(@RequestBody District district){
 	 	try{
 			GenericDao.delete(null, district);
@@ -44,7 +46,6 @@ public class DistrictController {
 	}
 
 	@Url(method = GET)
-	@Auth(user = "admin")
 	public Object findAll(){
 	 	try{
 			return GenericDao.findAll(null, entity);
