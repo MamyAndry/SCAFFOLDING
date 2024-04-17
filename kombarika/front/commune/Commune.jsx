@@ -187,7 +187,7 @@ function Commune(){
   const pageNumber = count / tableSize;
   for(let i = 0; i < pageNumber; i++){
     paginations.push(
-      <li className="page-item"><a className="page-link" onClick={(e) => setCurrentPage(i * tableSize)}>{i + 1}</a></li>
+      <li className="page-item"><a className="page-link" style={{'color':'#007F73'}} onClick={(e) => setCurrentPage(i * tableSize)}>{i + 1}</a></li>
     );
   }
 
@@ -263,7 +263,7 @@ function Commune(){
           <div className="row justify-content-end">
               <div className="col" >   
                 <div className="row">
-                  <Button variant="primary" onClick={handleShowInsertModal}>
+                  <Button variant="primary" style={{'background-color':'#007F73'}} onClick={handleShowInsertModal}>
                       Add Commune
                   </Button>
                 </div>   
