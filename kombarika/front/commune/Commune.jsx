@@ -54,7 +54,7 @@ function Commune(){
 	useEffect(() => {
 		const getCommune = async () => {
 			try {
-				const response = await fetch(url + 'commune/pagination' + '?start=' + currentPage + '&length=' + tableSize);
+				const response = await fetch(url + 'commune/pagination' + '?start=' + currentPage + '&length=' + tableSize, {credentials: 'include'});
 					if (!response.ok) {
 						throw new Error('Network response was not ok');
 					};
@@ -73,7 +73,7 @@ function Commune(){
 	useEffect(() => {
 		const getIdDistrict = async () => {
 			try {
-				const response = await fetch(url + 'district');
+				const response = await fetch(url + 'district', {credentials: 'include'});
 					if (!response.ok) {
 						throw new Error('Network response was not ok');
 					};
@@ -270,60 +270,8 @@ function Commune(){
               </div>
               
           </div>
-          { loading ? (
-            <div className="row">
-              <div className="d-flex justify-content-center">
-                <div className="spinner-border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </div>
-              </div>
-            </div>
-          ):(       
-          <>    
-          <div className="row">
-              <table className="table">
-                  <thead id="table-head">
-                      <tr>
-							<th> Nom Commune </th>
-							<th> Id District </th>
-							<th> Id </th>
-				
-                          <th></th>
-                          <th></th>
-                      </tr>
-                  </thead>    
-                  <tbody id="table-body">
-                      {commune.map((item) => (
-                        <tr key={item.id}>
-						<td>{item.nomCommune}</td>
-						<td>{item.idDistrict.nomDistrict}</td>
-						<td>{item.id}</td>
-				
-                            <td>
-                                <Button variant="danger" key={item.id} onClick={() => handleDeleteClick(item)}>
-                                    Delete
-                                </Button>
-                            </td>   
-                            <td>
-                                <Button variant="warning" key={item.id} onClick={() => handleSelectItem(item.id)}>
-                                    Update
-                                </Button>
-                            </td>
-                        </tr>
-                      ))}
-                  </tbody>
-              </table>
-            </div>
-            <div className="row">
-                <nav aria-label="Page navigation example">
-                <ul className="pagination justify-content-start">
-                    {paginations}
-                </ul>
-                </nav>
-            </div>
-          </>
-      )}
-      </div>
+        </div>
+      
     {/* SAVE */}
     <Modal show={showInsertModal} onHide={handleCloseInsertModal}>
         <Modal.Header closeButton>
@@ -337,12 +285,12 @@ function Commune(){
 					</div>
 					<div className="mb-3"> 
 					 	<label className="form-label">Id District</label> 
-					 	<select className="form-control" name="idDistrict" id="select-idDistrict">
-							{idDistrict.map((elt) => (
+					 	<select className="form-control" name="idDistrict">
+								{idDistrict.map((elt) => (
 								<option value={elt.id}>{elt.nomDistrict}</option>
 							))}
 							
-						</select>
+					</select>
 					</div>
 					
                 <div className="mb-3">
@@ -364,7 +312,7 @@ function Commune(){
         </Modal.Header>
         <Modal.Body>    
             <form action="" method="" id="update" onSubmit={handleUpdateSubmit}>
-    					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
+    					<div className="mb-3"> 
 					 	<label className="form-label">Nom Commune</label> 
 					 	<input className="form-control" type="#type#" name="nomCommune" onChange={handleInputNomCommuneChange} value={selectedItem ? selectedItem.nomCommune:''} />
 					</div>
@@ -377,7 +325,7 @@ function Commune(){
 							
 					</select>
 					</div>
-					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
+					<div className="mb-3"> 
 					 	<label className="form-label"></label> 
 					 	<input className="form-control" type="hidden" name="id" onChange={handleInputIdChange} value={selectedItem ? selectedItem.id:''} />
 					</div>

@@ -62,7 +62,7 @@ function Bureauvote(){
 	useEffect(() => {
 		const getBureauvote = async () => {
 			try {
-				const response = await fetch(url + 'bureauvote/pagination' + '?start=' + currentPage + '&length=' + tableSize);
+				const response = await fetch(url + 'bureauvote/pagination' + '?start=' + currentPage + '&length=' + tableSize, {credentials: 'include'});
 					if (!response.ok) {
 						throw new Error('Network response was not ok');
 					};
@@ -81,7 +81,7 @@ function Bureauvote(){
 	useEffect(() => {
 		const getIdFokontany = async () => {
 			try {
-				const response = await fetch(url + 'fokontany');
+				const response = await fetch(url + 'fokontany', {credentials: 'include'});
 					if (!response.ok) {
 						throw new Error('Network response was not ok');
 					};
@@ -282,64 +282,8 @@ function Bureauvote(){
               </div>
               
           </div>
-          { loading ? (
-            <div className="row">
-              <div className="d-flex justify-content-center">
-                <div className="spinner-border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </div>
-              </div>
-            </div>
-          ):(       
-          <>    
-          <div className="row">
-              <table className="table">
-                  <thead id="table-head">
-                      <tr>
-							<th> Code Bureau </th>
-							<th> Centre Vote </th>
-							<th> Id Fokontany </th>
-							<th> Id </th>
-							<th> Bureau Vote </th>
-				
-                          <th></th>
-                          <th></th>
-                      </tr>
-                  </thead>    
-                  <tbody id="table-body">
-                      {bureauvote.map((item) => (
-                        <tr key={item.id}>
-						<td>{item.codeBureau}</td>
-						<td>{item.centreVote}</td>
-						<td>{item.idFokontany.nomFokontany}</td>
-						<td>{item.id}</td>
-						<td>{item.bureauVote}</td>
-				
-                            <td>
-                                <Button variant="danger" key={item.id} onClick={() => handleDeleteClick(item)}>
-                                    Delete
-                                </Button>
-                            </td>   
-                            <td>
-                                <Button variant="warning" key={item.id} onClick={() => handleSelectItem(item.id)}>
-                                    Update
-                                </Button>
-                            </td>
-                        </tr>
-                      ))}
-                  </tbody>
-              </table>
-            </div>
-            <div className="row">
-                <nav aria-label="Page navigation example">
-                <ul className="pagination justify-content-start">
-                    {paginations}
-                </ul>
-                </nav>
-            </div>
-          </>
-      )}
-      </div>
+        </div>
+      
     {/* SAVE */}
     <Modal show={showInsertModal} onHide={handleCloseInsertModal}>
         <Modal.Header closeButton>
@@ -357,12 +301,12 @@ function Bureauvote(){
 					</div>
 					<div className="mb-3"> 
 					 	<label className="form-label">Id Fokontany</label> 
-					 	<select className="form-control" name="idFokontany" id="select-idFokontany">
-							{idFokontany.map((elt) => (
+					 	<select className="form-control" name="idFokontany">
+								{idFokontany.map((elt) => (
 								<option value={elt.id}>{elt.nomFokontany}</option>
 							))}
 							
-						</select>
+					</select>
 					</div>
 					<div className="mb-3"> 
 					 	<label className="form-label">Bureau Vote</label> 
@@ -388,11 +332,11 @@ function Bureauvote(){
         </Modal.Header>
         <Modal.Body>    
             <form action="" method="" id="update" onSubmit={handleUpdateSubmit}>
-    					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
+    					<div className="mb-3"> 
 					 	<label className="form-label">Code Bureau</label> 
 					 	<input className="form-control" type="#type#" name="codeBureau" onChange={handleInputCodeBureauChange} value={selectedItem ? selectedItem.codeBureau:''} />
 					</div>
-					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
+					<div className="mb-3"> 
 					 	<label className="form-label">Centre Vote</label> 
 					 	<input className="form-control" type="#type#" name="centreVote" onChange={handleInputCentreVoteChange} value={selectedItem ? selectedItem.centreVote:''} />
 					</div>
@@ -405,11 +349,11 @@ function Bureauvote(){
 							
 					</select>
 					</div>
-					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
+					<div className="mb-3"> 
 					 	<label className="form-label"></label> 
 					 	<input className="form-control" type="hidden" name="id" onChange={handleInputIdChange} value={selectedItem ? selectedItem.id:''} />
 					</div>
-					<div className="mb-3"> front/bureauvote front/district front/commune front/fokontany front/region
+					<div className="mb-3"> 
 					 	<label className="form-label">Bureau Vote</label> 
 					 	<input className="form-control" type="#type#" name="bureauVote" onChange={handleInputBureauVoteChange} value={selectedItem ? selectedItem.bureauVote:''} />
 					</div>
