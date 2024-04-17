@@ -310,8 +310,8 @@
 
                     "controllerProperty" : {
                         "path": "RequestUrl(\"/?\")",
-                        "get": "Url(method = GET)",
-                        "post": "Url(method = POST)",
+                        "get": "Url(method = GET)\n@Auth(user = \"admin\")",
+                        "post": "Url(method = POST)\n@Auth(user = \"admin\")",
                         "put": "Url(method = PUT)",
                         "delete": "Url(method = DELETE)",
                         "name":"Controller",
@@ -326,7 +326,7 @@
                         "annotationArgumentParameterFormData":"RequestBody",
                         "annotationArgumentParameterLink":"",
                         "constructor":"",
-                        "paginationAnnotation":"@Url(value = \"pagination\" ,method = GET)\n",
+                        "paginationAnnotation":"@Url(value = \"/pagination\" ,method = GET)\n",
                         "paginationArgument": "@Param(\"start\") int start, @Param(\"length\") int length",
                         "findAllAsync": "?"
                     },
