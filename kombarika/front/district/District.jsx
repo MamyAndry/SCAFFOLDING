@@ -190,6 +190,57 @@ function District(){
       <li className="page-item"><a className="page-link" style={{'color':'#007F73'}} onClick={(e) => setCurrentPage(i * tableSize)}>{i + 1}</a></li>
     );
   }
+const [pas,setPas] = useState([]);
+
+useEffect (() => {
+    const getPages = () => {
+    if(pageNumber < 8){
+      setPas(paginations)
+      return;
+    }
+    var page = currentPage / tableSize
+    var distDebut = page; 
+    var distFin = paginations.length - page;
+    const temp = [];
+    if(distDebut < 4 && distFin > 4){
+      for(let i = 0; i < 5; i++){
+        temp[i] = paginations[i]
+      }
+      temp.push(
+      <li className="page-item"><a className="page-link" href="#">....</a></li>
+      );
+      temp.push(paginations[paginations.length - 1]);
+    }
+    else if(distDebut > 4 && distFin < 4){
+      var j = 2;
+      temp.push(paginations[0]);
+      temp.push(
+        <li className="page-item"><a className="page-link" href="#">....</a></li>
+      );
+      for(let i = paginations.length - 5; i < paginations.length; i++){
+        temp[j] = paginations[i];
+        j++;
+      }
+    }
+    else if(distDebut >= 4 && distFin >=   4){
+      var k = 2;
+      temp.push(paginations[0]);
+      temp.push(
+        <li className="page-item"><a className="page-link" href="#">....</a></li>
+      );
+      for(let i = page - 1; i < page + 2; i++){
+        temp[k] = paginations[i];
+        k++;
+      }
+      temp.push(
+        <li className="page-item"><a className="page-link" href="#">....</a></li>
+        );
+        temp.push(paginations[paginations.length - 1]);
+    }
+      setPas(temp);
+    };
+    getPages();
+  }, [currentPage, pageNumber, paginations]);
 
   return (
     <>
@@ -252,7 +303,7 @@ function District(){
     <div className="row" style={{'overflow-x':'scroll', 'cursor':'pointer'}}>
                 <nav aria-label="Page navigation example">
                 <ul className="pagination justify-content-start">
-                    {paginations}
+                    {pas}
                 </ul>
                 </nav>
     </div>
