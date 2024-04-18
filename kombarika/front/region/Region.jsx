@@ -2,8 +2,8 @@ import React, {useState, useEffect} from "react";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-function #entity#(){
-  const url = '#url#';
+function Region(){
+  const url = 'http://localhost:8080/demo_war_exploded/';
 
 
   const [loading, setLoading] = useState(true);
@@ -12,30 +12,59 @@ function #entity#(){
   const [currentPage, setCurrentPage] = useState(0);
   const tableSize = 5;
 
-
+  
   const [showInsertModal, setShowInsertModal] = useState(false);
-
+  
   const handleCloseInsertModal = () => setShowInsertModal(false);
   const handleShowInsertModal = () => setShowInsertModal(true);
-
+  
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-
+  
   const handleCloseUpdateModal = () => setShowUpdateModal(false);
   const handleShowUpdateModal = () => setShowUpdateModal(true);
-
+  
   const [error, setError] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const handleSelectItem = (itemKey) => {
     handleShowUpdateModal();
-    const itemDetails = #path#.find(item => item.#id# === itemKey);
+    const itemDetails = region.find(item => item.id === itemKey);
     setSelectedItem(itemDetails);
   };
 
-#values#
+	const [region, setRegion] = useState([]);
+	
+	
 
-#handleInputSelectChange#
+		const handleInputNomRegionChange = (event) => {
+			setSelectedItem({ ...selectedItem, nomRegion: event.target.value });
+		};
+		
+		const handleInputIdChange = (event) => {
+			setSelectedItem({ ...selectedItem, id: event.target.value });
+		};
+		
+		
 
-#getValues#
+	useEffect(() => {
+		const getRegion = async () => {
+			try {
+				const response = await fetch(url + 'region/pagination' + '?start=' + currentPage + '&length=' + tableSize, {credentials: 'include'});
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					};
+				const datas = await response.json();
+				setCount(datas.count)
+				setRegion(datas.data);
+			} catch (error) {
+				setError(error);
+			} finally {
+				setLoading(false);
+			}
+		};
+		getRegion();
+	}, [currentPage]);
+	
+	
 
 //////// SAVE
   const handleSaveSubmit = async (event) => {
@@ -43,7 +72,7 @@ function #entity#(){
       const form = event.target;
       const formData = new FormData(form);
       const data = {};
-
+  
       for (let [key, value] of formData.entries()) {
         if (form.elements[key].tagName === 'SELECT') {
           data[key] = { id: value };
@@ -51,9 +80,9 @@ function #entity#(){
           data[key] = value;
         }
       }
-
+  
       try {
-        const response = await fetch(url + '#path#', {
+        const response = await fetch(url + 'region', {
           method: 'POST',
           credentials: 'include',
           body: JSON.stringify(data),
@@ -61,12 +90,12 @@ function #entity#(){
             'Content-Type': 'application/json'
           }
         });
-
+  
         if (!response.ok) {
           alert("Response was not ok, you may not be authenticated")
           throw new Error('Network response was not ok');
         }
-
+  
         handleCloseInsertModal();
         // If you want to reload the page after success
         window.location.reload();
@@ -75,7 +104,7 @@ function #entity#(){
       }
   };
 
-//////// UPDATE
+//////// UPDATE 
   const handleUpdateSubmit = async (event) => {
       event.preventDefault();
       const form = event.target;
@@ -89,7 +118,7 @@ function #entity#(){
         }
       }
       try {
-        const response = await fetch(url + '#path#', {
+        const response = await fetch(url + 'region', {
           method: 'PUT',
           credentials: 'include',
           headers: {
@@ -97,7 +126,7 @@ function #entity#(){
           },
           body: JSON.stringify(data)
         });
-
+  
         if (!response.ok) {
           alert("Response was not ok, you may not be authenticated")
           throw new Error('Network response was not ok');
@@ -114,7 +143,7 @@ function #entity#(){
   const handleDeleteClick = async (item) => {
     try {
       console.log(item);
-      const response = await fetch(url + '#path#', {
+      const response = await fetch(url + 'region', {
         method: 'DELETE',
         credentials: 'include',
         headers: {
@@ -149,10 +178,9 @@ useEffect (() => {
       return;
     }
     var page = currentPage / tableSize
-    var distDebut = page;
+    var distDebut = page; 
     var distFin = paginations.length - page;
     const temp = [];
-    paginations[page] = <li className="page-item active"><a className="page-link" style={{'color':'#007F73'}} onClick={(e) => setCurrentPage(page * tableSize)}>{page + 1}</a></li>;
     if(distDebut < 4 && distFin > 4){
       for(let i = 0; i < 5; i++){
         temp[i] = paginations[i]
@@ -208,30 +236,34 @@ useEffect (() => {
                 </div>
               </div>
             </div>
-          ):(
+          ):(  
           <table className="table">
             <thead>
               <tr>
-#header#
+							<th> Nom Region </th>
+							<th> Id </th>
+				
 
               <th></th>
               </tr>
             </thead>
             <tbody>
-
-            {#path#.map((item) => (
+              
+            {region.map((item) => (
                         <tr key={item.id}>
-            #tableValue#
-
+            						<td>{item.nomRegion}</td>
+						<td>{item.id}</td>
+				
+				
             <td style={{'text-align': 'right'}}>
-              <button key={item.#id#} onClick={() => handleSelectItem(item.#id#)}  style={{'margin-right': '20px', 'background-color': '#007F73', 'color': 'white'}} className="btn" >
+              <button key={item.id} onClick={() => handleSelectItem(item.id)}  style={{'margin-right': '20px', 'background-color': '#007F73', 'color': 'white'}} className="btn" >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                 </svg>
-
+                
               </button>
-              <button className="btn btn-danger" key={item.#id#} onClick={() => handleDeleteClick(item)}>
+              <button className="btn btn-danger" key={item.id} onClick={() => handleDeleteClick(item)}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                   <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
                 </svg>
@@ -257,25 +289,29 @@ useEffect (() => {
 
       <div className="container">
           <div className="row justify-content-end">
-              <div className="col" >
+              <div className="col" >   
                 <div className="row">
                   <Button variant="primary" style={{'background-color':'#007F73'}} onClick={handleShowInsertModal}>
-                      Add #entity#
+                      Add Region
                   </Button>
-                </div>
+                </div>   
               </div>
-
+              
           </div>
         </div>
-
+      
     {/* SAVE */}
     <Modal show={showInsertModal} onHide={handleCloseInsertModal}>
         <Modal.Header closeButton>
-        <Modal.Title>Add #entity#</Modal.Title>
+        <Modal.Title>Add Region</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <form action="" method="" id="insert" onSubmit={handleSaveSubmit}>
-#inputInsert#
+					<div className="mb-3"> 
+					 	<label className="form-label">Nom Region</label> 
+					 	<input className="form-control" type="text" name="nomRegion" />
+					</div>
+					
                 <div className="mb-3">
                 <Button variant="primary" type= "submit" >
                     Save Changes
@@ -291,17 +327,25 @@ useEffect (() => {
     {/* UPDATE */}
     <Modal show={showUpdateModal} onHide={handleCloseUpdateModal}>
         <Modal.Header closeButton>
-            <Modal.Title>Update #entity#</Modal.Title>
+            <Modal.Title>Update Region</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body>    
             <form action="" method="" id="update" onSubmit={handleUpdateSubmit}>
-    #inputUpdate#
+    					<div className="mb-3"> 
+					 	<label className="form-label">Nom Region</label> 
+					 	<input className="form-control" type="#type#" name="nomRegion" onChange={handleInputNomRegionChange} value={selectedItem ? selectedItem.nomRegion:''} />
+					</div>
+					<div className="mb-3"> 
+					 	<label className="form-label"></label> 
+					 	<input className="form-control" type="hidden" name="id" onChange={handleInputIdChange} value={selectedItem ? selectedItem.id:''} />
+					</div>
+					
             <div className="mb-3">
             <Button variant="warning" type= "submit" >
                 Save Changes
             </Button>
             </div>
-            </form>
+            </form>  
         </Modal.Body>
         <Modal.Footer>
 
@@ -311,4 +355,4 @@ useEffect (() => {
   )
 }
 
-export default #entity#;
+export default Region;

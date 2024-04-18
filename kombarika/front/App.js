@@ -3,7 +3,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-${IMPORTS}
+import Bureauvote from "./components/bureauvote/Bureauvote";
+import Commune from "./components/commune/Commune";
+import District from "./components/district/District";
+import Fokontany from "./components/fokontany/Fokontany";
+import Region from "./components/region/Region";
+
 
 
 const url = 'http://localhost:8080/demo_war_exploded/';
@@ -58,7 +63,27 @@ function App() {
                 <div className='row'>
                     <div className='col-auto collapse collapse-horizontal' id='collapseNavbar'>
                         <ul className="nav flex-column">
-${NAV}
+	<li className="nav-item">
+		<a className="nav-link active" aria-current="page" href="/bureauvote">Bureauvote</a>
+	</li>
+	
+	<li className="nav-item">
+		<a className="nav-link active" aria-current="page" href="/commune">Commune</a>
+	</li>
+	
+	<li className="nav-item">
+		<a className="nav-link active" aria-current="page" href="/district">District</a>
+	</li>
+	
+	<li className="nav-item">
+		<a className="nav-link active" aria-current="page" href="/fokontany">Fokontany</a>
+	</li>
+	
+	<li className="nav-item">
+		<a className="nav-link active" aria-current="page" href="/region">Region</a>
+	</li>
+	
+	
     <li className="nav-item">
 		<a className="nav-link" onClick={() => login()}>Login</a>
 	</li>
@@ -67,7 +92,12 @@ ${NAV}
                     <div className='col-1'></div>
                     <div className='col-9'>
                         <Routes>
-${ROUTES}	
+					<Route path="/bureauvote" element={<Bureauvote />} />
+					<Route path="/commune" element={<Commune />} />
+					<Route path="/district" element={<District />} />
+					<Route path="/fokontany" element={<Fokontany />} />
+					<Route path="/region" element={<Region />} />
+		
                         </Routes>
                     </div>           
                     </div>
