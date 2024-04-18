@@ -2,9 +2,9 @@
     "defaultConnection" : "DefaultConnection",
     "listConnection": {
         "DefaultConnection": {
-            "datasource":"jdbc:postgresql://localhost:5432/district",
-            "username":"your_username",
-            "password":"your_password",
+            "datasource":"jdbc:postgresql://172.16.123.101:5432/fitsarana",
+            "username":"postgres",
+            "password":"fanatenana",
             "databaseType":"POSTGRESQL"
         },
         "OtherConnection": {

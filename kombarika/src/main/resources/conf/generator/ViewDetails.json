@@ -112,8 +112,8 @@
             "handleSelectChange":"",
             "values":"#entity#: null,\n",
             "tableValue":"<td>{{item.#values#}}</td>",
-            "fetch":"fetch(this.url + '#entity#') \n .then(response => response.json()) \n.then(data => { this.#entity# = data; }) \n .catch(error => alert(error)); \n",
-            "paginationMethods": "fetch(this.url + '#entity#/' + this.pagination_start + '/' + this.pagination_end) \n .then(response => response.json()) \n.then(data => { this.#entity# = data; }) \n.catch(error => alert(error)); \n",
+            "fetch":"fetch(this.url + '#Entity#Controller/find-#entity#.do') \n .then(response => response.json()) \n.then(data => { this.#entity# = data; }) \n .catch(error => alert(error)); \n",
+            "paginationMethods": "fetch(this.url + '#Entity#Controller/' + 'find-pagination-#entity#.do', { headers:{'Content-Type': 'application/json'},method: 'POST', body: JSON.stringify({'debut': this.pagination_start, 'fin': this.pagination_end})}) \n .then(response => response.json()) \n.then(data => { this.#entity# = data; }) \n.catch(error => alert(error)); \n",
             "handleSelectItem":"",
             "listMapping" : {
                 "Timestamp":"date-time local",

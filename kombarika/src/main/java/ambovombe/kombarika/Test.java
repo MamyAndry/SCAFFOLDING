@@ -24,7 +24,7 @@ public class Test {
         CodeGenerator codeGenerator = new CodeGenerator();      
         String path = "/home/fabien/Documents/GitHub/SCAFF/Voyage-S5-S3/src/main/java"; // class path
         //path = "/home/fabien/Documents/my-app(1)/my-app/src/main/java/io/bootify/my_app/generatedrest2/";
-        String viewPath = "/home/fabien/Documents/GitHub/meteo-dashboard/src/components2";
+        String viewPath = "/home/fabien/Documents/GitHub/meteo-dashboard/src/components5";
         
         // String path = "/home/mamisoa/ITU/L3/Mr_Naina/FRAMEWORK/testkarana/src/main/java";
         // String viewPath = "./";
@@ -35,14 +35,14 @@ public class Test {
 
         String framework = "java:karana";
         String packageName = "com";
-        String entity = "entity";
+        String entity = "entity";   
         String controller = "controller";
         String repository = "repository";
         String view = "";
         String viewType = "vue";
         //fetch(this.url + 'http://192.168.1.11:8080/Gestion_produit/MatiereController/find-matiere.do') 
         // 
-        String url = "http://localhost:8080/";
+        String url = "http://172.16.123.101:8080/fitsarana/";
         try{
             // String[] tables = {"district","region"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();

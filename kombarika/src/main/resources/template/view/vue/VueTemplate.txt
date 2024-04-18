@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <Button @click="insertForm = !insertForm" class="add-button">
-            <img src="https://www.svgrepo.com/show/521942/add-ellipse.svg" height="25" width="350">
+            <img src="https://www.svgrepo.com/show/521942/add-ellipse.svg" height="25px" width="350px">
         </Button>
         <!-- Insert start -->
         <div class="row">
@@ -36,15 +36,17 @@
                         #header#
                         <th style="display: flex;">
                             <div class="button-group-1">
-                                <Button v-if="page > 0" height="25" width="25" type="submit" @click="this.previousValues()">
+                                <Button :class="{ 'hide': page <= 1 }" height="25px" width="25px" type="submit" @click="this.previousValues()">
                                     <img src="data:image/png;base64,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"
-                                    height="25" width="25" style="transform: rotate(180deg); border-radius: 50%; border: 1px solid white;"/>
+                                    height="25px" width="25px" style="transform: rotate(180deg); border-radius: 50%; border: 1px solid white;"/>
                                 </Button>
-                                
-                                <Button height="25" width="25" type="submit" @click="this.nextValues()">
+                                <Button :class="{ 'hide': #path#?.length == 0 }" height="25px" width="25px" type="submit" @click="this.nextValues()">
                                     <img src="data:image/png;base64,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"
-                                    height="25" width="25" style="transform: rotate(0deg); border-radius: 50%; border: 1px solid white;"/>
+                                    height="25px" width="25px" style="transform: rotate(0deg); border-radius: 50%; border: 1px solid white;"/>
                                 </Button>
+                                    <Button style="color: white;">
+                                    {{this.page}}
+                                    </Button>
                             </div>
                         </th>
                     </tr>
@@ -74,6 +76,7 @@
             <div id="body">
                 <form id="update" @submit="e => update(e)" v-if="updateForm">
                     #inputUpdate#
+
                     <div className="mb-3">
                         <Button class="btn btn-primary update-button" type= "submit" >
                             Update
@@ -154,10 +157,21 @@
                 this.pagination_start = value;
             },
             getPaginedData(){
-                const urlType = this.url + '#path#/' + this.pagination_start + "/" + this.pagination_end;
+                const urlType = this.url + '#entity#Controller/' + 'find-pagination-#path#.do';
                 console.log(urlType);
+                const paginationRange = 
+                {
+                    "debut": this.pagination_start,
+                    "fin": this.pagination_end
+                }
                 try{
-                    fetch(urlType) 
+                    fetch(urlType, { 
+                        headers:{
+                            'Content-Type': 'application/json'
+                        },
+                        method: 'POST',
+                        body: JSON.stringify(paginationRange)
+                    }) 
                     .then(response => response.json()) 
                     .then(data => { this.#path# = data; }) 
                     .catch(error => alert(error));
@@ -202,14 +216,16 @@
             async update(event) {
                 event.preventDefault();
                 const updateData = this.fetchFormData(event.target);
-                const dataToSend = this.mergeData(this.targetItem, updateData);
+                const #path# = this.mergeData(this.targetItem, updateData);
                 try {
-                    const response = await fetch(this.url + 'region', {
+                    const response = await fetch(this.url + '#entity#Controller/' + 'update-#path#.do', {
                         method: 'PUT',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            /*
+                            'Authorization': 'Bearer ' + localStorage.getItem("token")*/
                         },
-                        body: JSON.stringify(dataToSend)
+                        body: JSON.stringify({ #path# })
                     });
                     if (!response.ok) {
                         throw new Error('Erreur réseau');
@@ -222,13 +238,15 @@
             },
             async del(event) {
                 event.preventDefault();
+                const #path# = this.targetItem;
                 try {
-                    const response = await fetch(this.url + '#path#', {
+                    const response = await fetch(this.url + '#entity#Controller/' + 'delete-#path#.do', {
                         method: 'DELETE',
                         headers: {
-                            'Content-Type': 'application/json',
+                            'Content-Type': 'application/json'/*,
+                            'Authorization': 'Bearer ' + localStorage.getItem("token")*/
                         },
-                        body: JSON.stringify(this.targetItem)
+                        body: JSON.stringify({#path#})
                     });
                     if (!response.ok) {
                         throw new Error('Erreur réseau');
@@ -241,14 +259,15 @@
             },
             async insert(event) {
                 event.preventDefault();
-                const insertData = this.fetchFormData(event.target);
+                const #path# = this.fetchFormData(event.target);
                 try {
-                    const response = await fetch(this.url + '#path#', {
+                    const response = await fetch(this.url + '#entity#Controller/' +'save-#path#.do', {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json'/*,
+                            'Authorization': 'Bearer ' + localStorage.getItem("token")*/
                         },
-                        body: JSON.stringify(insertData)
+                        body: JSON.stringify({#path#})
                     });
                     if (!response.ok) {
                         throw new Error('Erreur réseau');
@@ -323,7 +342,7 @@
         width: 100%; 
     }
     table {
-        width: 80%;
+        width: 95%;
         overflow-y: scroll;
         border-radius: 1.25em;
         background: #012B39;
@@ -462,7 +481,7 @@ inputs
 */
 
 
-input{
+input, select{
     width: 100%;
     min-height: 40px;
     border: 1px solid aliceblue;
@@ -506,6 +525,10 @@ input{
 
 .update-button{
     background-color: #d3d36c;
+}
+
+.hide{
+    opacity: 0;
 }
 /**
  */

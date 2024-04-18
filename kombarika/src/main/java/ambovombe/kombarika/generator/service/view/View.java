@@ -32,7 +32,7 @@ public class View {
                         .replace("#path#", ObjectUtility.formatToCamelCase(temp))
                         .replace("#label#", temp)
                         .replace("#id#", ObjectUtility.formatToCamelCase(id))
-                        .replace("#attribute#", ObjectUtility.formatToCamelCase(attribute));
+                        .replace("#attribute#", ObjectUtility.formatToCamelCase(temp));
                     option = Misc.tabulate(Misc.tabulate(option));
                     res += this.getViewProperties().getSelect()
                     .replace("#label#", ObjectUtility.capitalize(temp))
@@ -54,7 +54,11 @@ public class View {
         if (foreignKeys.isEmpty()) {
             return "";
         }
+        // pour chaque foreign keys
         for (Map.Entry<String, String> set : foreignKeys.entrySet()) {
+            //System.out.println("update "+set.getKey());
+            //System.out.println("url "+url);
+            //System.out.println("hm "+foreignKeys.entrySet());
             res += this.getViewProperties().getOptionUpdate()
                 .replace("#url#", url)
                 .replace("#path#", ObjectUtility.formatToCamelCase(set.getValue()))
@@ -68,30 +72,74 @@ public class View {
         return Misc.tabulate(res);
     }
 
+    /*
+     * 
+     *  for (Map.Entry<String, String> set : columns.entrySet()) {
+            if (!primaryKeys.contains(set.getKey())) {
+                String temp = foreignKeys.get(set.getKey());
+                if(temp != null){
+                    String option = this.getViewProperties().getOption()
+                        .replace("#url#", url)
+                        .replace("#path#", ObjectUtility.formatToCamelCase(temp))
+                        .replace("#label#", temp)
+                        .replace("#id#", ObjectUtility.formatToCamelCase(id))
+                        .replace("#attribute#", ObjectUtility.formatToCamelCase(temp));
+                    option = Misc.tabulate(Misc.tabulate(option));
+                    res += this.getViewProperties().getSelect()
+                    .replace("#label#", ObjectUtility.capitalize(temp))
+                    .replace("#name#", ObjectUtility.formatToCamelCase(temp))
+                    .replace("#option#", option);
+                    continue;
+                }
+                res += template
+                .replace("#label#", ObjectUtility.formatToSpacedString(set.getKey()))
+                .replace("#type#", this.getViewProperties().getListMapping().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
+                .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";        
+            }
+        }
+     */
+
     public String getInputUpdate(HashMap<String, String> columns, HashMap<String, String> foreignKeys, List<String> primaryKeys, String url, String id) throws Exception{
         String res ="";
         String template = this.getViewProperties().getInputUpdate();
         for (Map.Entry<String, String> set : columns.entrySet()) {
             if (!primaryKeys.contains(set.getKey())) {
                 String temp = foreignKeys.get(set.getKey());
+                //System.out.println("set key " + set.getKey() + " temp ="+temp);
                 if(temp != null){
+                    /* 
                     res += this.getViewProperties().getSelectUpdate()
                     .replace("#name#", ObjectUtility.formatToCamelCase(temp))
                     .replace("#id#", ObjectUtility.formatToCamelCase(id))
                     .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)));
+                    continue;
+*/
+                    String option = this.getViewProperties().getOption()
+                        .replace("#url#", url)
+                        .replace("#path#", ObjectUtility.formatToCamelCase(temp))
+                        .replace("#label#", temp)
+                        .replace("#id#", ObjectUtility.formatToCamelCase(id))
+                        .replace("#attribute#", ObjectUtility.formatToCamelCase(temp));
+                    option = Misc.tabulate(Misc.tabulate(option));
+                    res += this.getViewProperties().getSelect()
+                    .replace("#label#", ObjectUtility.capitalize(temp))
+                    .replace("#name#", ObjectUtility.formatToCamelCase(temp))
+                    .replace("#option#", option);
                     continue;
                 }
                 res +=  template
                 .replace("#label#", ObjectUtility.formatToSpacedString(set.getKey()))
                 .replace("#type#", this.getViewProperties().getListMapping().get(set.getValue().split("\\.")[set.getValue().split("\\.").length -1]))
                 .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getKey())))
-                .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";        
+                .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey()));
+            
             }else{
+                //System.out.println(id);
                 res += template
                 .replace("#label#", "")
                 .replace("#type#", "hidden")                
                 .replace("#Name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(set.getKey())))
-                .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";          
+                .replace("#name#", ObjectUtility.formatToCamelCase(set.getKey()));
             }   
         }
         return Misc.tabulate(res);
@@ -113,7 +161,7 @@ public class View {
         for (Map.Entry<String, String> set : columns.entrySet()) {
             if(foreignKeys.get(set.getKey()) != null){
                 res += "\t\t" + template
-                .replace("#values#", ObjectUtility.formatToCamelCase(foreignKeys.get(set.getKey())) + "." + ObjectUtility.formatToCamelCase(attribute)) + "\n";                
+                .replace("#values#", ObjectUtility.formatToCamelCase(foreignKeys.get(set.getKey())) + "?." + ObjectUtility.formatToCamelCase(foreignKeys.get(set.getKey()))) + "\n";                
             }else{
                 res += "\t\t" + template
                 .replace("#values#", ObjectUtility.formatToCamelCase(set.getKey())) + "\n";
