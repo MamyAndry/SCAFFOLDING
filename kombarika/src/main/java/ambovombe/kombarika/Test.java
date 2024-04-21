@@ -35,13 +35,13 @@ public class Test {
 
 
         String framework = "java:merana";
-        String packageName = "com.example.demo";
+        String packageName = "com.example.kombarikatest";
         String entity = "entity";
         String controller = "model";
         String repository = "repository";
         String view = "";
         String viewType = "react";
-        String url = "http://localhost:8080/demo_war_exploded/";
+        String url = "http://localhost:8080/kombarikatest_war_exploded/";
         try{
             // String[] tables = {"media_publication"};
             // DbConnection dbConnection = codeGenerator.getDbConnection();
