@@ -284,7 +284,7 @@ useEffect (() => {
             </form>
         </Modal.Body>
         <Modal.Footer>
-        </Modal.Footer>
+        </Modal.Footer> 
     </Modal>
 
 

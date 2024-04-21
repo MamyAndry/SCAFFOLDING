@@ -1,7 +1,7 @@
 package ambovombe.kombarika.configuration.mapping;
 
-import ambovombe.kombarika.utils.Misc;
 import ambovombe.kombarika.generator.parser.FileUtility;
+import ambovombe.kombarika.utils.Misc;
 import lombok.Getter;
 import lombok.Setter;
 

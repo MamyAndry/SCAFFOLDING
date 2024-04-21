@@ -10,8 +10,8 @@ import ambovombe.kombarika.configuration.mapping.ViewProperties;
 import ambovombe.kombarika.database.DbConnection;
 import ambovombe.kombarika.generator.parser.FileUtility;
 import ambovombe.kombarika.generator.service.DbService;
-import ambovombe.kombarika.generator.utils.ObjectUtility;
 import ambovombe.kombarika.utils.Misc;
+import ambovombe.kombarika.utils.ObjectUtility;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -190,7 +190,7 @@ public class View {
 
     public HashMap<String, String> getIdAndAttribute(DbConnection dbConnection, HashMap<String, String> foreignKeys) throws Exception{
         String attribute = "";
-        String id       = "";
+        String id = "";
         HashMap<String,String> map = new HashMap<>();
         for (Map.Entry<String, String> set : foreignKeys.entrySet()) {
             List<String> tempPrimaryKey = DbService.getPrimaryKey(dbConnection, set.getValue());

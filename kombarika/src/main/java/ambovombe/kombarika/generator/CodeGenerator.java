@@ -16,7 +16,7 @@ import ambovombe.kombarika.generator.service.controller.Controller;
 import ambovombe.kombarika.generator.service.entity.Entity;
 import ambovombe.kombarika.generator.service.repository.Repository;
 import ambovombe.kombarika.generator.service.view.View;
-import ambovombe.kombarika.generator.utils.ObjectUtility;
+import ambovombe.kombarika.utils.ObjectUtility;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -51,6 +51,9 @@ public class CodeGenerator {
         LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
         TypeMapping typeMapping = getTypeProperties().getListProperties().get(language);
         FrameworkProperties frameworkProperties = languageProperties.getFrameworks().get(framework);
+        if(frameworkProperties.getTemplate().equals("")){
+            return "";
+        }
         String template = frameworkProperties.getTemplate();
         Entity entity = new Entity();
         entity.setAnnotationProperty(frameworkProperties.getAnnotationProperty());
@@ -68,6 +71,7 @@ public class CodeGenerator {
         String framework
     ) throws Exception{
         String entity = buildEntity(table, packageName, language, framework);
+        if(entity.equals("")) return;
         LanguageProperties languageProperties = getLanguageDetails().getLanguages().get(language);
         String directory = packageName.replace(".", File.separator);
         FileUtility.createDirectory(directory,path);

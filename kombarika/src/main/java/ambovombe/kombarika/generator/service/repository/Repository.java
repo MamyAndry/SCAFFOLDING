@@ -5,8 +5,8 @@ import ambovombe.kombarika.configuration.mapping.LanguageProperties;
 import ambovombe.kombarika.configuration.mapping.TypeMapping;
 import ambovombe.kombarika.generator.parser.FileUtility;
 import ambovombe.kombarika.generator.service.GeneratorService;
-import ambovombe.kombarika.generator.utils.ObjectUtility;
 import ambovombe.kombarika.utils.Misc;
+import ambovombe.kombarika.utils.ObjectUtility;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,7 +47,7 @@ public class Repository {
         if(this.getFrameworkProperties().getRepository().equals(""))
             return res;
         String path = Misc.getSourceTemplateLocation().concat(File.separator).concat(this.getFrameworkProperties().getRepository());
-        String template = FileUtility.readOneFile(path);
+        String template = FileUtility.readOneFile(path);    
         res = template.replace("#package#", GeneratorService.getPackage(this.getLanguageProperties(), packageName))
                 .replace("#imports#", getRepositoryImport(entityPackage, table))
                 .replace("#class#", getRepositoryClass(table, primaryKeysType))

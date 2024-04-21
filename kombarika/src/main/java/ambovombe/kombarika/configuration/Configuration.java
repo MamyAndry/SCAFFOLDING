@@ -1,7 +1,7 @@
 package ambovombe.kombarika.configuration;
 
-import ambovombe.kombarika.utils.Misc;
 import ambovombe.kombarika.generator.parser.JsonUtility;
+import ambovombe.kombarika.utils.Misc;
 import lombok.Getter;
 import lombok.Setter;
 

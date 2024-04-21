@@ -22,7 +22,7 @@ async function login(){
           alert("Response was not ok, you may not be authenticated")
           throw new Error('Network response was not ok');
         }
-        alert("successfully loged in")
+        alert("successfully logged in")
         // If you want to reload the page after success
       } catch (error) {
         console.log('Error:', error);
@@ -47,7 +47,7 @@ function App() {
                                     </a>
                                 </li>
                                 <li>
-                                    <button className="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar" aria-controls="collapseNavbar" aria-expanded="false">
+                                    <button className="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#collapseNavbar" aria-controls="collapseNavbar" aria-expanded="false">
                                         <span className="navbar-toggler-icon"></span>
                                     </button>
                                 </li>
@@ -56,21 +56,26 @@ function App() {
                     </nav>
                 </div>
                 <div className='row'>
-                    <div className='col-auto collapse collapse-horizontal' id='collapseNavbar'>
-                        <ul className="nav flex-column">
+                    <div className="offcanvas offcanvas-start col-auto" tabindex="-1" id="collapseNavbar" aria-labelledby="offcanvasExampleLabel">
+                        <div className="offcanvas-header">
+                            <h5 className="offcanvas-title" id="offcanvasExampleLabel">Kombarika</h5>
+                            <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div className="offcanvas-body">
+                            <ul className="nav flex-column">
 ${NAV}
-    <li className="nav-item">
-		<a className="nav-link" onClick={() => login()}>Login</a>
-	</li>
-                        </ul>
+                                <li className="nav-item">
+                                    <a className="nav-link" onClick={() => login()}>Login</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div className='col-1'></div>
-                    <div className='col-9'>
+                    <div className='col'>
                         <Routes>
 ${ROUTES}	
                         </Routes>
                     </div>           
-                    </div>
+                </div>
             </div>
         </Router>
     );

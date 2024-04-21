@@ -8,8 +8,8 @@ import java.util.Map;
 import ambovombe.kombarika.configuration.mapping.*;
 import ambovombe.kombarika.generator.service.DbService;
 import ambovombe.kombarika.generator.service.GeneratorService;
-import ambovombe.kombarika.generator.utils.ObjectUtility;
 import ambovombe.kombarika.utils.Misc;
+import ambovombe.kombarika.utils.ObjectUtility;
 import lombok.Getter;
 import lombok.Setter;
 

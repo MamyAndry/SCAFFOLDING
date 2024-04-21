@@ -6,7 +6,7 @@ import ambovombe.kombarika.configuration.mapping.*;
 import ambovombe.kombarika.database.DbConnection;
 import ambovombe.kombarika.generator.service.DbService;
 import ambovombe.kombarika.generator.service.GeneratorService;
-import ambovombe.kombarika.generator.utils.ObjectUtility;
+import ambovombe.kombarika.utils.ObjectUtility;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -110,7 +110,7 @@ public class Entity {
 
     public String getEncapsulation(HashMap<String, String> columns, HashMap<String, String> foreignKeys){
         String rep = "";
-        for (Map.Entry<String, String> set : columns.entrySet()) {
+        for(Map.Entry<String, String> set : columns.entrySet()) {
 
             String temp = foreignKeys.get(set.getKey());
             if(temp != null){

@@ -110,6 +110,62 @@
                     "type":"Byte[]",
                     "packageName":""
                 }
+            },
+            "python" : {
+                "listMapping" : {
+                    "Timestamp":{
+                        "type":"",
+                        "packageName":""
+                    },
+                    "Time":{
+                        "type":"",
+                        "packageName":""
+                    },
+                    "Date":{
+                        "type":"",
+                        "packageName":""
+                    },
+                    "Integer":{
+                        "type":"",
+                        "packageName":""
+                    },
+                    "Double":{
+                        "type":"",
+                        "packageName":""
+                    },
+                    "Float":{
+                        "type":"",
+                        "packageName":""
+                    },
+                    "Boolean":{
+                        "type":"",
+                        "packageName":""
+                    },
+                    "String":{
+                        "type":"",
+                        "packageName":""
+                    },
+                    "Char":{
+                        "type":"",
+                        "packageName":""
+                    },
+                    "BigDecimal":{
+                        "type":"",
+                        "packageName":""
+                    },
+                    "BigInt":{
+                        "type":"",
+                        "packageName":""
+                    },
+                    "Long":{
+                        "type":"",
+                        "packageName":""
+                    },
+                    "[B":{
+                        "type":"",
+                        "packageName":""
+                    }
+                }
             }
         }
     }
