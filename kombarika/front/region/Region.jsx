@@ -173,15 +173,16 @@ const [pas,setPas] = useState([]);
 
 useEffect (() => {
     const getPages = () => {
-    if(pageNumber < 8){
-      setPas(paginations)
-      return;
-    }
+
     var page = currentPage / tableSize
     var distDebut = page;
     var distFin = paginations.length - page;
     const temp = [];
-    paginations[page] = <li className="page-item active"><a className="page-link" style={{'color':'#007F73'}} onClick={(e) => setCurrentPage(page * tableSize)}>{page + 1}</a></li>;
+    paginations[page] = <li className="page-item active"><a className="page-link" style={{'color':'white', 'background-color':'#007F73'}} onClick={(e) => setCurrentPage(page * tableSize)}>{page + 1}</a></li>;
+    if(pageNumber < 8){
+      setPas(paginations)
+      return;
+    }
     if(distDebut < 4 && distFin > 4){
       for(let i = 0; i < 5; i++){
         temp[i] = paginations[i]
